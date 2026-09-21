@@ -2,111 +2,491 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>360° Панорама</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vesper Погодинская — виды из окна</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.css">
   <style>
+    /* ==========================================================================
+       Mobile-first. База — 375px. Дальше только min-width:
+       768 (планшет) / 1280 (десктоп) / 1536 (широкий).
+       ========================================================================== */
+    :root {
+      --bg: #0f1113;
+      --surface: #16191c;
+      --surface-2: #1e2226;
+      --line: #2a2f34;
+      --text: #f2f4f6;
+      --muted: #9aa3ab;
+      --faint: #6b747c;
+      --accent: #c9a86a;      /* тёплое «де-люкс» золото */
+      --accent-ink: #0f1113;
+      --na: #7a8189;
+
+      --gutter: 16px;
+      --radius: 12px;
+      --fs-title: 18px;
+      --fs-code: 17px;
+      --fs-meta: 13px;
+      --row-pad: 14px;
+      --maxw: 720px;
+      --bar-h: 56px;
+      font-synthesis: none;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    * { box-sizing: border-box; }
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
+      margin: 0; padding: 0; height: 100%;
+      background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
-    #panorama {
-      width: 100vw;
-      height: 100vh;
+    body { overflow: hidden; }
+    a { color: inherit; }
+
+    .screen { position: fixed; inset: 0; display: none; flex-direction: column; }
+    .screen.active { display: flex; }
+
+    /* ---------- Общая верхняя панель ---------- */
+    .bar {
+      flex: 0 0 auto;
+      min-height: var(--bar-h);
+      display: flex; align-items: center; gap: 10px;
+      padding: max(env(safe-area-inset-top), 8px) var(--gutter) 8px;
+      background: color-mix(in srgb, var(--bg) 88%, #000);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
     }
-    /* Экран загрузки */
-    #loader {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-      color: #fff;
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      z-index: 10;
-      transition: opacity 0.6s ease;
+    .bar h1 {
+      margin: 0; font-size: var(--fs-title); font-weight: 600; letter-spacing: .01em;
+      line-height: 1.2;
     }
-    #loader.hidden {
-      opacity: 0;
-      pointer-events: none;
+    .bar .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+    /* ---------- ЭКРАН A: список ---------- */
+    #screen-a .scroll {
+      flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      padding: 0 var(--gutter) calc(env(safe-area-inset-bottom) + 24px);
     }
-    .spinner {
-      width: 44px;
-      height: 44px;
-      border: 3px solid rgba(255, 255, 255, 0.2);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.9s linear infinite;
-      margin-bottom: 18px;
+    .list { width: 100%; max-width: var(--maxw); margin: 0 auto; }
+
+    /* header строки таблицы — только на планшете+ */
+    .list-head {
+      display: none;
+      position: sticky; top: 0; z-index: 2;
+      grid-template-columns: var(--cols);
+      gap: 12px; padding: 10px 16px;
+      background: var(--bg);
+      color: var(--faint); font-size: 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .06em;
+      border-bottom: 1px solid var(--line);
     }
+
+    .row {
+      width: 100%; text-align: left; cursor: pointer;
+      background: var(--surface); color: inherit;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      padding: var(--row-pad);
+      margin-top: 10px;
+      display: flex; flex-direction: column; gap: 8px;
+      font: inherit;
+      transition: border-color .15s, background .15s, transform .05s;
+    }
+    .row:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+    .row:active { transform: scale(.997); }
+    .row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .row .code {
+      font-size: var(--fs-code); font-weight: 650; letter-spacing: .02em;
+      font-variant-numeric: tabular-nums;
+      display: flex; align-items: center; gap: 10px; justify-content: space-between;
+    }
+    .row .cams {
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+      border-radius: 999px; padding: 2px 9px; white-space: nowrap;
+    }
+
+    .row .meta {
+      display: flex; flex-wrap: wrap; gap: 6px 14px;
+      font-size: var(--fs-meta); color: var(--muted);
+    }
+    .row .meta .m { display: inline-flex; gap: 5px; align-items: baseline; }
+    .row .meta .m b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .row .meta .lbl { display: inline; color: var(--faint); }
+
+    .row.na { opacity: .72; }
+    .row.na .code { color: var(--muted); font-weight: 600; }
+    .badge-na {
+      font-size: 11px; font-weight: 600; color: var(--na);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 2px 10px; white-space: nowrap; letter-spacing: .01em;
+    }
+
+    /* ---------- ЭКРАН B: вьювер ---------- */
+    #panorama { flex: 1 1 auto; position: relative; background: #000; }
+    .bar .back {
+      appearance: none; border: 1px solid var(--line); background: var(--surface-2);
+      color: var(--text); border-radius: 10px; height: 40px; padding: 0 14px;
+      font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
+    .bar .back:hover { border-color: var(--accent); }
+    .bar .vtitle { display: flex; flex-direction: column; min-width: 0; }
+    .bar .vtitle .t { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+    .bar .vtitle .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .bar .vtitle .na-tag { color: var(--na); }
+
+    /* стрелки переключения камер */
+    .nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 4; width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(15,17,19,.55); color: #fff;
+      border: 1px solid rgba(255,255,255,.18); cursor: pointer;
+      backdrop-filter: blur(4px); transition: background .15s, border-color .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav:hover { background: rgba(15,17,19,.8); border-color: var(--accent); }
+    .nav:active { transform: translateY(-50%) scale(.94); }
+    .nav svg { width: 22px; height: 22px; }
+    .nav.prev { left: 12px; }
+    .nav.next { right: 12px; }
+    .nav[hidden] { display: none; }
+
+    /* счётчик видов снизу */
+    .dots {
+      position: absolute; bottom: calc(env(safe-area-inset-bottom) + 14px); left: 50%;
+      transform: translateX(-50%); z-index: 4;
+      display: flex; gap: 7px; padding: 7px 12px; border-radius: 999px;
+      background: rgba(15,17,19,.5); backdrop-filter: blur(4px);
+    }
+    .dots .dot {
+      width: 8px; height: 8px; border-radius: 50%; cursor: pointer;
+      background: rgba(255,255,255,.35); transition: background .15s, transform .15s;
+    }
+    .dots .dot.on { background: var(--accent); transform: scale(1.15); }
+    .dots[hidden] { display: none; }
+
+    /* хинт про плейсхолдер */
+    .placeholder-note {
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 4;
+      font-size: 11px; color: rgba(255,255,255,.8);
+      background: rgba(15,17,19,.5); border: 1px solid rgba(255,255,255,.15);
+      padding: 4px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+    }
+    .placeholder-note[hidden] { display: none; }
+
+    /* спиннер загрузки данных */
+    .loading { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; }
+    .spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    #loader p { margin: 0; font-size: 15px; letter-spacing: 0.02em; opacity: 0.8; }
-    /* Прячем плашку "Pannellum 2.5.7", которая появляется по правому клику */
+
     .pnlm-about-msg { display: none !important; }
-    .hint {
-      position: fixed;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.75);
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      font-size: 13px;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 6px 14px;
-      border-radius: 999px;
-      z-index: 5;
-      pointer-events: none;
-      transition: opacity 1s ease;
+
+    /* ==========================================================================
+       БРЕЙКПОИНТ 768 — планшет: список превращается в таблицу с колонками
+       ========================================================================== */
+    @media (min-width: 768px) {
+      :root {
+        --gutter: 24px; --fs-title: 20px; --fs-code: 16px; --maxw: 900px;
+        --cols: minmax(110px, 1.1fr) .7fr .6fr .8fr .9fr;
+      }
+      .list-head { display: grid; }
+      .row {
+        display: grid; grid-template-columns: var(--cols);
+        gap: 12px; align-items: center; padding: 14px 16px;
+      }
+      .row .code { display: block; font-weight: 600; }
+      .row .cams { position: static; }
+      .row .code .cams { display: none; }        /* бейдж камер уводим в отдельную колонку не нужно */
+      .row .meta { display: contents; }          /* ячейки раскладываются по грид-колонкам строки */
+      .row .meta .m { display: block; font-size: 14px; color: var(--text); }
+      .row .meta .m .lbl { display: none; }
+      .row .meta .m b { font-weight: 500; }
+      .row.na .meta { display: block; }
+      .badge-na { justify-self: start; }
+    }
+
+    /* ==========================================================================
+       БРЕЙКПОИНТ 1280 — десктоп: крупнее, шире, чуть воздуха
+       ========================================================================== */
+    @media (min-width: 1280px) {
+      :root {
+        --gutter: 40px; --fs-title: 22px; --fs-code: 17px; --maxw: 1040px;
+        --row-pad: 16px; --bar-h: 64px;
+      }
+      #screen-a .scroll { padding-top: 8px; }
+      .row { margin-top: 12px; }
+      .nav { width: 56px; height: 56px; }
+      .nav svg { width: 26px; height: 26px; }
+      .nav.prev { left: 28px; } .nav.next { right: 28px; }
+    }
+
+    /* ==========================================================================
+       БРЕЙКПОИНТ 1536 — широкий: максимальная ширина списка ещё больше
+       ========================================================================== */
+    @media (min-width: 1536px) {
+      :root { --gutter: 64px; --maxw: 1200px; --fs-title: 24px; }
+      .list-head, .row { padding-left: 22px; padding-right: 22px; }
     }
   </style>
 </head>
 <body>
-  <div id="loader">
-    <div class="spinner"></div>
-    <p>Загрузка панорамы…</p>
-  </div>
-  <div id="panorama"></div>
-  <div class="hint" id="hint">Зажмите и двигайте, чтобы осмотреться · колесо / щипок — зум</div>
+
+  <!-- ЭКРАН A -->
+  <section id="screen-a" class="screen">
+    <header class="bar">
+      <div>
+        <h1>Vesper Погодинская</h1>
+        <div class="sub" id="a-sub">Виды из окна</div>
+      </div>
+    </header>
+    <div class="scroll">
+      <div class="list">
+        <div class="list-head" aria-hidden="true">
+          <div>Код</div><div>Корпус</div><div>Этаж</div><div>Комнаты</div><div>Площадь</div>
+        </div>
+        <div id="rows"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН B -->
+  <section id="screen-b" class="screen">
+    <header class="bar">
+      <button class="back" id="btn-back" aria-label="К списку">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        К списку
+      </button>
+      <div class="vtitle">
+        <span class="t" id="v-code">—</span>
+        <span class="s" id="v-sub">—</span>
+      </div>
+    </header>
+    <div id="panorama">
+      <div class="placeholder-note" id="ph-note" hidden>Демо-панорама (реальные виды появятся позже)</div>
+      <button class="nav prev" id="nav-prev" aria-label="Предыдущий вид">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="nav next" id="nav-next" aria-label="Следующий вид">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="dots" id="dots" hidden></div>
+    </div>
+  </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.js"></script>
   <script>
-    var viewer = pannellum.viewer('panorama', {
-      type: 'equirectangular',
-      panorama: 'panorama.jpg',
-      autoLoad: true,
-      autoRotate: -2,
-      autoRotateInactivityDelay: 3000,
-      showZoomCtrl: true,
-      showFullscreenCtrl: true,
-      hfov: 100,
-      minHfov: 40,
-      maxHfov: 120,
-      compass: false,
-      keyboardZoom: true,
-      mouseZoom: true,
-      draggable: true,
-      friction: 0.15
-    });
+  (function () {
+    "use strict";
 
-    viewer.on('load', function () {
-      document.getElementById('loader').classList.add('hidden');
-    });
+    var DATA = null;
+    var byCode = {};
+    var viewer = null;
+    var listScroll = 0;
 
-    // Прячем подсказку после первого взаимодействия
-    var hint = document.getElementById('hint');
-    ['mousedown', 'touchstart', 'wheel'].forEach(function (ev) {
-      window.addEventListener(ev, function () {
-        hint.style.opacity = '0';
-      }, { once: true, passive: true });
+    var $ = function (id) { return document.getElementById(id); };
+    var screenA = $("screen-a"), screenB = $("screen-b");
+
+    // ---------- утилиты форматирования ----------
+    function fmtArea(a) {
+      if (a == null) return "";
+      return a.toFixed(1).replace(".", ",") + " м²";
+    }
+    function korpus(code) { return code.split("-")[0]; }
+
+    // ---------- загрузка данных ----------
+    function load() {
+      screenA.classList.add("active");
+      $("rows").innerHTML = '<div class="loading"><span class="spinner"></span>Загрузка данных…</div>';
+      fetch("data/apartments.json?ts=" + Date.now())
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (json) {
+          DATA = json;
+          DATA.apartments.forEach(function (a) { byCode[a.code] = a; });
+          buildList();
+          route();
+        })
+        .catch(function (e) {
+          $("rows").innerHTML = '<div class="loading">Не удалось загрузить данные: ' + e.message + '</div>';
+        });
+    }
+
+    // ---------- ЭКРАН A ----------
+    function buildList() {
+      var forSale = DATA.counts.forSale, total = DATA.counts.total;
+      $("a-sub").textContent = "Виды из окна · " + total + " квартир, из них " + forSale + " в продаже";
+
+      var html = "";
+      DATA.apartments.forEach(function (a) {
+        var camBadge = '<span class="cams">' + a.cameras.length + ' ' + viewsWord(a.cameras.length) + '</span>';
+        if (a.forSale) {
+          html +=
+            '<button class="row" data-code="' + a.code + '">' +
+              '<span class="code">' + a.code + camBadge + '</span>' +
+              '<span class="meta">' +
+                '<span class="m"><span class="lbl">Корпус</span><b>' + korpus(a.code) + '</b></span>' +
+                '<span class="m"><span class="lbl">Этаж</span><b>' + (a.floor != null ? a.floor : "—") + '</b></span>' +
+                '<span class="m"><span class="lbl">Комнаты</span><b>' + (a.rooms != null ? a.rooms : "—") + '</b></span>' +
+                '<span class="m"><span class="lbl">Площадь</span><b>' + fmtArea(a.area) + '</b></span>' +
+              '</span>' +
+            '</button>';
+        } else {
+          html +=
+            '<button class="row na" data-code="' + a.code + '">' +
+              '<span class="code">' + a.code + camBadge + '</span>' +
+              '<span class="meta"><span class="badge-na">не в продаже</span></span>' +
+            '</button>';
+        }
+      });
+      var rows = $("rows");
+      rows.innerHTML = html;
+      rows.querySelectorAll(".row").forEach(function (el) {
+        el.addEventListener("click", function () {
+          listScroll = el.closest(".scroll").scrollTop;
+          go(el.getAttribute("data-code"));
+        });
+      });
+    }
+
+    function viewsWord(n) {
+      var d10 = n % 10, d100 = n % 100;
+      if (d10 === 1 && d100 !== 11) return "вид";
+      if (d10 >= 2 && d10 <= 4 && (d100 < 10 || d100 >= 20)) return "вида";
+      return "видов";
+    }
+
+    // ---------- ЭКРАН B ----------
+    function showViewer(apt, camIdx) {
+      var cams = apt.cameras;
+      var pos = 0;
+      for (var i = 0; i < cams.length; i++) { if (cams[i].idx === camIdx) { pos = i; break; } }
+      var cam = cams[pos];
+
+      $("v-code").textContent = apt.code;
+      $("v-sub").innerHTML = 'Вид ' + (pos + 1) + ' из ' + cams.length +
+        ' · <span' + (apt.forSale ? "" : ' class="na-tag"') + '>' +
+        (apt.forSale ? ("Корпус " + korpus(apt.code) + ", этаж " + (apt.floor != null ? apt.floor : "—") +
+          (apt.rooms != null ? (", " + apt.rooms + "-комн.") : "") +
+          (apt.area != null ? (", " + fmtArea(apt.area)) : ""))
+          : "не в продаже") + '</span>';
+
+      // навигация
+      var multi = cams.length > 1;
+      $("nav-prev").hidden = !multi;
+      $("nav-next").hidden = !multi;
+      buildDots(apt, pos);
+
+      // плейсхолдер-плашка
+      $("ph-note").hidden = !DATA.placeholderImages;
+
+      // (пере)создаём панораму
+      if (viewer) { try { viewer.destroy(); } catch (e) {} viewer = null; }
+      viewer = pannellum.viewer("panorama", {
+        type: "equirectangular",
+        panorama: cam.image,
+        autoLoad: true,
+        showZoomCtrl: true,
+        showFullscreenCtrl: true,
+        showControls: true,
+        hfov: 95, minHfov: 45, maxHfov: 120,
+        yaw: cam.yaw != null ? cam.yaw : 0,
+        pitch: 0,
+        compass: false,
+        friction: 0.15
+      });
+    }
+
+    function buildDots(apt, pos) {
+      var dots = $("dots");
+      if (apt.cameras.length <= 1) { dots.hidden = true; dots.innerHTML = ""; return; }
+      dots.hidden = false;
+      var html = "";
+      apt.cameras.forEach(function (c, i) {
+        html += '<span class="dot' + (i === pos ? " on" : "") + '" data-idx="' + c.idx + '" title="Вид ' + (i + 1) + '"></span>';
+      });
+      dots.innerHTML = html;
+      dots.querySelectorAll(".dot").forEach(function (el) {
+        el.addEventListener("click", function () {
+          go(apt.code, parseInt(el.getAttribute("data-idx"), 10));
+        });
+      });
+    }
+
+    function step(delta) {
+      var r = parseHash();
+      if (!r.code) return;
+      var apt = byCode[r.code]; if (!apt) return;
+      var cams = apt.cameras;
+      var pos = 0;
+      for (var i = 0; i < cams.length; i++) { if (cams[i].idx === r.camIdx) { pos = i; break; } }
+      pos = (pos + delta + cams.length) % cams.length;   // зациклено
+      go(apt.code, cams[pos].idx);
+    }
+
+    // ---------- роутинг (хеш, переживает F5) ----------
+    function parseHash() {
+      var h = location.hash.replace(/^#\/?/, "");           // "1-02-201/2"
+      if (!h) return { code: null, camIdx: null };
+      var parts = h.split("/");
+      var code = decodeURIComponent(parts[0]);
+      var camIdx = parts[1] != null && parts[1] !== "" ? parseInt(parts[1], 10) : null;
+      return { code: code, camIdx: isNaN(camIdx) ? null : camIdx };
+    }
+
+    function go(code, camIdx) {
+      var apt = byCode[code];
+      var hash = "#/" + encodeURIComponent(code);
+      if (apt) {
+        var idx = camIdx;
+        if (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; })) {
+          idx = apt.cameras.length ? apt.cameras[0].idx : 0;
+        }
+        hash += "/" + idx;
+      }
+      if (location.hash === hash) { route(); } else { location.hash = hash; }
+    }
+
+    function route() {
+      if (!DATA) return;
+      var r = parseHash();
+      var apt = r.code ? byCode[r.code] : null;
+
+      if (apt && apt.cameras.length) {
+        var idx = r.camIdx;
+        if (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; })) {
+          idx = apt.cameras[0].idx;
+        }
+        screenA.classList.remove("active");
+        screenB.classList.add("active");
+        showViewer(apt, idx);
+      } else {
+        // список
+        if (viewer) { try { viewer.destroy(); } catch (e) {} viewer = null; }
+        screenB.classList.remove("active");
+        screenA.classList.add("active");
+        var sc = screenA.querySelector(".scroll");
+        if (sc) sc.scrollTop = listScroll;
+      }
+    }
+
+    // ---------- события ----------
+    $("btn-back").addEventListener("click", function () {
+      if (location.hash) location.hash = ""; else route();
     });
-    // и сама пропадёт через 6 секунд
-    setTimeout(function () { hint.style.opacity = '0'; }, 6000);
+    $("nav-prev").addEventListener("click", function () { step(-1); });
+    $("nav-next").addEventListener("click", function () { step(1); });
+    window.addEventListener("keydown", function (e) {
+      if (!screenB.classList.contains("active")) return;
+      if (e.key === "ArrowLeft") { step(-1); }
+      else if (e.key === "ArrowRight") { step(1); }
+      else if (e.key === "Escape") { location.hash = ""; }
+    });
+    window.addEventListener("hashchange", route);
+
+    load();
+  })();
   </script>
 </body>
 </html>
