@@ -124,7 +124,8 @@
     }
 
     /* ---------- ЭКРАН B: вьювер ---------- */
-    #panorama { flex: 1 1 auto; position: relative; background: #000; }
+    #stage { flex: 1 1 auto; position: relative; background: #000; min-height: 0; }
+    #panorama { position: absolute; inset: 0; }
     .bar .back {
       appearance: none; border: 1px solid var(--line); background: var(--surface-2);
       color: var(--text); border-radius: 10px; height: 40px; padding: 0 14px;
@@ -264,7 +265,8 @@
         <span class="s" id="v-sub">—</span>
       </div>
     </header>
-    <div id="panorama">
+    <div id="stage">
+      <div id="panorama"></div>
       <div class="placeholder-note" id="ph-note" hidden>Демо-панорама (реальные виды появятся позже)</div>
       <button class="nav prev" id="nav-prev" aria-label="Предыдущий вид">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -363,12 +365,33 @@
     }
 
     // ---------- ЭКРАН B ----------
+    var scenesAdded = {};   // sceneId(=image) -> true
+    var currentScene = null;
+
+    function computedYaw(cam) {
+      var base = cam.yaw != null ? cam.yaw : 0;
+      return base + (DATA.placeholderImages ? DEMO_YAW_OFFSET : 0);
+    }
+
+    function sceneConfig(image, yaw) {
+      return {
+        type: "equirectangular",
+        panorama: image,
+        hfov: 95, minHfov: 45, maxHfov: 120,
+        yaw: yaw, pitch: 0,
+        autoLoad: true, compass: false, friction: 0.15
+      };
+    }
+
     function showViewer(apt, camIdx) {
       var cams = apt.cameras;
       var pos = 0;
       for (var i = 0; i < cams.length; i++) { if (cams[i].idx === camIdx) { pos = i; break; } }
       var cam = cams[pos];
+      var yaw = computedYaw(cam);
 
+      // Заголовок / стрелки / точки — эти узлы ЖИВУТ ВНЕ #panorama,
+      // поэтому не удаляются и всегда на месте.
       $("v-code").textContent = apt.code;
       $("v-sub").innerHTML = 'Вид ' + (pos + 1) + ' из ' + cams.length +
         ' · <span' + (apt.forSale ? "" : ' class="na-tag"') + '>' +
@@ -376,31 +399,44 @@
           (apt.rooms != null ? (", " + apt.rooms + "-комн.") : "") +
           (apt.area != null ? (", " + fmtArea(apt.area)) : ""))
           : "не в продаже") + '</span>';
-
-      // навигация
       var multi = cams.length > 1;
       $("nav-prev").hidden = !multi;
       $("nav-next").hidden = !multi;
       buildDots(apt, pos);
-
-      // плейсхолдер-плашка
       $("ph-note").hidden = !DATA.placeholderImages;
 
-      // (пере)создаём панораму
-      if (viewer) { try { viewer.destroy(); } catch (e) {} viewer = null; }
-      viewer = pannellum.viewer("panorama", {
-        type: "equirectangular",
-        panorama: cam.image,
-        autoLoad: true,
-        showZoomCtrl: true,
-        showFullscreenCtrl: true,
-        showControls: true,
-        hfov: 95, minHfov: 45, maxHfov: 120,
-        yaw: ((cam.yaw != null ? cam.yaw : 0) + (DATA.placeholderImages ? DEMO_YAW_OFFSET : 0)),
-        pitch: 0,
-        compass: false,
-        friction: 0.15
-      });
+      // Один вьювер на всё время — переключаем сцены, а не пересоздаём WebGL.
+      var sceneId = cam.image;
+      if (!viewer) {
+        scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
+        var cfg = {}; cfg[sceneId] = sceneConfig(sceneId, yaw);
+        viewer = pannellum.viewer("panorama", {
+          default: {
+            firstScene: sceneId,
+            sceneFadeDuration: 200,
+            showZoomCtrl: true,
+            showFullscreenCtrl: true
+          },
+          scenes: cfg
+        });
+      } else {
+        if (!scenesAdded[sceneId]) {
+          viewer.addScene(sceneId, sceneConfig(sceneId, yaw));
+          scenesAdded[sceneId] = true;
+        }
+        if (sceneId === currentScene) {
+          // та же картинка (режим заглушки) — просто плавно поворачиваем
+          try { viewer.setPitch(0, 400); viewer.setYaw(yaw, 400); viewer.setHfov(95, 400); } catch (e) {}
+        } else {
+          viewer.loadScene(sceneId, 0, yaw, 95);
+          currentScene = sceneId;
+        }
+      }
+
+      // #screen-b мог быть display:none — просим Pannellum пересчитать размер холста
+      setTimeout(function () {
+        try { window.dispatchEvent(new Event("resize")); } catch (e) {}
+      }, 60);
     }
 
     function buildDots(apt, pos) {
@@ -467,8 +503,7 @@
         screenB.classList.add("active");
         showViewer(apt, idx);
       } else {
-        // список
-        if (viewer) { try { viewer.destroy(); } catch (e) {} viewer = null; }
+        // список — вьювер НЕ уничтожаем, просто прячем экран
         screenB.classList.remove("active");
         screenA.classList.add("active");
         var sc = screenA.querySelector(".scroll");
