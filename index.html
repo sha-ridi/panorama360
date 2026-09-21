@@ -405,15 +405,17 @@
       buildDots(apt, pos);
       $("ph-note").hidden = !DATA.placeholderImages;
 
-      // Один вьювер на всё время — переключаем сцены, а не пересоздаём WebGL.
-      var sceneId = cam.image;
+      // Один вьювер на всё время (один WebGL-контекст). Каждая камера — своя
+      // сцена (панорама), даже если изображение пока одно и то же. Стрелки
+      // ПЕРЕЗАГРУЖАЮТ панораму (loadScene) с затуханием, а НЕ крутят камеру.
+      var sceneId = apt.code + "/" + cam.idx;
       if (!viewer) {
         scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
-        var cfg = {}; cfg[sceneId] = sceneConfig(sceneId, yaw);
+        var cfg = {}; cfg[sceneId] = sceneConfig(cam.image, yaw);
         viewer = pannellum.viewer("panorama", {
           default: {
             firstScene: sceneId,
-            sceneFadeDuration: 200,
+            sceneFadeDuration: 250,
             showZoomCtrl: true,
             showFullscreenCtrl: true
           },
@@ -421,14 +423,11 @@
         });
       } else {
         if (!scenesAdded[sceneId]) {
-          viewer.addScene(sceneId, sceneConfig(sceneId, yaw));
+          viewer.addScene(sceneId, sceneConfig(cam.image, yaw));
           scenesAdded[sceneId] = true;
         }
-        if (sceneId === currentScene) {
-          // та же картинка (режим заглушки) — просто плавно поворачиваем
-          try { viewer.setPitch(0, 400); viewer.setYaw(yaw, 400); viewer.setHfov(95, 400); } catch (e) {}
-        } else {
-          viewer.loadScene(sceneId, 0, yaw, 95);
+        if (sceneId !== currentScene) {
+          viewer.loadScene(sceneId, 0, yaw, 95);   // перезагрузка панорамы, без поворота
           currentScene = sceneId;
         }
       }
