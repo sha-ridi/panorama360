@@ -286,6 +286,11 @@
     var viewer = null;
     var listScroll = 0;
 
+    // ВРЕМЕННО: разворот демо-панорамы на 180°. Действует только пока
+    // изображения — заглушки; с реальными рендерами (placeholderImages=false)
+    // сдвиг автоматически отключается.
+    var DEMO_YAW_OFFSET = 180;
+
     var $ = function (id) { return document.getElementById(id); };
     var screenA = $("screen-a"), screenB = $("screen-b");
 
@@ -391,7 +396,7 @@
         showFullscreenCtrl: true,
         showControls: true,
         hfov: 95, minHfov: 45, maxHfov: 120,
-        yaw: cam.yaw != null ? cam.yaw : 0,
+        yaw: ((cam.yaw != null ? cam.yaw : 0) + (DATA.placeholderImages ? DEMO_YAW_OFFSET : 0)),
         pitch: 0,
         compass: false,
         friction: 0.15
