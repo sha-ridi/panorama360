@@ -183,15 +183,22 @@
     .spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ---------- ЭКРАН ПЛАНА ---------- */
+    /* ---------- ЭКРАН ПЛАНА (полноэкранный, с зумом) ---------- */
     #plan-stage {
       flex: 1 1 auto; position: relative; min-height: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: #000; overflow: auto; padding: 16px;
+      background: #000; overflow: hidden;
+      touch-action: none; cursor: grab;
+    }
+    #plan-stage:active { cursor: grabbing; }
+    /* фон: план + растянутые краевые пиксели, лёгкое равномерное размытие */
+    #plan-bg {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      filter: blur(4px); transform: scale(1.04);
     }
     #plan-img {
-      max-width: 100%; max-height: 100%; object-fit: contain; display: block;
-      border-radius: 8px;
+      position: absolute; top: 0; left: 0; z-index: 1;
+      transform-origin: 0 0; will-change: transform;
+      user-select: none; -webkit-user-drag: none;
     }
     .plan-note {
       position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 4;
@@ -200,22 +207,21 @@
       padding: 4px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
     }
     .plan-note[hidden] { display: none; }
-    .plan-cta {
-      flex: 0 0 auto; display: flex; justify-content: center;
-      padding: 12px var(--gutter) calc(env(safe-area-inset-bottom) + 12px);
-      border-top: 1px solid var(--line); background: var(--surface);
+    /* круглая кнопка перехода к видам */
+    .fab {
+      position: absolute; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
+      z-index: 6; width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: var(--accent-ink); border: none; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.45); transition: filter .15s, transform .05s;
     }
-    .cta {
-      appearance: none; border: none; cursor: pointer;
-      width: 100%; max-width: 420px; height: 50px;
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--accent); color: var(--accent-ink);
-      font: inherit; font-size: 15px; font-weight: 650; letter-spacing: .01em;
-      border-radius: 12px; transition: filter .15s, transform .05s;
+    .fab:hover { filter: brightness(1.06); }
+    .fab:active { transform: scale(.95); }
+    .fab:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+    .fab svg { width: 26px; height: 26px; }
+    @media (min-width: 1280px) {
+      .fab { width: 60px; height: 60px; right: 28px; bottom: calc(env(safe-area-inset-bottom) + 28px); }
     }
-    .cta:hover { filter: brightness(1.06); }
-    .cta:active { transform: scale(.99); }
-    .cta:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
     .pnlm-about-msg { display: none !important; }
 
@@ -300,13 +306,11 @@
       </div>
     </header>
     <div id="plan-stage">
-      <img id="plan-img" alt="План квартиры">
+      <canvas id="plan-bg"></canvas>
+      <img id="plan-img" alt="План квартиры" draggable="false">
       <div class="plan-note" id="plan-note" hidden>Демо-план (реальный появится позже)</div>
-    </div>
-    <div class="plan-cta">
-      <button class="cta" id="plan-to-views">
-        Виды из окна
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      <button class="fab" id="plan-to-views" aria-label="Виды из окна" title="Виды из окна">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
       </button>
     </div>
   </section>
@@ -551,6 +555,106 @@
     }
 
     // ---------- ЭКРАН ПЛАНА ----------
+    // Мини панзум: перетаскивание + колесо + щипок. Старт ~2× от вписывания.
+    var planPZ = (function () {
+      var img = $("plan-img"), stage = $("plan-stage");
+      var s = 1, tx = 0, ty = 0, minS = 1, maxS = 1, iw = 1, ih = 1;
+      var pts = {}, lastDist = 0, dragId = null, lastX = 0, lastY = 0;
+
+      function clamp() {
+        var cw = stage.clientWidth, ch = stage.clientHeight, sw = iw * s, sh = ih * s;
+        tx = sw >= cw ? Math.min(0, Math.max(cw - sw, tx)) : (cw - sw) / 2;
+        ty = sh >= ch ? Math.min(0, Math.max(ch - sh, ty)) : (ch - sh) / 2;
+      }
+      var bgPending = false;
+      function apply() {
+        img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")";
+        if (!bgPending) {                                          // перерисовать фон под текущий зум/сдвиг
+          bgPending = true;
+          requestAnimationFrame(function () { bgPending = false; paintBg(); });
+        }
+      }
+      // Фон следит за планом: план в текущем положении (tx,ty,s), поля вокруг —
+      // растянутые крайние пиксели, чтобы края «продолжались» без шва.
+      function paintBg() {
+        var cw = stage.clientWidth, ch = stage.clientHeight;
+        if (!cw || !ch || !img.naturalWidth) return;
+        var bg = $("plan-bg");
+        if (bg.width !== cw) bg.width = cw;
+        if (bg.height !== ch) bg.height = ch;
+        var ctx = bg.getContext("2d");
+        var dx = tx, dy = ty, dw = iw * s, dh = ih * s;
+        var ml = dx, mt = dy, mr = cw - (dx + dw), mb = ch - (dy + dh);
+        ctx.clearRect(0, 0, cw, ch);
+        if (ml > 0.5) ctx.drawImage(img, 0, 0, 2, ih, 0, dy, ml, dh);              // левый край
+        if (mr > 0.5) ctx.drawImage(img, iw - 2, 0, 2, ih, dx + dw, dy, mr, dh);   // правый
+        if (mt > 0.5) ctx.drawImage(img, 0, 0, iw, 2, dx, 0, dw, mt);              // верхний
+        if (mb > 0.5) ctx.drawImage(img, 0, ih - 2, iw, 2, dx, dy + dh, dw, mb);   // нижний
+        if (ml > 0.5 && mt > 0.5) ctx.drawImage(img, 0, 0, 2, 2, 0, 0, ml, mt);              // углы
+        if (mr > 0.5 && mt > 0.5) ctx.drawImage(img, iw - 2, 0, 2, 2, dx + dw, 0, mr, mt);
+        if (ml > 0.5 && mb > 0.5) ctx.drawImage(img, 0, ih - 2, 2, 2, 0, dy + dh, ml, mb);
+        if (mr > 0.5 && mb > 0.5) ctx.drawImage(img, iw - 2, ih - 2, 2, 2, dx + dw, dy + dh, mr, mb);
+        ctx.drawImage(img, dx, dy, dw, dh);                        // сам план (под чёткой картинкой; нужен для сглаживания краёв блюром)
+      }
+      function setup() {
+        var cw = stage.clientWidth, ch = stage.clientHeight;
+        iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
+        img.style.width = iw + "px"; img.style.height = ih + "px";
+        var fit = Math.min(cw / iw, ch / ih);
+        minS = fit; maxS = fit * 6; s = Math.min(maxS, fit * 2);   // старт ~2×
+        tx = (cw - iw * s) / 2; ty = (ch - ih * s) / 2;
+        clamp(); apply();
+      }
+      function zoomAt(mx, my, factor) {
+        var ns = Math.max(minS, Math.min(maxS, s * factor));
+        if (ns === s) return;
+        var px = (mx - tx) / s, py = (my - ty) / s;
+        s = ns; tx = mx - px * s; ty = my - py * s; clamp(); apply();
+      }
+      function dist() { var p = pvals(); return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); }
+      function mid() { var p = pvals(); return { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
+      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
+
+      stage.addEventListener("wheel", function (e) {
+        e.preventDefault();
+        var r = stage.getBoundingClientRect();
+        zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+      }, { passive: false });
+      stage.addEventListener("pointerdown", function (e) {
+        if (e.target.closest(".fab")) return;   // не перехватываем клик по кнопке
+        stage.setPointerCapture(e.pointerId);
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length === 1) { dragId = e.pointerId; lastX = e.clientX; lastY = e.clientY; }
+        else if (ids.length === 2) { lastDist = dist(); }
+      });
+      stage.addEventListener("pointermove", function (e) {
+        if (!pts[e.pointerId]) return;
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length >= 2) {
+          var d = dist();
+          if (lastDist) { var r = stage.getBoundingClientRect(), m = mid(); zoomAt(m.x - r.left, m.y - r.top, d / lastDist); }
+          lastDist = d;
+        } else if (e.pointerId === dragId) {
+          tx += e.clientX - lastX; ty += e.clientY - lastY; lastX = e.clientX; lastY = e.clientY; clamp(); apply();
+        }
+      });
+      function up(e) {
+        delete pts[e.pointerId];
+        var ids = Object.keys(pts);
+        if (ids.length < 2) lastDist = 0;
+        if (ids.length === 1) { dragId = +ids[0]; lastX = pts[dragId].x; lastY = pts[dragId].y; }
+        if (ids.length === 0) dragId = null;
+      }
+      stage.addEventListener("pointerup", up);
+      stage.addEventListener("pointercancel", up);
+      window.addEventListener("resize", function () {
+        if (screenPlan.classList.contains("active") && img.naturalWidth) setup();
+      });
+      return { setup: setup };
+    })();
+
     function showPlan(apt) {
       $("plan-code").textContent = apt.code;
       $("plan-sub").innerHTML = apt.forSale
@@ -558,11 +662,15 @@
            (apt.rooms != null ? (", " + apt.rooms + "-комн.") : "") +
            (apt.area != null ? (", " + fmtArea(apt.area)) : ""))
         : '<span class="na-tag">не в продаже</span>';
+      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);  // note только для плейсхолдера
       var img = $("plan-img");
       var src = apt.plan || "plan-placeholder.jpg";
-      if (img.getAttribute("src") !== src) img.setAttribute("src", src);
-      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);  // note только для плейсхолдера
-      // кнопка -> первый вид
+      img.onload = function () { planPZ.setup(); };
+      if (img.getAttribute("src") !== src) {
+        img.setAttribute("src", src);            // onload пересоберёт зум
+      } else if (img.complete && img.naturalWidth) {
+        planPZ.setup();                          // та же картинка — просто сбросить зум
+      }
       var first = apt.cameras.length ? apt.cameras[0].idx : 0;
       $("plan-to-views").onclick = function () { goView(apt.code, first); };
     }
