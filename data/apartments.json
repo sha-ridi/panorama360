@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-22T11:45:32.693346+00:00",
+ "generatedAt": "2026-09-22T11:53:52.280432+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -40,7 +40,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 154.59,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-02-201.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -88,7 +88,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 163.41,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-02-202.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -136,7 +136,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.5,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-02-203.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -184,7 +184,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 173.3,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-02-204.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1396,7 +1396,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-10-1001.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1468,7 +1468,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-10-1002.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1540,7 +1540,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
-   "plan": "plan-placeholder.jpg",
+   "plan": "plans/1-11-1101.jpg",
    "cameras": [
     {
      "idx": 0,
