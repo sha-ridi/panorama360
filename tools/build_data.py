@@ -93,6 +93,7 @@ def parse_cameras(path):
                 "component": comp,
                 "yaw": _to_float(row.get("RotYaw")),
                 "pitch": _to_float(row.get("RotPitch")),
+                "perp": _to_float(row.get("PerpendicularAngleDeg")),
                 "yawMin": _to_float(row.get("RotXMin")),
                 "yawMax": _to_float(row.get("RotXMax")),
                 "pitchMin": _to_float(row.get("RotYMin")),

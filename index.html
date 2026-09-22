@@ -373,41 +373,31 @@
     // ---------- ЭКРАН B ----------
     var scenesAdded = {};   // sceneId(=image) -> true
     var currentScene = null;
+    var curLimits = null;   // {yawMin,yawMax,pitchMin,pitchMax} центра камеры или null
 
     var PLACEHOLDER = "panorama.jpg";
     function isPlaceholder(cam) { return cam.image === PLACEHOLDER; }
 
     function computedYaw(cam) {
-      var base = cam.yaw != null ? cam.yaw : 0;
-      // временный разворот 180° — только для камер, где ещё стоит заглушка
-      return base + (isPlaceholder(cam) ? DEMO_YAW_OFFSET : 0);
+      // Заглушка: временный разворот на 180° от направления камеры.
+      if (isPlaceholder(cam)) return (cam.yaw != null ? cam.yaw : 0) + DEMO_YAW_OFFSET;
+      // Реальный рендер снят уже глядя в окно → центр панорамы = 0.
+      return 0;
     }
 
     function clampDeg(v) { return Math.max(-180, Math.min(180, v)); }
 
     function sceneConfig(cam) {
       var yaw = computedYaw(cam);
-      var cfg = {
+      // Краевые лимиты Pannellum НЕ используем — они режут по краю кадра.
+      // Вместо этого ограничиваем ЦЕНТР камеры вручную (см. curLimits + clamp).
+      return {
         type: "equirectangular",
         panorama: cam.image,
         hfov: 95, minHfov: 45, maxHfov: 120,
         yaw: yaw, pitch: 0,
         autoLoad: true, compass: false, friction: 0.15
       };
-      // Пределы обзора — только для реальных видов, у которых есть данные.
-      if (APPLY_LIMITS && !isPlaceholder(cam)) {
-        if (cam.yawMin != null && cam.yawMax != null) {
-          var a = cam.yaw + YAW_SIGN * cam.yawMin;
-          var b = cam.yaw + YAW_SIGN * cam.yawMax;
-          cfg.minYaw = clampDeg(Math.min(a, b));
-          cfg.maxYaw = clampDeg(Math.max(a, b));
-        }
-        if (cam.pitchMin != null && cam.pitchMax != null) {
-          cfg.minPitch = Math.min(cam.pitchMin, cam.pitchMax);
-          cfg.maxPitch = Math.max(cam.pitchMin, cam.pitchMax);
-        }
-      }
-      return cfg;
     }
 
     function showViewer(apt, camIdx) {
@@ -416,6 +406,24 @@
       for (var i = 0; i < cams.length; i++) { if (cams[i].idx === camIdx) { pos = i; break; } }
       var cam = cams[pos];
       var yaw = computedYaw(cam);
+
+      // Пределы поворота ЦЕНТРА камеры — ровно из таблицы (для реальных видов).
+      if (APPLY_LIMITS && !isPlaceholder(cam) &&
+          cam.yawMin != null && cam.yawMax != null) {
+        // RotX-лимиты заданы относительно ПЕРПЕНДИКУЛЯРА к окну, а камера
+        // смотрит по RotYaw. Сдвигаем сектор на разницу (perp - RotYaw),
+        // т.к. в панораме направление камеры = 0.
+        var off = (cam.perp != null ? cam.perp : cam.yaw) - cam.yaw;
+        var ya = YAW_SIGN * (off + cam.yawMin);
+        var yb = YAW_SIGN * (off + cam.yawMax);
+        curLimits = {
+          yawMin: Math.min(ya, yb), yawMax: Math.max(ya, yb),
+          pitchMin: Math.min(cam.pitchMin, cam.pitchMax),
+          pitchMax: Math.max(cam.pitchMin, cam.pitchMax)
+        };
+      } else {
+        curLimits = null;
+      }
 
       // Заголовок / стрелки / точки — эти узлы ЖИВУТ ВНЕ #panorama,
       // поэтому не удаляются и всегда на месте.
@@ -550,6 +558,20 @@
       else if (e.key === "Escape") { location.hash = ""; }
     });
     window.addEventListener("hashchange", route);
+
+    // Жёсткий кламп поворота центра камеры по лимитам из таблицы
+    (function clampLoop() {
+      if (viewer && curLimits && screenB.classList.contains("active")) {
+        try {
+          var y = viewer.getYaw(), p = viewer.getPitch();
+          if (y < curLimits.yawMin) viewer.setYaw(curLimits.yawMin, false);
+          else if (y > curLimits.yawMax) viewer.setYaw(curLimits.yawMax, false);
+          if (p < curLimits.pitchMin) viewer.setPitch(curLimits.pitchMin, false);
+          else if (p > curLimits.pitchMax) viewer.setPitch(curLimits.pitchMax, false);
+        } catch (e) {}
+      }
+      requestAnimationFrame(clampLoop);
+    })();
 
     load();
   })();
