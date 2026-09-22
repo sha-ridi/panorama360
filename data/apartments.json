@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-22T08:37:35.260973+00:00",
+ "generatedAt": "2026-09-22T09:12:20.375403+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -1523,7 +1523,7 @@
      "yawMax": 100.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/1-11-1101_0.jpg"
     },
     {
      "idx": 1,
@@ -1535,7 +1535,7 @@
      "yawMax": 60.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/1-11-1101_1.jpg"
     },
     {
      "idx": 2,
