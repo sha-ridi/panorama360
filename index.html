@@ -288,10 +288,16 @@
     var viewer = null;
     var listScroll = 0;
 
-    // ВРЕМЕННО: разворот демо-панорамы на 180°. Действует только пока
-    // изображения — заглушки; с реальными рендерами (placeholderImages=false)
-    // сдвиг автоматически отключается.
+    // ВРЕМЕННО: разворот демо-панорамы на 180°. Действует только для камер,
+    // где ещё стоит заглушка; у реальных видов сдвиг не применяется.
     var DEMO_YAW_OFFSET = 180;
+
+    // Ограничение углов обзора для РЕАЛЬНЫХ видов (данные RotX*/RotY* из CSV).
+    //   APPLY_LIMITS — общий выключатель.
+    //   YAW_SIGN — знак горизонтальных пределов относительно направления камеры
+    //              (калибровка под конвенцию рендеров UE: +1 или -1).
+    var APPLY_LIMITS = true;
+    var YAW_SIGN = 1;
 
     var $ = function (id) { return document.getElementById(id); };
     var screenA = $("screen-a"), screenB = $("screen-b");
@@ -377,14 +383,31 @@
       return base + (isPlaceholder(cam) ? DEMO_YAW_OFFSET : 0);
     }
 
-    function sceneConfig(image, yaw) {
-      return {
+    function clampDeg(v) { return Math.max(-180, Math.min(180, v)); }
+
+    function sceneConfig(cam) {
+      var yaw = computedYaw(cam);
+      var cfg = {
         type: "equirectangular",
-        panorama: image,
+        panorama: cam.image,
         hfov: 95, minHfov: 45, maxHfov: 120,
         yaw: yaw, pitch: 0,
         autoLoad: true, compass: false, friction: 0.15
       };
+      // Пределы обзора — только для реальных видов, у которых есть данные.
+      if (APPLY_LIMITS && !isPlaceholder(cam)) {
+        if (cam.yawMin != null && cam.yawMax != null) {
+          var a = cam.yaw + YAW_SIGN * cam.yawMin;
+          var b = cam.yaw + YAW_SIGN * cam.yawMax;
+          cfg.minYaw = clampDeg(Math.min(a, b));
+          cfg.maxYaw = clampDeg(Math.max(a, b));
+        }
+        if (cam.pitchMin != null && cam.pitchMax != null) {
+          cfg.minPitch = Math.min(cam.pitchMin, cam.pitchMax);
+          cfg.maxPitch = Math.max(cam.pitchMin, cam.pitchMax);
+        }
+      }
+      return cfg;
     }
 
     function showViewer(apt, camIdx) {
@@ -415,7 +438,7 @@
       var sceneId = apt.code + "/" + cam.idx;
       if (!viewer) {
         scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
-        var cfg = {}; cfg[sceneId] = sceneConfig(cam.image, yaw);
+        var cfg = {}; cfg[sceneId] = sceneConfig(cam);
         viewer = pannellum.viewer("panorama", {
           default: {
             firstScene: sceneId,
@@ -427,7 +450,7 @@
         });
       } else {
         if (!scenesAdded[sceneId]) {
-          viewer.addScene(sceneId, sceneConfig(cam.image, yaw));
+          viewer.addScene(sceneId, sceneConfig(cam));
           scenesAdded[sceneId] = true;
         }
         if (sceneId !== currentScene) {
