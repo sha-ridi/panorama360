@@ -28,8 +28,8 @@ CSV_PATH = os.path.join(REPO, "data", "apartment_view_cameras.csv")
 PLANS_DIR = os.path.join(REPO, "plans")
 
 DEFAULT_SRC = r"C:/Users/shari/Desktop/360/plans"
-DEFAULT_WIDTH = 1600
-DEFAULT_QUALITY = 88
+DEFAULT_WIDTH = 2160      # нативное разрешение планов (без даунскейла)
+DEFAULT_QUALITY = 95      # почти без потерь — чтобы текст читался
 
 
 def full_code(name):
