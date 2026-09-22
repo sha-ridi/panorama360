@@ -386,6 +386,7 @@
     }
 
     function clampDeg(v) { return Math.max(-180, Math.min(180, v)); }
+    function wrapDeg(a) { return ((a % 360) + 540) % 360 - 180; }   // -> [-180, 180)
 
     function sceneConfig(cam) {
       var yaw = computedYaw(cam);
@@ -411,13 +412,15 @@
       if (APPLY_LIMITS && !isPlaceholder(cam) &&
           cam.yawMin != null && cam.yawMax != null) {
         // RotX-лимиты заданы относительно ПЕРПЕНДИКУЛЯРА к окну, а камера
-        // смотрит по RotYaw. Сдвигаем сектор на разницу (perp - RotYaw),
-        // т.к. в панораме направление камеры = 0.
-        var off = (cam.perp != null ? cam.perp : cam.yaw) - cam.yaw;
-        var ya = YAW_SIGN * (off + cam.yawMin);
-        var yb = YAW_SIGN * (off + cam.yawMax);
+        // смотрит по RotYaw. Смещение перпендикуляра относительно направления
+        // камеры (в панораме оно = 0), нормализованное в [-180,180].
+        var perp = (cam.perp != null ? cam.perp : cam.yaw);
+        var off = wrapDeg(perp - cam.yaw);
+        // Храним сектор как центр + полуширину — корректно клампится по кругу,
+        // в т.ч. если сектор пересекает шов ±180°.
         curLimits = {
-          yawMin: Math.min(ya, yb), yawMax: Math.max(ya, yb),
+          yawCenter: wrapDeg(YAW_SIGN * (off + (cam.yawMin + cam.yawMax) / 2)),
+          yawHalf: Math.abs(cam.yawMax - cam.yawMin) / 2,
           pitchMin: Math.min(cam.pitchMin, cam.pitchMax),
           pitchMax: Math.max(cam.pitchMin, cam.pitchMax)
         };
@@ -564,8 +567,11 @@
       if (viewer && curLimits && screenB.classList.contains("active")) {
         try {
           var y = viewer.getYaw(), p = viewer.getPitch();
-          if (y < curLimits.yawMin) viewer.setYaw(curLimits.yawMin, false);
-          else if (y > curLimits.yawMax) viewer.setYaw(curLimits.yawMax, false);
+          if (curLimits.yawHalf < 180) {                 // кламп по кругу
+            var d = wrapDeg(y - curLimits.yawCenter);
+            if (d > curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter + curLimits.yawHalf), false);
+            else if (d < -curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter - curLimits.yawHalf), false);
+          }
           if (p < curLimits.pitchMin) viewer.setPitch(curLimits.pitchMin, false);
           else if (p > curLimits.pitchMax) viewer.setPitch(curLimits.pitchMax, false);
         } catch (e) {}
