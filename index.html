@@ -368,9 +368,13 @@
     var scenesAdded = {};   // sceneId(=image) -> true
     var currentScene = null;
 
+    var PLACEHOLDER = "panorama.jpg";
+    function isPlaceholder(cam) { return cam.image === PLACEHOLDER; }
+
     function computedYaw(cam) {
       var base = cam.yaw != null ? cam.yaw : 0;
-      return base + (DATA.placeholderImages ? DEMO_YAW_OFFSET : 0);
+      // временный разворот 180° — только для камер, где ещё стоит заглушка
+      return base + (isPlaceholder(cam) ? DEMO_YAW_OFFSET : 0);
     }
 
     function sceneConfig(image, yaw) {
@@ -403,7 +407,7 @@
       $("nav-prev").hidden = !multi;
       $("nav-next").hidden = !multi;
       buildDots(apt, pos);
-      $("ph-note").hidden = !DATA.placeholderImages;
+      $("ph-note").hidden = !isPlaceholder(cam);
 
       // Один вьювер на всё время (один WebGL-контекст). Каждая камера — своя
       // сцена (панорама), даже если изображение пока одно и то же. Стрелки

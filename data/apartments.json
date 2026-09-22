@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-09-21T12:10:17.346400+00:00",
+ "generatedAt": "2026-09-22T04:39:04.024850+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
- "placeholderImages": true,
+ "placeholderImages": false,
  "counts": {
   "total": 64,
   "forSale": 30,
@@ -1654,7 +1654,7 @@
      "yawMax": 50.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-02-205_0.jpg"
     },
     {
      "idx": 1,
@@ -1665,7 +1665,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-02-205_1.jpg"
     }
    ]
   },
