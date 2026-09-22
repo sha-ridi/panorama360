@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-22T05:10:14.081216+00:00",
+ "generatedAt": "2026-09-22T08:37:35.260973+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -1945,7 +1945,7 @@
      "yawMax": 70.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-03-305_0.jpg"
     },
     {
      "idx": 1,
@@ -1957,7 +1957,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-03-305_1.jpg"
     }
    ]
   },
@@ -2120,7 +2120,7 @@
      "yawMax": 50.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-04-405_0.jpg"
     },
     {
      "idx": 1,
@@ -2132,7 +2132,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "views/2-04-405_1.jpg"
     }
    ]
   },
