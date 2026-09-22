@@ -28,8 +28,8 @@ CSV_PATH = os.path.join(REPO, "data", "apartment_view_cameras.csv")
 PLANS_DIR = os.path.join(REPO, "plans")
 
 DEFAULT_SRC = r"C:/Users/shari/Desktop/360/plans"
-DEFAULT_WIDTH = 2160      # нативное разрешение планов (без даунскейла)
-DEFAULT_QUALITY = 95      # почти без потерь — чтобы текст читался
+DEFAULT_WIDTH = 3200      # ПОТОЛОК ширины: шире — уменьшаем, уже — оставляем как есть
+DEFAULT_QUALITY = 92      # высокое качество — чтобы текст на планах читался
 
 
 def full_code(name):
@@ -90,10 +90,10 @@ def main():
 
     from PIL import Image
     os.makedirs(PLANS_DIR, exist_ok=True)
-    w = args.width
     total = 0
     for code, src in plan:
         im = Image.open(src).convert("RGB")
+        w = min(args.width, im.size[0])          # только уменьшаем, не апскейлим
         if im.size[0] != w:
             h = round(im.size[1] * w / im.size[0])
             im = im.resize((w, h), Image.LANCZOS)
