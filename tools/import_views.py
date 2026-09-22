@@ -23,7 +23,7 @@ data/apartments.json.
     python tools/import_views.py
     python tools/import_views.py "E:/UE_Projects/Marta/Vesper/Vesper/360"
     python tools/import_views.py --dry-run
-    python tools/import_views.py --width 6144 --quality 90
+    python tools/import_views.py --width 4096 --quality 85
     python tools/import_views.py --no-build
 
 После импорта:
@@ -42,8 +42,8 @@ CSV_PATH = os.path.join(REPO, "data", "apartment_view_cameras.csv")
 VIEWS_DIR = os.path.join(REPO, "views")
 
 DEFAULT_SRC = r"E:/UE_Projects/Marta/Vesper/Vesper/360"
-DEFAULT_WIDTH = 4096
-DEFAULT_QUALITY = 85
+DEFAULT_WIDTH = 6144        # как у демо-панорамы (без даунскейла оригинала)
+DEFAULT_QUALITY = 90
 
 
 def load_maps(csv_path):

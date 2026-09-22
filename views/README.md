@@ -16,8 +16,8 @@
        360/<корпус>-<этаж>-<кв>/<timestamp>/<...>.ViewCameraComponent<юнит>_<idx>.png
 
 2. Запустить импортёр — он сам определит код квартиры и индекс камеры,
-   сожмёт (4096×2048, JPEG q85) и разложит в `views/`, затем пересоберёт
-   `data/apartments.json`:
+   сожмёт (6144×3072, JPEG q90 — как демо-панорама) и разложит в `views/`,
+   затем пересоберёт `data/apartments.json`:
 
        python tools/import_views.py "E:/UE_Projects/Marta/Vesper/Vesper/360"
 
