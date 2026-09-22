@@ -39,7 +39,9 @@ CSV_PATH = os.path.join(DATA, "apartment_view_cameras.csv")
 XML_PATH = os.path.join(DATA, "feed_snapshot.xml")
 OUT_PATH = os.path.join(DATA, "apartments.json")
 VIEWS_DIR = os.path.join(REPO, "views")
+PLANS_DIR = os.path.join(REPO, "plans")
 PLACEHOLDER = "panorama.jpg"
+PLAN_PLACEHOLDER = "plan-placeholder.jpg"
 
 FEED_URL = "https://www.vespermoscow.com/upload/tfeeds/pogodinskaya-3d.xml"
 
@@ -147,6 +149,13 @@ def image_for(code, idx):
     return PLACEHOLDER
 
 
+def plan_for(code):
+    fname = f"{code}.jpg"
+    if os.path.exists(os.path.join(PLANS_DIR, fname)):
+        return f"plans/{fname}"
+    return PLAN_PLACEHOLDER   # план ещё не готов -> плейсхолдер
+
+
 def main():
     if FETCH:
         try:
@@ -172,6 +181,7 @@ def main():
             "forSale": sale is not None,
             "rooms": sale["rooms"] if sale else None,
             "area": sale["area"] if sale else None,
+            "plan": plan_for(code),
             "cameras": c["cameras"],
         }
         apartments.append(apt)

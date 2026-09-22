@@ -183,6 +183,40 @@
     .spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ---------- ЭКРАН ПЛАНА ---------- */
+    #plan-stage {
+      flex: 1 1 auto; position: relative; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #000; overflow: auto; padding: 16px;
+    }
+    #plan-img {
+      max-width: 100%; max-height: 100%; object-fit: contain; display: block;
+      border-radius: 8px;
+    }
+    .plan-note {
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 4;
+      font-size: 11px; color: rgba(255,255,255,.8);
+      background: rgba(15,17,19,.5); border: 1px solid rgba(255,255,255,.15);
+      padding: 4px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+    }
+    .plan-note[hidden] { display: none; }
+    .plan-cta {
+      flex: 0 0 auto; display: flex; justify-content: center;
+      padding: 12px var(--gutter) calc(env(safe-area-inset-bottom) + 12px);
+      border-top: 1px solid var(--line); background: var(--surface);
+    }
+    .cta {
+      appearance: none; border: none; cursor: pointer;
+      width: 100%; max-width: 420px; height: 50px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--accent); color: var(--accent-ink);
+      font: inherit; font-size: 15px; font-weight: 650; letter-spacing: .01em;
+      border-radius: 12px; transition: filter .15s, transform .05s;
+    }
+    .cta:hover { filter: brightness(1.06); }
+    .cta:active { transform: scale(.99); }
+    .cta:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
     .pnlm-about-msg { display: none !important; }
 
     /* ==========================================================================
@@ -253,6 +287,30 @@
     </div>
   </section>
 
+  <!-- ЭКРАН ПЛАНА -->
+  <section id="screen-plan" class="screen">
+    <header class="bar">
+      <button class="back" id="plan-back" aria-label="К списку">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        К списку
+      </button>
+      <div class="vtitle">
+        <span class="t" id="plan-code">—</span>
+        <span class="s" id="plan-sub">—</span>
+      </div>
+    </header>
+    <div id="plan-stage">
+      <img id="plan-img" alt="План квартиры">
+      <div class="plan-note" id="plan-note" hidden>Демо-план (реальный появится позже)</div>
+    </div>
+    <div class="plan-cta">
+      <button class="cta" id="plan-to-views">
+        Виды из окна
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </section>
+
   <!-- ЭКРАН B -->
   <section id="screen-b" class="screen">
     <header class="bar">
@@ -300,7 +358,7 @@
     var YAW_SIGN = 1;
 
     var $ = function (id) { return document.getElementById(id); };
-    var screenA = $("screen-a"), screenB = $("screen-b");
+    var screenA = $("screen-a"), screenB = $("screen-b"), screenPlan = $("screen-plan");
 
     // ---------- утилиты форматирования ----------
     function fmtArea(a) {
@@ -358,7 +416,7 @@
       rows.querySelectorAll(".row").forEach(function (el) {
         el.addEventListener("click", function () {
           listScroll = el.closest(".scroll").scrollTop;
-          go(el.getAttribute("data-code"));
+          goPlan(el.getAttribute("data-code"));
         });
       });
     }
@@ -487,9 +545,26 @@
       dots.innerHTML = html;
       dots.querySelectorAll(".dot").forEach(function (el) {
         el.addEventListener("click", function () {
-          go(apt.code, parseInt(el.getAttribute("data-idx"), 10));
+          goView(apt.code, parseInt(el.getAttribute("data-idx"), 10));
         });
       });
+    }
+
+    // ---------- ЭКРАН ПЛАНА ----------
+    function showPlan(apt) {
+      $("plan-code").textContent = apt.code;
+      $("plan-sub").innerHTML = apt.forSale
+        ? ("Корпус " + korpus(apt.code) + ", этаж " + (apt.floor != null ? apt.floor : "—") +
+           (apt.rooms != null ? (", " + apt.rooms + "-комн.") : "") +
+           (apt.area != null ? (", " + fmtArea(apt.area)) : ""))
+        : '<span class="na-tag">не в продаже</span>';
+      var img = $("plan-img");
+      var src = apt.plan || "plan-placeholder.jpg";
+      if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);  // note только для плейсхолдера
+      // кнопка -> первый вид
+      var first = apt.cameras.length ? apt.cameras[0].idx : 0;
+      $("plan-to-views").onclick = function () { goView(apt.code, first); };
     }
 
     function step(delta) {
@@ -500,7 +575,7 @@
       var pos = 0;
       for (var i = 0; i < cams.length; i++) { if (cams[i].idx === r.camIdx) { pos = i; break; } }
       pos = (pos + delta + cams.length) % cams.length;   // зациклено
-      go(apt.code, cams[pos].idx);
+      goView(apt.code, cams[pos].idx);
     }
 
     // ---------- роутинг (хеш, переживает F5) ----------
@@ -513,17 +588,26 @@
       return { code: code, camIdx: isNaN(camIdx) ? null : camIdx };
     }
 
-    function go(code, camIdx) {
-      var apt = byCode[code];
+    // #/{code}            -> план квартиры
+    function goPlan(code) {
       var hash = "#/" + encodeURIComponent(code);
-      if (apt) {
-        var idx = camIdx;
-        if (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; })) {
-          idx = apt.cameras.length ? apt.cameras[0].idx : 0;
-        }
-        hash += "/" + idx;
-      }
       if (location.hash === hash) { route(); } else { location.hash = hash; }
+    }
+    // #/{code}/{camIdx}    -> вид из окна
+    function goView(code, camIdx) {
+      var apt = byCode[code];
+      var idx = camIdx;
+      if (apt && (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; }))) {
+        idx = apt.cameras.length ? apt.cameras[0].idx : 0;
+      }
+      var hash = "#/" + encodeURIComponent(code) + "/" + idx;
+      if (location.hash === hash) { route(); } else { location.hash = hash; }
+    }
+
+    function setScreen(el) {
+      [screenA, screenPlan, screenB].forEach(function (s) {
+        s.classList.toggle("active", s === el);
+      });
     }
 
     function route() {
@@ -531,34 +615,44 @@
       var r = parseHash();
       var apt = r.code ? byCode[r.code] : null;
 
-      if (apt && apt.cameras.length) {
-        var idx = r.camIdx;
-        if (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; })) {
-          idx = apt.cameras[0].idx;
-        }
-        screenA.classList.remove("active");
-        screenB.classList.add("active");
+      if (apt && r.camIdx != null && apt.cameras.length) {
+        // вид из окна
+        var idx = apt.cameras.some(function (c) { return c.idx === r.camIdx; })
+          ? r.camIdx : apt.cameras[0].idx;
+        setScreen(screenB);
         showViewer(apt, idx);
+      } else if (apt) {
+        // план квартиры
+        setScreen(screenPlan);
+        showPlan(apt);
       } else {
         // список — вьювер НЕ уничтожаем, просто прячем экран
-        screenB.classList.remove("active");
-        screenA.classList.add("active");
+        setScreen(screenA);
         var sc = screenA.querySelector(".scroll");
         if (sc) sc.scrollTop = listScroll;
       }
     }
 
     // ---------- события ----------
+    // из видов -> назад к плану квартиры
     $("btn-back").addEventListener("click", function () {
+      var r = parseHash();
+      if (r.code) goPlan(r.code); else { location.hash = ""; }
+    });
+    // из плана -> назад к списку
+    $("plan-back").addEventListener("click", function () {
       if (location.hash) location.hash = ""; else route();
     });
     $("nav-prev").addEventListener("click", function () { step(-1); });
     $("nav-next").addEventListener("click", function () { step(1); });
     window.addEventListener("keydown", function (e) {
-      if (!screenB.classList.contains("active")) return;
-      if (e.key === "ArrowLeft") { step(-1); }
-      else if (e.key === "ArrowRight") { step(1); }
-      else if (e.key === "Escape") { location.hash = ""; }
+      if (screenB.classList.contains("active")) {
+        if (e.key === "ArrowLeft") { step(-1); }
+        else if (e.key === "ArrowRight") { step(1); }
+        else if (e.key === "Escape") { var r = parseHash(); if (r.code) goPlan(r.code); }
+      } else if (screenPlan.classList.contains("active")) {
+        if (e.key === "Escape") { location.hash = ""; }
+      }
     });
     window.addEventListener("hashchange", route);
 

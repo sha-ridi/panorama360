@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-22T09:12:20.375403+00:00",
+ "generatedAt": "2026-09-22T11:45:32.693346+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -16,6 +16,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -39,6 +40,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 154.59,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -86,6 +88,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 163.41,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -133,6 +136,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.5,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -180,6 +184,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 173.3,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -227,6 +232,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 162.38,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -274,6 +280,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 160.82,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -321,6 +328,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 143.11,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -368,6 +376,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 181.84,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -415,6 +424,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 159.45,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -462,6 +472,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 157.91,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -509,6 +520,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.85,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -556,6 +568,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 180.06,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -603,6 +616,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -662,6 +676,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 143.13,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -709,6 +724,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 181.52,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -756,6 +772,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -827,6 +844,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.75,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -874,6 +892,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 179.92,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -921,6 +940,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -992,6 +1012,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 143.14,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1039,6 +1060,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1086,6 +1108,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1157,6 +1180,7 @@
    "forSale": true,
    "rooms": 4,
    "area": 329.29,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1228,6 +1252,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1299,6 +1324,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1370,6 +1396,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1441,6 +1468,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1512,6 +1540,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1619,6 +1648,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1654,6 +1684,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1689,6 +1720,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1712,6 +1744,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 187.71,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1759,6 +1792,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 148.85,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1794,6 +1828,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1829,6 +1864,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1864,6 +1900,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1887,6 +1924,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 186.78,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1934,6 +1972,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.49,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1969,6 +2008,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2004,6 +2044,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2039,6 +2080,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2062,6 +2104,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2109,6 +2152,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.52,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2144,6 +2188,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2179,6 +2224,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2214,6 +2260,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2237,6 +2284,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2284,6 +2332,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2319,6 +2368,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 139.43,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2354,6 +2404,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2389,6 +2440,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 187.7,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2436,6 +2488,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 138.6,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2483,6 +2536,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2530,6 +2584,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 186.85,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2577,6 +2632,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 137.86,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2624,6 +2680,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2671,6 +2728,7 @@
    "forSale": true,
    "rooms": 3,
    "area": 187.36,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2718,6 +2776,7 @@
    "forSale": true,
    "rooms": 2,
    "area": 137.81,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2765,6 +2824,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2812,6 +2872,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2859,6 +2920,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2906,6 +2968,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -2965,6 +3028,7 @@
    "forSale": false,
    "rooms": null,
    "area": null,
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
