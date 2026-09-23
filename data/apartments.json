@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-23T06:03:01.712313+00:00",
+ "generatedAt": "2026-09-23T11:54:30.768717+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -103,7 +103,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-02-202_0",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 1,
@@ -115,7 +124,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-02-202_1",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 2,
@@ -127,7 +145,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-02-202_2",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     }
    ]
   },
@@ -152,7 +179,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-02-203_0",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 1,
@@ -164,7 +200,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-02-203_1",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 2,
@@ -1602,7 +1647,16 @@
      "yawMax": 60.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/1-11-1101_1.jpg"
+     "image": "views/1-11-1101_1.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-11-1101_1",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 2,
@@ -1614,7 +1668,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-11-1101_2",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 3,
