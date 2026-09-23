@@ -730,7 +730,7 @@
         iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
         img.style.width = iw + "px"; img.style.height = ih + "px";
         var fit = Math.min(cw / iw, ch / ih);
-        minS = fit; maxS = fit * 7; s = Math.min(maxS, fit * 3.5);   // старт ~3.5×
+        minS = fit * 2; maxS = fit * 7; s = Math.min(maxS, fit * 3.5);   // мин 2×, старт 3.5×, макс 7×
         tx = (cw - iw * s) / 2; ty = (ch - ih * s) / 2;
         clamp(); apply();
       }
