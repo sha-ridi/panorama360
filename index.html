@@ -70,6 +70,44 @@
     }
     .list { width: 100%; max-width: var(--maxw); margin: 0 auto; }
 
+    /* ---------- тулбар: поиск / фильтры / сортировка ---------- */
+    .toolbar {
+      flex: 0 0 auto; padding: 8px var(--gutter) 10px;
+      background: color-mix(in srgb, var(--bg) 92%, #000);
+      border-bottom: 1px solid var(--line);
+    }
+    .toolbar-inner {
+      width: 100%; max-width: var(--maxw); margin: 0 auto;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .tb-search {
+      width: 100%; height: 40px; box-sizing: border-box;
+      border: 1px solid var(--line); background: var(--surface-2); color: var(--text);
+      border-radius: 10px; padding: 0 12px; font: inherit; font-size: 14px;
+    }
+    .tb-search::placeholder { color: var(--faint); }
+    .tb-search:focus, .tb-sel:focus { outline: none; border-color: var(--accent); }
+    .tb-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .tb-sel {
+      height: 36px; border: 1px solid var(--line); color: var(--text);
+      border-radius: 9px; padding: 0 30px 0 10px; font: inherit; font-size: 13px; cursor: pointer;
+      appearance: none; -webkit-appearance: none;
+      background-color: var(--surface-2);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%239aa3ab' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 11px center; background-size: 11px;
+    }
+    .tb-cap { font-size: 13px; color: var(--muted); margin-left: 4px; white-space: nowrap; }
+    .tb-check {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); cursor: pointer; user-select: none;
+    }
+    .tb-check input { accent-color: var(--accent); width: 16px; height: 16px; }
+    @media (min-width: 768px) {
+      .toolbar-inner { flex-direction: row; align-items: center; }
+      .tb-search { flex: 1 1 auto; max-width: 320px; }
+      .tb-controls { margin-left: auto; }
+    }
+
     /* header строки таблицы — только на планшете+ */
     .list-head {
       display: none;
@@ -209,18 +247,19 @@
     .plan-note[hidden] { display: none; }
     /* круглая кнопка перехода к видам */
     .fab {
-      position: absolute; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: calc(env(safe-area-inset-bottom) + 16px);
       z-index: 6; width: 56px; height: 56px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       background: var(--accent); color: var(--accent-ink); border: none; cursor: pointer;
       box-shadow: 0 4px 16px rgba(0,0,0,.45); transition: filter .15s, transform .05s;
     }
     .fab:hover { filter: brightness(1.06); }
-    .fab:active { transform: scale(.95); }
+    .fab:active { transform: translateX(-50%) scale(.95); }
     .fab:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
     .fab svg { width: 26px; height: 26px; }
     @media (min-width: 1280px) {
-      .fab { width: 60px; height: 60px; right: 28px; bottom: calc(env(safe-area-inset-bottom) + 28px); }
+      .fab { width: 60px; height: 60px; bottom: calc(env(safe-area-inset-bottom) + 28px); }
     }
 
     .pnlm-about-msg { display: none !important; }
@@ -231,7 +270,7 @@
     @media (min-width: 768px) {
       :root {
         --gutter: 24px; --fs-title: 20px; --fs-code: 16px; --maxw: 900px;
-        --cols: minmax(110px, 1.1fr) .7fr .6fr .8fr .9fr;
+        --cols: minmax(96px, 1fr) .5fr .45fr .55fr .7fr 1.05fr;
       }
       .list-head { display: grid; }
       .row {
@@ -283,10 +322,36 @@
         <div class="sub" id="a-sub">Виды из окна</div>
       </div>
     </header>
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <input type="search" id="q" class="tb-search" placeholder="Поиск по коду…" autocomplete="off">
+        <div class="tb-controls">
+          <select id="f-korpus" class="tb-sel" aria-label="Корпус">
+            <option value="">Все корпуса</option>
+            <option value="1">Корпус 1</option>
+            <option value="2">Корпус 2</option>
+          </select>
+          <select id="f-rooms" class="tb-sel" aria-label="Комнаты">
+            <option value="">Комнаты: все</option>
+          </select>
+          <span class="tb-cap">Сортировка:</span>
+          <select id="sort" class="tb-sel" aria-label="Сортировка">
+            <option value="code">по коду</option>
+            <option value="price-asc">по цене ↑</option>
+            <option value="price-desc">по цене ↓</option>
+            <option value="area-asc">по площади ↑</option>
+            <option value="area-desc">по площади ↓</option>
+            <option value="floor-asc">по этажу ↑</option>
+            <option value="floor-desc">по этажу ↓</option>
+          </select>
+          <label class="tb-check"><input type="checkbox" id="f-sale"> только в продаже</label>
+        </div>
+      </div>
+    </div>
     <div class="scroll">
       <div class="list">
         <div class="list-head" aria-hidden="true">
-          <div>Код</div><div>Корпус</div><div>Этаж</div><div>Комнаты</div><div>Площадь</div>
+          <div>Код</div><div>Корпус</div><div>Этаж</div><div>Комнаты</div><div>Площадь</div><div>Цена</div>
         </div>
         <div id="rows"></div>
       </div>
@@ -318,9 +383,9 @@
   <!-- ЭКРАН B -->
   <section id="screen-b" class="screen">
     <header class="bar">
-      <button class="back" id="btn-back" aria-label="К списку">
+      <button class="back" id="btn-back" aria-label="К плану">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        К списку
+        К плану
       </button>
       <div class="vtitle">
         <span class="t" id="v-code">—</span>
@@ -369,7 +434,12 @@
       if (a == null) return "";
       return a.toFixed(1).replace(".", ",") + " м²";
     }
+    function fmtPrice(v) {
+      if (v == null) return "";
+      return Math.round(v).toLocaleString("ru-RU") + " ₽";
+    }
     function korpus(code) { return code.split("-")[0]; }
+    function natCmp(x, y) { return x.localeCompare(y, undefined, { numeric: true }); }
 
     // ---------- загрузка данных ----------
     function load() {
@@ -380,7 +450,8 @@
         .then(function (json) {
           DATA = json;
           DATA.apartments.forEach(function (a) { byCode[a.code] = a; });
-          buildList();
+          setupControls();
+          applyList();
           route();
         })
         .catch(function (e) {
@@ -388,13 +459,67 @@
         });
     }
 
-    // ---------- ЭКРАН A ----------
-    function buildList() {
-      var forSale = DATA.counts.forSale, total = DATA.counts.total;
-      $("a-sub").textContent = "Виды из окна · " + total + " квартир, из них " + forSale + " в продаже";
-
-      var html = "";
+    // ---------- ЭКРАН A: тулбар (поиск / фильтры / сортировка) ----------
+    function setupControls() {
+      // варианты комнат из данных
+      var rooms = [];
       DATA.apartments.forEach(function (a) {
+        if (a.rooms != null && rooms.indexOf(a.rooms) < 0) rooms.push(a.rooms);
+      });
+      rooms.sort(function (x, y) { return x - y; });
+      var sel = $("f-rooms");
+      rooms.forEach(function (r) {
+        var o = document.createElement("option");
+        o.value = String(r); o.textContent = r + "-комн.";
+        sel.appendChild(o);
+      });
+      ["q", "f-korpus", "f-rooms", "sort", "f-sale"].forEach(function (id) {
+        var el = $(id);
+        el.addEventListener(id === "q" ? "input" : "change", applyList);
+      });
+    }
+
+    function sortApts(arr, mode) {
+      function cmp(x, y, dir) {                 // числа, null в конец
+        if (x == null && y == null) return 0;
+        if (x == null) return 1;
+        if (y == null) return -1;
+        return dir * (x - y);
+      }
+      if (mode === "code") return arr;          // порядок из JSON уже натуральный
+      var a = arr.slice();
+      a.sort(function (p, q) {
+        switch (mode) {
+          case "price-asc": return cmp(p.price, q.price, 1) || natCmp(p.code, q.code);
+          case "price-desc": return cmp(p.price, q.price, -1) || natCmp(p.code, q.code);
+          case "area-asc": return cmp(p.area, q.area, 1) || natCmp(p.code, q.code);
+          case "area-desc": return cmp(p.area, q.area, -1) || natCmp(p.code, q.code);
+          case "floor-asc": return cmp(p.floor, q.floor, 1) || natCmp(p.code, q.code);
+          case "floor-desc": return cmp(p.floor, q.floor, -1) || natCmp(p.code, q.code);
+        }
+        return 0;
+      });
+      return a;
+    }
+
+    function applyList() {
+      var q = ($("q").value || "").trim().toLowerCase();
+      var fk = $("f-korpus").value, fr = $("f-rooms").value, fs = $("f-sale").checked;
+      var arr = DATA.apartments.filter(function (a) {
+        if (q && a.code.toLowerCase().indexOf(q) < 0) return false;
+        if (fk && korpus(a.code) !== fk) return false;
+        if (fr && String(a.rooms) !== fr) return false;   // rooms есть только у продающихся
+        if (fs && !a.forSale) return false;
+        return true;
+      });
+      arr = sortApts(arr, $("sort").value);
+      renderRows(arr);
+      $("a-sub").textContent = "Показано " + arr.length + " из " + DATA.counts.total;
+    }
+
+    function renderRows(arr) {
+      var html = "";
+      arr.forEach(function (a) {
         var camBadge = '<span class="cams">' + a.cameras.length + ' ' + viewsWord(a.cameras.length) + '</span>';
         if (a.forSale) {
           html +=
@@ -405,6 +530,7 @@
                 '<span class="m"><span class="lbl">Этаж</span><b>' + (a.floor != null ? a.floor : "—") + '</b></span>' +
                 '<span class="m"><span class="lbl">Комнаты</span><b>' + (a.rooms != null ? a.rooms : "—") + '</b></span>' +
                 '<span class="m"><span class="lbl">Площадь</span><b>' + fmtArea(a.area) + '</b></span>' +
+                '<span class="m price"><span class="lbl">Цена</span><b>' + fmtPrice(a.price) + '</b></span>' +
               '</span>' +
             '</button>';
         } else {
@@ -416,7 +542,7 @@
         }
       });
       var rows = $("rows");
-      rows.innerHTML = html;
+      rows.innerHTML = html || '<div class="loading">Ничего не найдено</div>';
       rows.querySelectorAll(".row").forEach(function (el) {
         el.addEventListener("click", function () {
           listScroll = el.closest(".scroll").scrollTop;

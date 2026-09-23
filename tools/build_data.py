@@ -78,12 +78,15 @@ def parse_feed(path):
             continue
         area_el = o.find("area")
         area = area_el.findtext("value") if area_el is not None else None
+        price_el = o.find("price")
+        price = price_el.findtext("value") if price_el is not None else None
         house = o.find("house")
         house_name = house.findtext("name") if house is not None else ""
         feed[code] = {
             "rooms": _to_int(o.findtext("rooms")),
             "floor": _to_int(o.findtext("floor")),
             "area": _to_float(area),
+            "price": _to_float(price),
             "status": o.findtext("status"),
             "houseName": house_name,
         }
@@ -181,6 +184,7 @@ def main():
             "forSale": sale is not None,
             "rooms": sale["rooms"] if sale else None,
             "area": sale["area"] if sale else None,
+            "price": sale["price"] if sale else None,
             "plan": plan_for(code),
             "cameras": c["cameras"],
         }
