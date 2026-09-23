@@ -564,7 +564,7 @@
     var curLimits = null;   // {yawMin,yawMax,pitchMin,pitchMax} центра камеры или null
 
     var PLACEHOLDER = "panorama.jpg";
-    function isPlaceholder(cam) { return cam.image === PLACEHOLDER; }
+    function isPlaceholder(cam) { return !cam.multiRes && cam.image === PLACEHOLDER; }
 
     function computedYaw(cam) {
       // Заглушка: временный разворот на 180° от направления камеры.
@@ -577,16 +577,19 @@
     function wrapDeg(a) { return ((a % 360) + 540) % 360 - 180; }   // -> [-180, 180)
 
     function sceneConfig(cam) {
-      var yaw = computedYaw(cam);
       // Краевые лимиты Pannellum НЕ используем — они режут по краю кадра.
       // Вместо этого ограничиваем ЦЕНТР камеры вручную (см. curLimits + clamp).
-      return {
-        type: "equirectangular",
-        panorama: cam.image,
+      var cfg = {
         hfov: 95, minHfov: 45, maxHfov: 120,
-        yaw: yaw, pitch: 0,
+        yaw: computedYaw(cam), pitch: 0,
         autoLoad: true, compass: false, friction: 0.15
       };
+      if (cam.multiRes) {                 // 16K и т.п. — тайлами
+        cfg.type = "multires"; cfg.multiRes = cam.multiRes;
+      } else {
+        cfg.type = "equirectangular"; cfg.panorama = cam.image;
+      }
+      return cfg;
     }
 
     function showViewer(apt, camIdx) {

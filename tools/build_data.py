@@ -39,6 +39,7 @@ CSV_PATH = os.path.join(DATA, "apartment_view_cameras.csv")
 XML_PATH = os.path.join(DATA, "feed_snapshot.xml")
 OUT_PATH = os.path.join(DATA, "apartments.json")
 VIEWS_DIR = os.path.join(REPO, "views")
+MULTIRES_DIR = os.path.join(REPO, "views", "multires")
 PLANS_DIR = os.path.join(REPO, "plans")
 PLACEHOLDER = "panorama.jpg"
 PLAN_PLACEHOLDER = "plan-placeholder.jpg"
@@ -159,6 +160,24 @@ def plan_for(code):
     return PLAN_PLACEHOLDER   # план ещё не готов -> плейсхолдер
 
 
+def multires_for(code, idx):
+    """Если для камеры сгенерированы multires-тайлы — вернуть конфиг Pannellum."""
+    name = f"{code}_{idx}"
+    cfg_path = os.path.join(MULTIRES_DIR, name, "config.json")
+    if not os.path.exists(cfg_path):
+        return None
+    cfg = json.load(open(cfg_path, encoding="utf-8"))
+    return {
+        "basePath": f"views/multires/{name}",
+        "path": "/%l/%s%y_%x",
+        "fallbackPath": "/fallback/%s",
+        "extension": "jpg",
+        "tileResolution": cfg["tileResolution"],
+        "maxLevel": cfg["maxLevel"],
+        "cubeResolution": cfg["cubeResolution"],
+    }
+
+
 def main():
     if FETCH:
         try:
@@ -176,6 +195,9 @@ def main():
         sale = feed.get(code)
         for cam in c["cameras"]:
             cam["image"] = image_for(code, cam["idx"])
+            mr = multires_for(code, cam["idx"])
+            if mr:
+                cam["multiRes"] = mr
         apt = {
             "code": code,
             "building": c["building"],

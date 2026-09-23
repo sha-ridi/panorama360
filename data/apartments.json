@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-23T05:19:57.848502+00:00",
+ "generatedAt": "2026-09-23T06:03:01.712313+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -1581,7 +1581,16 @@
      "yawMax": 100.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/1-11-1101_0.jpg"
+     "image": "views/1-11-1101_0.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-11-1101_0",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     }
     },
     {
      "idx": 1,
