@@ -874,11 +874,9 @@
     var orbit = (function () {
       var stage = $("orbit-stage"), img = $("orbit-img");
       var frames = [], loaded = [], count = 0, cur = 0, inited = false;
-      var autoT = null, dragId = null, lastX = 0, lastY = 0, accum = 0;
+      var autoT = null, dragId = null, lastX = 0, accum = 0;
       var PX_PER_FRAME = 5;     // чувствительность вращения
       var DIR = -1;             // направление вращения
-      var s = 1, tx = 0, ty = 0, minS = 1, maxS = 4;   // зум/пан
-      var pts = {}, lastDist = 0;
 
       function pad(i) { return ("000" + i).slice(-3); }
       function nearestLoaded(i) {
@@ -895,25 +893,6 @@
         var j = nearestLoaded(cur);
         if (frames[j]) img.src = frames[j].src;
       }
-      function applyT() { img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")"; }
-      function clampPan() {
-        var W = stage.clientWidth, H = stage.clientHeight;
-        tx = Math.min(0, Math.max(W - W * s, tx));
-        ty = Math.min(0, Math.max(H - H * s, ty));
-      }
-      function resetZoom() { s = 1; tx = 0; ty = 0; applyT(); }
-      function zoomAt(mx, my, f) {
-        var ns = Math.max(minS, Math.min(maxS, s * f));
-        if (ns === s) return;
-        var px = (mx - tx) / s, py = (my - ty) / s;
-        s = ns; tx = mx - px * s; ty = my - py * s;
-        if (s <= 1.001) { s = 1; tx = 0; ty = 0; }
-        clampPan(); applyT();
-      }
-      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
-      function dist() { var p = pvals(); return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); }
-      function mid() { var p = pvals(); return { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
-
       function init() {
         if (inited) return;
         inited = true;
@@ -935,53 +914,26 @@
           })
           .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });
       }
-      function start() { resetZoom(); stop(); autoT = setInterval(function () { if (s === 1) show(cur + 1); }, 90); }
+      function start() { stop(); autoT = setInterval(function () { show(cur + 1); }, 90); }
       function stop() { if (autoT) { clearInterval(autoT); autoT = null; } }
       function hideHint() { var h = $("orbit-hint"); if (h) h.style.opacity = "0"; }
 
       stage.addEventListener("dragstart", function (e) { e.preventDefault(); });
-      stage.addEventListener("wheel", function (e) {
-        e.preventDefault();
-        var r = stage.getBoundingClientRect();
-        zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.2 : 1 / 1.2);
-      }, { passive: false });
       stage.addEventListener("pointerdown", function (e) {
-        if (e.target.closest(".fab")) return;    // клик по кнопке "назад" не перехватываем
+        if (e.target.closest(".fab")) return;    // клик по кнопке "закрыть" не перехватываем
         e.preventDefault();
         stage.setPointerCapture(e.pointerId);
-        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-        var ids = Object.keys(pts);
-        if (ids.length === 1) { dragId = e.pointerId; lastX = e.clientX; lastY = e.clientY; accum = 0; stop(); hideHint(); }
-        else if (ids.length === 2) { lastDist = dist(); }
+        dragId = e.pointerId; lastX = e.clientX; accum = 0; stop(); hideHint();
       });
       stage.addEventListener("pointermove", function (e) {
-        if (!pts[e.pointerId]) return;
-        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
-        var ids = Object.keys(pts);
-        if (ids.length >= 2) {                     // щипок — зум
-          var d = dist();
-          if (lastDist) { var r = stage.getBoundingClientRect(), m = mid(); zoomAt(m.x - r.left, m.y - r.top, d / lastDist); }
-          lastDist = d;
-        } else if (e.pointerId === dragId) {
-          var dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
-          if (s > 1.01) {                          // увеличено — двигаем картинку
-            tx += dx; ty += dy; clampPan(); applyT();
-          } else {                                 // не увеличено — крутим дом
-            accum += dx;
-            while (Math.abs(accum) >= PX_PER_FRAME) {
-              if (accum > 0) { show(cur + DIR); accum -= PX_PER_FRAME; }
-              else { show(cur - DIR); accum += PX_PER_FRAME; }
-            }
-          }
+        if (e.pointerId !== dragId) return;
+        accum += (e.clientX - lastX); lastX = e.clientX;
+        while (Math.abs(accum) >= PX_PER_FRAME) {
+          if (accum > 0) { show(cur + DIR); accum -= PX_PER_FRAME; }
+          else { show(cur - DIR); accum += PX_PER_FRAME; }
         }
       });
-      function up(e) {
-        delete pts[e.pointerId];
-        var ids = Object.keys(pts);
-        if (ids.length < 2) lastDist = 0;
-        if (ids.length === 1) { dragId = +ids[0]; lastX = pts[dragId].x; lastY = pts[dragId].y; }
-        if (ids.length === 0) dragId = null;
-      }
+      function up(e) { if (e.pointerId === dragId) dragId = null; }
       stage.addEventListener("pointerup", up);
       stage.addEventListener("pointercancel", up);
 
