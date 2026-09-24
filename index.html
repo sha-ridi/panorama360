@@ -63,6 +63,46 @@
     }
     .bar .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
 
+    /* кнопка "Осмотреть комплекс" в шапке списка */
+    .complex-btn {
+      margin-left: auto; appearance: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+      height: 40px; padding: 0 14px; border-radius: 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+      background: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
+      color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
+      transition: filter .15s, border-color .15s, transform .05s;
+    }
+    .complex-btn:hover { border-color: var(--accent); }
+    .complex-btn:active { transform: scale(.98); }
+    .complex-btn svg { color: var(--accent); }
+
+    /* ---------- ЭКРАН КОМПЛЕКСА (турнтейбл) ---------- */
+    #orbit-stage {
+      flex: 1 1 auto; position: relative; min-height: 0; background: #000;
+      overflow: hidden; touch-action: none; cursor: grab;
+      display: flex; align-items: center; justify-content: center;
+      user-select: none; -webkit-user-select: none;
+    }
+    #orbit-stage:active { cursor: grabbing; }
+    #orbit-img {
+      width: 100%; height: 100%; object-fit: cover; transform-origin: 0 0;
+      user-select: none; -webkit-user-drag: none; pointer-events: none;
+    }
+    .orbit-loading {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 14px; background: #000; z-index: 3;
+    }
+    .orbit-loading[hidden] { display: none; }
+    .orbit-hint {
+      position: absolute; bottom: calc(env(safe-area-inset-bottom) + 16px); left: 50%;
+      transform: translateX(-50%); z-index: 4; pointer-events: none;
+      font-size: 13px; color: rgba(255,255,255,.8);
+      background: rgba(15,17,19,.5); border: 1px solid rgba(255,255,255,.15);
+      padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+      transition: opacity .5s ease;
+    }
+
     /* ---------- ЭКРАН A: список ---------- */
     #screen-a .scroll {
       flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
@@ -321,6 +361,10 @@
         <h1>Vesper Погодинская</h1>
         <div class="sub" id="a-sub">Виды из окна</div>
       </div>
+      <button class="complex-btn" id="btn-complex">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        Осмотреть комплекс
+      </button>
     </header>
     <div class="toolbar">
       <div class="toolbar-inner">
@@ -355,6 +399,17 @@
         </div>
         <div id="rows"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН КОМПЛЕКСА (турнтейбл облёта дома) — полноэкранный -->
+  <section id="screen-complex" class="screen">
+    <div id="orbit-stage">
+      <img id="orbit-img" alt="Вид дома" draggable="false">
+      <div class="orbit-loading" id="orbit-loading"><span class="spinner"></span>Загрузка…</div>
+      <button class="fab" id="orbit-back-fab" aria-label="Закрыть" title="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
   </section>
 
@@ -427,7 +482,7 @@
     var YAW_SIGN = 1;
 
     var $ = function (id) { return document.getElementById(id); };
-    var screenA = $("screen-a"), screenB = $("screen-b"), screenPlan = $("screen-plan");
+    var screenA = $("screen-a"), screenB = $("screen-b"), screenPlan = $("screen-plan"), screenComplex = $("screen-complex");
 
     // ---------- утилиты форматирования ----------
     function fmtArea(a) {
@@ -815,6 +870,129 @@
       goView(apt.code, cams[pos].idx);
     }
 
+    // ---------- ЭКРАН КОМПЛЕКСА: турнтейбл облёта ----------
+    var orbit = (function () {
+      var stage = $("orbit-stage"), img = $("orbit-img");
+      var frames = [], loaded = [], count = 0, cur = 0, inited = false;
+      var autoT = null, dragId = null, lastX = 0, lastY = 0, accum = 0;
+      var PX_PER_FRAME = 5;     // чувствительность вращения
+      var DIR = -1;             // направление вращения
+      var s = 1, tx = 0, ty = 0, minS = 1, maxS = 4;   // зум/пан
+      var pts = {}, lastDist = 0;
+
+      function pad(i) { return ("000" + i).slice(-3); }
+      function nearestLoaded(i) {
+        if (loaded[i]) return i;
+        for (var d = 1; d < count; d++) {
+          var a = (i - d + count) % count, b = (i + d) % count;
+          if (loaded[a]) return a;
+          if (loaded[b]) return b;
+        }
+        return 0;
+      }
+      function show(i) {
+        cur = ((i % count) + count) % count;
+        var j = nearestLoaded(cur);
+        if (frames[j]) img.src = frames[j].src;
+      }
+      function applyT() { img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")"; }
+      function clampPan() {
+        var W = stage.clientWidth, H = stage.clientHeight;
+        tx = Math.min(0, Math.max(W - W * s, tx));
+        ty = Math.min(0, Math.max(H - H * s, ty));
+      }
+      function resetZoom() { s = 1; tx = 0; ty = 0; applyT(); }
+      function zoomAt(mx, my, f) {
+        var ns = Math.max(minS, Math.min(maxS, s * f));
+        if (ns === s) return;
+        var px = (mx - tx) / s, py = (my - ty) / s;
+        s = ns; tx = mx - px * s; ty = my - py * s;
+        if (s <= 1.001) { s = 1; tx = 0; ty = 0; }
+        clampPan(); applyT();
+      }
+      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
+      function dist() { var p = pvals(); return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); }
+      function mid() { var p = pvals(); return { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
+
+      function init() {
+        if (inited) return;
+        inited = true;
+        fetch("complex/manifest.json?ts=" + Date.now())
+          .then(function (r) { return r.json(); })
+          .then(function (m) {
+            count = m.count;
+            for (var i = 0; i < count; i++) {
+              (function (i) {
+                var im = new Image();
+                im.onload = function () {
+                  loaded[i] = true;
+                  if (i === 0) { $("orbit-loading").hidden = true; show(0); }
+                };
+                im.src = "complex/frame_" + pad(i) + ".jpg";
+                frames[i] = im;
+              })(i);
+            }
+          })
+          .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });
+      }
+      function start() { resetZoom(); stop(); autoT = setInterval(function () { if (s === 1) show(cur + 1); }, 90); }
+      function stop() { if (autoT) { clearInterval(autoT); autoT = null; } }
+      function hideHint() { var h = $("orbit-hint"); if (h) h.style.opacity = "0"; }
+
+      stage.addEventListener("dragstart", function (e) { e.preventDefault(); });
+      stage.addEventListener("wheel", function (e) {
+        e.preventDefault();
+        var r = stage.getBoundingClientRect();
+        zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.2 : 1 / 1.2);
+      }, { passive: false });
+      stage.addEventListener("pointerdown", function (e) {
+        if (e.target.closest(".fab")) return;    // клик по кнопке "назад" не перехватываем
+        e.preventDefault();
+        stage.setPointerCapture(e.pointerId);
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length === 1) { dragId = e.pointerId; lastX = e.clientX; lastY = e.clientY; accum = 0; stop(); hideHint(); }
+        else if (ids.length === 2) { lastDist = dist(); }
+      });
+      stage.addEventListener("pointermove", function (e) {
+        if (!pts[e.pointerId]) return;
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length >= 2) {                     // щипок — зум
+          var d = dist();
+          if (lastDist) { var r = stage.getBoundingClientRect(), m = mid(); zoomAt(m.x - r.left, m.y - r.top, d / lastDist); }
+          lastDist = d;
+        } else if (e.pointerId === dragId) {
+          var dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+          if (s > 1.01) {                          // увеличено — двигаем картинку
+            tx += dx; ty += dy; clampPan(); applyT();
+          } else {                                 // не увеличено — крутим дом
+            accum += dx;
+            while (Math.abs(accum) >= PX_PER_FRAME) {
+              if (accum > 0) { show(cur + DIR); accum -= PX_PER_FRAME; }
+              else { show(cur - DIR); accum += PX_PER_FRAME; }
+            }
+          }
+        }
+      });
+      function up(e) {
+        delete pts[e.pointerId];
+        var ids = Object.keys(pts);
+        if (ids.length < 2) lastDist = 0;
+        if (ids.length === 1) { dragId = +ids[0]; lastX = pts[dragId].x; lastY = pts[dragId].y; }
+        if (ids.length === 0) dragId = null;
+      }
+      stage.addEventListener("pointerup", up);
+      stage.addEventListener("pointercancel", up);
+
+      return { init: init, start: start, stop: stop };
+    })();
+
+    function showComplex() {
+      orbit.init();
+      orbit.start();     // мягкое авто-вращение, останавливается при драге
+    }
+
     // ---------- роутинг (хеш, переживает F5) ----------
     function parseHash() {
       var h = location.hash.replace(/^#\/?/, "");           // "1-02-201/2"
@@ -842,14 +1020,16 @@
     }
 
     function setScreen(el) {
-      [screenA, screenPlan, screenB].forEach(function (s) {
+      [screenA, screenPlan, screenB, screenComplex].forEach(function (s) {
         s.classList.toggle("active", s === el);
       });
+      if (el !== screenComplex) orbit.stop();   // авто-вращение только на экране комплекса
     }
 
     function route() {
-      if (!DATA) return;
       var r = parseHash();
+      if (r.code === "complex") { setScreen(screenComplex); showComplex(); return; }
+      if (!DATA) return;
       var apt = r.code ? byCode[r.code] : null;
 
       if (apt && r.camIdx != null && apt.cameras.length) {
@@ -878,6 +1058,11 @@
     });
     // из плана -> назад к списку
     $("plan-back").addEventListener("click", function () {
+      if (location.hash) location.hash = ""; else route();
+    });
+    // осмотр комплекса
+    $("btn-complex").addEventListener("click", function () { location.hash = "#/complex"; });
+    $("orbit-back-fab").addEventListener("click", function () {
       if (location.hash) location.hash = ""; else route();
     });
     $("nav-prev").addEventListener("click", function () { step(-1); });
