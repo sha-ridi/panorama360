@@ -4,6 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- iPhone Safari (iOS 26): пока страница не прокручена, Safari сам заливает полосы под
+       статус-баром и нижней панелью. Поэтому делаем «разгонную полосу»: страница на 62px выше,
+       сразу прокручена на 62px, экраны сдвинуты на столько же вниз — интерфейс стоит на месте,
+       а план/панорама (сцены) заходят под статус-бар и под нижнюю панель. -->
+  <script>
+  (function () {
+    var ua = navigator.userAgent;
+    if (!/iPhone|iPod/.test(ua)) return;
+    document.documentElement.classList.add("ios-runway");
+    var OFF = 62;
+    function fix() { if (Math.abs(window.scrollY - OFF) > 1) window.scrollTo(0, OFF); }
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("DOMContentLoaded", fix);
+    window.addEventListener("load", function () { fix(); setTimeout(fix, 300); });
+    window.addEventListener("resize", function () { setTimeout(fix, 50); });
+    window.addEventListener("scroll", fix);
+  })();
+  </script>
+  <style>
+    .ios-runway { --off: 62px; }
+    .ios-runway, .ios-runway body { overflow: visible !important; height: auto !important; }
+    .ios-runway body { height: calc(var(--off) + 100dvh + 140px) !important; position: relative; }
+    .ios-runway .screen { position: absolute; left: 0; right: 0; top: var(--off); bottom: auto; height: 100dvh; }
+    .ios-runway #plan-stage, .ios-runway #stage { top: calc(-1 * var(--off)); bottom: -140px; }
+    .ios-runway .logo { position: absolute; top: calc(var(--off) + var(--logo-top)); }
+  </style>
   <title>Веспер Погодинская — виды из окна</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
