@@ -14,6 +14,7 @@
   напр.  python tools/make_multires.py "X:/.../..._1101_0_FinalColor.png" 1-11-1101 0
 """
 import argparse
+import time
 import json
 import math
 import os
@@ -69,9 +70,13 @@ def main():
     ap.add_argument("src"); ap.add_argument("code"); ap.add_argument("idx", type=int)
     ap.add_argument("--tile", type=int, default=512)
     ap.add_argument("--quality", type=int, default=90)
+    ap.add_argument("--width", type=int, default=0, help="уменьшить панораму до этой ширины (напр. 8192)")
+    ap.add_argument("--outdir", default="", help="куда писать (по умолчанию views/multires/<code>_<idx>)")
     args = ap.parse_args()
 
     im = Image.open(args.src).convert("RGB")
+    if args.width and im.size[0] > args.width:
+        im = im.resize((args.width, args.width // 2), Image.LANCZOS)
     W, H = im.size
     S = np.asarray(im)
     C = 8 * int(W / math.pi / 8)                    # разрешение грани (как в Pannellum)
@@ -79,7 +84,7 @@ def main():
     L = int(math.ceil(math.log2(C / T))) + 1
     print("equirect %dx%d -> cube %d, tile %d, levels %d" % (W, H, C, T, L))
 
-    outdir = os.path.join(REPO, "views", "multires", "%s_%d" % (args.code, args.idx))
+    outdir = args.outdir or os.path.join(REPO, "views", "multires", "%s_%d" % (args.code, args.idx))
     os.makedirs(os.path.join(outdir, "fallback"), exist_ok=True)
 
     nfiles = 0
@@ -104,7 +109,8 @@ def main():
         del full, img
         print("  face", face, "done")
 
-    cfg = {"tileResolution": T, "maxLevel": L, "cubeResolution": C}
+    cfg = {"tileResolution": T, "maxLevel": L, "cubeResolution": C,
+           "version": time.strftime("%Y%m%d%H%M")}   # попадает в URL тайлов (?v=) — сброс кеша
     json.dump(cfg, open(os.path.join(outdir, "config.json"), "w"))
     total = sum(os.path.getsize(os.path.join(dp, f))
                 for dp, _dn, fn in os.walk(outdir) for f in fn)

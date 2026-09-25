@@ -195,7 +195,7 @@ def multires_for(code, idx):
         "basePath": f"views/multires/{name}",
         "path": "/%l/%s%y_%x",
         "fallbackPath": "/fallback/%s",
-        "extension": "jpg",
+        "extension": "jpg" + ("?v=%s" % cfg["version"] if cfg.get("version") else ""),   # кеш-бастинг после перегенерации
         "tileResolution": cfg["tileResolution"],
         "maxLevel": cfg["maxLevel"],
         "cubeResolution": cfg["cubeResolution"],
