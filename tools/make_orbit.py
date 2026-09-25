@@ -10,7 +10,7 @@ complex/ как frame_000.jpg ... и пишет complex/manifest.json {count,wid
   python tools/make_orbit.py <dir_с_кадрами> [--step 4] [--width 1280] [--quality 82]
     --step 4  = брать каждый 4-й кадр (0.5°*4 = 2° между кадрами -> 180 кадров)
 """
-import argparse, json, os, re, sys
+import argparse, json, os, re, sys, time
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -69,7 +69,8 @@ def main():
         dst = os.path.join(OUT, "frame_%03d.jpg" % i)
         im.save(dst, "JPEG", quality=args.quality, optimize=True, progressive=True)
         total += os.path.getsize(dst)
-    json.dump({"count": len(chosen), "width": W, "height": H, "pattern": "frame_%03d.jpg"},
+    json.dump({"count": len(chosen), "width": W, "height": H,
+               "pattern": "frame_%03d.jpg", "version": int(time.time())},
               open(os.path.join(OUT, "manifest.json"), "w"))
     print("готово:", OUT, "| кадров:", len(chosen), "| ~%.1f МБ" % (total / 1e6), "| %dx%d" % (W, H))
 

@@ -900,6 +900,7 @@
           .then(function (r) { return r.json(); })
           .then(function (m) {
             count = m.count;
+            var ver = m.version ? ("?v=" + m.version) : "";   // кеш-бастинг после перегенерации
             for (var i = 0; i < count; i++) {
               (function (i) {
                 var im = new Image();
@@ -907,7 +908,7 @@
                   loaded[i] = true;
                   if (i === 0) { $("orbit-loading").hidden = true; show(0); }
                 };
-                im.src = "complex/frame_" + pad(i) + ".jpg";
+                im.src = "complex/frame_" + pad(i) + ".jpg" + ver;
                 frames[i] = im;
               })(i);
             }
