@@ -35,9 +35,19 @@
       animation: spin .8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    /* лого — как на основной странице */
+    :root { --logo-top: calc(env(safe-area-inset-top, 0px) + 16px); }
+    @media (min-width: 768px)  { :root { --logo-top: 24px; } }
+    @media (min-width: 1280px) { :root { --logo-top: 28px; } }
+    @media (min-width: 1536px) { :root { --logo-top: 32px; } }
+    .logo {
+      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      width: 145px; height: 32px; pointer-events: none; user-select: none; -webkit-user-drag: none;
+    }
   </style>
 </head>
 <body>
+  <img class="logo" src="../assets/logo-ru-white.svg" alt="Веспер Погодинская" draggable="false">
   <div id="orbit-stage">
     <img id="orbit-img" alt="Вид комплекса Vesper Погодинская" draggable="false">
     <div class="orbit-loading" id="orbit-loading"><span class="spinner"></span>Загрузка…</div>
@@ -52,6 +62,7 @@
     var dragId = null, lastX = 0, accum = 0;
     var PX_PER_FRAME = 5;     // чувствительность вращения
     var DIR = -1;             // направление вращения
+    var START = 25;           // стартовый вид (frame_025.jpg)
 
     function pad(i) { return ("000" + i).slice(-3); }
     function nearestLoaded(i) {
@@ -73,17 +84,19 @@
       .then(function (r) { return r.json(); })
       .then(function (m) {
         count = m.count;
+        var start = START % count;
+        cur = start;
         var ver = m.version ? ("?v=" + m.version) : "";   // кеш-бастинг после перегенерации
-        for (var i = 0; i < count; i++) {
+        for (var k = 0; k < count; k++) {   // грузим начиная со стартового кадра
           (function (i) {
             var im = new Image();
             im.onload = function () {
               loaded[i] = true;
-              if (i === 0) { $("orbit-loading").hidden = true; show(0); }
+              if (i === start) { $("orbit-loading").hidden = true; show(start); }
             };
             im.src = "frame_" + pad(i) + ".jpg" + ver;
             frames[i] = im;
-          })(i);
+          })((start + k) % count);
         }
       })
       .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });

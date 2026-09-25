@@ -4,165 +4,160 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <title>Vesper Погодинская — виды из окна</title>
+  <title>Веспер Погодинская — виды из окна</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.css">
   <style>
     /* ==========================================================================
-       Mobile-first. База — 375px. Дальше только min-width:
-       768 (планшет) / 1280 (десктоп) / 1536 (широкий).
+       Дизайн по макету Figma (iPhone 16/17 Pro Max). Mobile-first: база — 375px,
+       дальше только min-width: 768 / 1280 / 1536.
        ========================================================================== */
-    :root {
-      --bg: #0f1113;
-      --surface: #16191c;
-      --surface-2: #1e2226;
-      --line: #2a2f34;
-      --text: #f2f4f6;
-      --muted: #9aa3ab;
-      --faint: #6b747c;
-      --accent: #becac0;      /* светло-зелёный */
-      --accent-ink: #0f1113;
-      --na: #7a8189;
+    @font-face { font-family: 'Cera Pro'; src: url('fonts/CeraPro-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Cera Pro'; src: url('fonts/CeraPro-Medium.ttf') format('truetype'); font-weight: 500 700; font-display: swap; }
 
-      --gutter: 16px;
-      --radius: 12px;
-      --fs-title: 18px;
-      --fs-code: 17px;
-      --fs-meta: 13px;
-      --row-pad: 14px;
-      --maxw: 720px;
-      --bar-h: 56px;
+    :root {
+      --green-80: rgba(38, 87, 70, .8);    /* плашки, карточка */
+      --green-70: rgba(38, 87, 70, .7);    /* пилюля вида */
+      --moss: #57967a;                     /* «ВИД N» */
+      --sage: #b6d5b9;                     /* разделитель */
+      --txt-2: #d4d4d4;                    /* второстепенный текст карточки */
+      --ui-bottom: calc(env(safe-area-inset-bottom, 0px) + 62px);   /* как в макете: над плавающей панелью Safari */
+      --logo-top: calc(env(safe-area-inset-top, 0px) + 16px);
       font-synthesis: none;
       -webkit-text-size-adjust: 100%;
     }
 
     * { box-sizing: border-box; }
     html, body {
-      margin: 0; padding: 0; height: 100%;
-      background: var(--bg); color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      background: #000; color: #fff;
+      font-family: 'Cera Pro', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    body { overflow: hidden; }
-    a { color: inherit; }
+    button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
 
-    .screen { position: fixed; inset: 0; display: none; flex-direction: column; }
-    .screen.active { display: flex; }
+    .screen { position: fixed; inset: 0; display: none; }
+    .screen.active { display: block; }
 
-    /* ---------- Общая верхняя панель ---------- */
-    .bar {
-      flex: 0 0 auto;
-      min-height: var(--bar-h);
-      display: flex; align-items: center; gap: 10px;
-      padding: max(env(safe-area-inset-top), 8px) var(--gutter) 8px;
-      background: color-mix(in srgb, var(--bg) 88%, #000);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(6px);
+    /* лого — поверх обоих экранов */
+    .logo {
+      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      width: 145px; height: 32px; pointer-events: none; user-select: none;
     }
-    .bar h1 {
-      margin: 0; font-size: var(--fs-title); font-weight: 600; letter-spacing: .01em;
-      line-height: 1.2;
-    }
-    .bar .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
 
-    /* ---------- ЭКРАН B: вьювер ---------- */
-    #stage { flex: 1 1 auto; position: relative; background: #000; min-height: 0; }
-    #panorama { position: absolute; inset: 0; }
-    .bar .back {
-      appearance: none; border: 1px solid var(--line); background: var(--surface-2);
-      color: var(--text); border-radius: 10px; height: 40px; padding: 0 14px;
-      font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
-    }
-    .bar .back:hover { border-color: var(--accent); }
-    .bar .vtitle { display: flex; flex-direction: column; min-width: 0; }
-    .bar .vtitle .t { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
-    .bar .vtitle .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
-    .bar .vtitle .na-tag { color: var(--na); }
-
-    /* стрелки переключения камер */
-    .nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      z-index: 4; width: 48px; height: 48px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(15,17,19,.55); color: #fff;
-      border: 1px solid rgba(255,255,255,.18); cursor: pointer;
-      backdrop-filter: blur(4px); transition: background .15s, border-color .15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .nav:hover { background: rgba(15,17,19,.8); border-color: var(--accent); }
-    .nav:active { transform: translateY(-50%) scale(.94); }
-    .nav svg { width: 22px; height: 22px; }
-    .nav.prev { left: 12px; }
-    .nav.next { right: 12px; }
-    .nav[hidden] { display: none; }
-
-    /* счётчик видов снизу */
-    .dots {
-      position: absolute; bottom: calc(env(safe-area-inset-bottom) + 14px); left: 50%;
-      transform: translateX(-50%); z-index: 4;
-      display: flex; gap: 7px; padding: 7px 12px; border-radius: 999px;
-      background: rgba(15,17,19,.5); backdrop-filter: blur(4px);
-    }
-    .dots .dot {
-      width: 8px; height: 8px; border-radius: 50%; cursor: pointer;
-      background: rgba(255,255,255,.35); transition: background .15s, transform .15s;
-    }
-    .dots .dot.on { background: var(--accent); transform: scale(1.15); }
-    .dots[hidden] { display: none; }
-
-    /* хинт про плейсхолдер */
-    .placeholder-note {
-      position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 4;
-      font-size: 11px; color: rgba(255,255,255,.8);
-      background: rgba(15,17,19,.5); border: 1px solid rgba(255,255,255,.15);
-      padding: 4px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
-    }
-    .placeholder-note[hidden] { display: none; }
-
-    /* спиннер загрузки данных */
-    .loading { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; }
-    .spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; margin-right: 12px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ---------- ЭКРАН ПЛАНА (полноэкранный, с зумом) ---------- */
+    /* ---------- ЭКРАН ПЛАНА ---------- */
     #plan-stage {
-      flex: 1 1 auto; position: relative; min-height: 0;
-      background: #000; overflow: hidden;
+      position: absolute; inset: 0; overflow: hidden; background: #000;
       touch-action: none; cursor: grab;
     }
     #plan-stage:active { cursor: grabbing; }
-    /* фон: план + растянутые краевые пиксели, лёгкое равномерное размытие */
-    #plan-bg {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      filter: blur(4px); transform: scale(1.04);
-    }
+    /* фон: план + растянутые краевые пиксели, лёгкое размытие.
+       Без z-index — чтобы стекло меток смешивалось (mix-blend) с планом под ним. */
+    #plan-bg { position: absolute; inset: 0; pointer-events: none; filter: blur(4px); transform: scale(1.04); }
     #plan-img {
-      position: absolute; top: 0; left: 0; z-index: 1;
-      transform-origin: 0 0; will-change: transform;
+      position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform;
       user-select: none; -webkit-user-drag: none;
     }
-    .plan-note {
-      position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 4;
-      font-size: 11px; color: rgba(255,255,255,.8);
-      background: rgba(15,17,19,.5); border: 1px solid rgba(255,255,255,.15);
-      padding: 4px 12px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+    #plan-overlay { position: absolute; inset: 0; pointer-events: none; }
+
+    /* метка камеры: якорь 0×0 в точке камеры, размер на экране постоянный */
+    .hotspot {
+      position: absolute; width: 0; height: 0; padding: 0; margin: 0; border: 0; background: none;
+      pointer-events: auto; cursor: pointer;
     }
-    .plan-note[hidden] { display: none; }
-    /* круглая кнопка перехода к видам */
-    .fab {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      bottom: calc(env(safe-area-inset-bottom) + 16px);
-      z-index: 6; width: 56px; height: 56px; border-radius: 50%;
+    .hs-cone {
+      position: absolute; left: -27.414px; top: -32px; width: 52.0048px; height: 32px;
+      transform-origin: 27.414px 32px; pointer-events: none;
+    }
+    .hs-glass {
+      position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 296px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .12);
+    }
+    .hs-glass i { position: absolute; inset: 0; border-radius: 296px; }
+    .hs-glass .g1 { background: rgba(255, 255, 255, .65); }
+    .hs-glass .g2 { background: #ddd; mix-blend-mode: color-burn; }
+    .hs-glass .g3 { background: #f7f7f7; mix-blend-mode: darken; }
+    .hs-glass .dot { inset: auto; left: 11px; top: 11px; width: 10px; height: 10px; background: #fff; }
+    .hotspot:focus-visible .hs-glass { outline: 2px solid #fff; outline-offset: 2px; }
+
+    .floor-pill {
+      position: absolute; transform: translate(-50%, -50%);
+      width: 100px; height: 45px; padding: 10px 15px; border-radius: 200px;
       display: flex; align-items: center; justify-content: center;
-      background: var(--accent); color: var(--accent-ink); border: none; cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0,0,0,.45); transition: filter .15s, transform .05s;
+      background: var(--green-80); color: #fff;
+      font-size: 20px; font-weight: 400; line-height: 1; text-transform: lowercase; white-space: nowrap;
     }
-    .fab:hover { filter: brightness(1.06); }
-    .fab:active { transform: translateX(-50%) scale(.95); }
-    .fab:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
-    .fab svg { width: 26px; height: 26px; }
-    @media (min-width: 1280px) {
-      .fab { width: 60px; height: 60px; bottom: calc(env(safe-area-inset-bottom) + 28px); }
+
+    /* карточка квартиры */
+    .apt-card {
+      position: absolute; z-index: 5; left: 50%; bottom: var(--ui-bottom); transform: translateX(-50%);
+      width: 185px; height: 94px; border-radius: 15px; background: var(--green-80);
+      white-space: nowrap; pointer-events: none;
+    }
+    .apt-card .code {
+      position: absolute; left: 0; right: 0; top: 13px; text-align: center;
+      font-size: 20px; font-weight: 500; line-height: 1; text-transform: uppercase; color: #fff;
+    }
+    .apt-card .left, .apt-card .div, .apt-card .price {
+      position: absolute; top: 62px; transform: translateY(-50%);
+      font-size: 14px; font-weight: 400; line-height: 1;
+    }
+    .apt-card .left { left: 17px; color: var(--txt-2); text-transform: lowercase; }
+    .apt-card .left span { display: block; }
+    .apt-card .div { left: 50%; transform: translate(-50%, -50%); color: var(--sage); }
+    .apt-card .price { left: 108px; color: var(--txt-2); }
+    .apt-card sup { font-size: 9px; line-height: 0; vertical-align: 5px; }
+    .apt-card [hidden] { display: none; }
+
+    .note {
+      position: absolute; z-index: 6; top: calc(var(--logo-top) + 44px); left: 50%; transform: translateX(-50%);
+      font-size: 11px; color: rgba(255,255,255,.85); white-space: nowrap; pointer-events: none;
+      background: rgba(0,0,0,.45); padding: 4px 12px; border-radius: 999px;
+    }
+    .note[hidden] { display: none; }
+
+    /* ---------- ЭКРАН ВИДА ---------- */
+    #stage { position: absolute; inset: 0; background: #000; }
+    #panorama { position: absolute; inset: 0; }
+
+    .view-ui {
+      position: absolute; z-index: 5; left: 50%; bottom: var(--ui-bottom); transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 25px;
+    }
+    /* мини-карта комплекса с камерами квартиры */
+    .minimap { position: relative; width: 102.083px; height: 77.977px; }
+    .minimap > img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .mm {
+      position: absolute; width: 0; height: 0; padding: 0; border: 0; background: none; cursor: pointer;
+    }
+    .mm::after { content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; }  /* зона нажатия */
+    .mm .cone {
+      position: absolute; left: -13.1727px; top: -15.11px; width: 26.3455px; height: 15.11px;
+      transform-origin: 13.1727px 15.11px; opacity: .45; transition: opacity .2s; pointer-events: none;
+    }
+    .mm .d {
+      position: absolute; left: -2.4394px; top: -2.4394px; width: 4.8788px; height: 4.8788px;
+      border-radius: 50%; background: #fff; transition: transform .2s;
+    }
+    .mm:not(.on) { display: none; }   /* показываем только текущий вид */
+    .mm.on .cone { opacity: 1; }
+
+    .view-controls { display: flex; align-items: center; gap: 19px; }
+    .vbtn { width: 48px; height: 48px; padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; }
+    .vbtn img { display: block; width: 48px; height: 48px; }
+    .vbtn.prev img { transform: rotate(90deg); }
+    .vbtn.next img { transform: rotate(-90deg); }
+    .vbtn[hidden] { display: inline-block; visibility: hidden; }
+    .vbtn:active img, .view-close:active img { filter: brightness(1.15); }
+    .view-pill { position: relative; width: 126px; height: 48px; border-radius: 200px; background: var(--green-70); }
+    .view-close {
+      position: absolute; left: 1.55px; top: 1px; width: 46px; height: 46px;
+      padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer;
+    }
+    .view-close img { display: block; width: 46px; height: 46px; }
+    .view-label {
+      position: absolute; left: 81.05px; top: 24px; transform: translate(-50%, -50%);
+      font-size: 16px; font-weight: 500; line-height: 1; letter-spacing: .8px; color: var(--moss);
+      white-space: nowrap; pointer-events: none;
     }
 
     .pnlm-about-msg { display: none !important; }
@@ -170,62 +165,47 @@
     /* ==========================================================================
        Брейкпоинты: 375 (база) / 768 / 1280 / 1536
        ========================================================================== */
-    @media (min-width: 768px) {
-      :root { --gutter: 24px; --fs-title: 20px; }
-    }
-    @media (min-width: 1280px) {
-      :root { --gutter: 40px; --fs-title: 22px; --bar-h: 64px; }
-      .nav { width: 56px; height: 56px; }
-      .nav svg { width: 26px; height: 26px; }
-      .nav.prev { left: 28px; } .nav.next { right: 28px; }
-    }
-    @media (min-width: 1536px) {
-      :root { --gutter: 64px; --fs-title: 24px; }
-    }
+    @media (min-width: 768px)  { :root { --ui-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px); --logo-top: 24px; } }
+    @media (min-width: 1280px) { :root { --ui-bottom: 40px; --logo-top: 28px; } }
+    @media (min-width: 1536px) { :root { --ui-bottom: 48px; --logo-top: 32px; } }
   </style>
 </head>
 <body>
 
+  <img class="logo" src="assets/logo-ru-white.svg" alt="Веспер Погодинская">
+
   <!-- ЭКРАН ПЛАНА -->
   <section id="screen-plan" class="screen">
-    <header class="bar">
-      <div class="vtitle">
-        <span class="t" id="plan-code">—</span>
-        <span class="s" id="plan-sub">—</span>
-      </div>
-    </header>
     <div id="plan-stage">
       <canvas id="plan-bg"></canvas>
       <img id="plan-img" alt="План квартиры" draggable="false">
-      <div class="plan-note" id="plan-note" hidden>Демо-план (реальный появится позже)</div>
-      <button class="fab" id="plan-to-views" aria-label="Виды из окна" title="Виды из окна">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-      </button>
+      <div id="plan-overlay"></div>
+    </div>
+    <div class="note" id="plan-note" hidden>Демо-план (реальный появится позже)</div>
+    <div class="apt-card" id="apt-card" aria-live="polite">
+      <div class="code" id="card-code">…</div>
+      <div class="left"><span id="card-rooms"></span><span id="card-area"></span></div>
+      <div class="div" id="card-div">|</div>
+      <div class="price" id="card-price"></div>
     </div>
   </section>
 
-  <!-- ЭКРАН B -->
+  <!-- ЭКРАН ВИДА -->
   <section id="screen-b" class="screen">
-    <header class="bar">
-      <button class="back" id="btn-back" aria-label="К плану">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        К плану
-      </button>
-      <div class="vtitle">
-        <span class="t" id="v-code">—</span>
-        <span class="s" id="v-sub">—</span>
-      </div>
-    </header>
     <div id="stage">
       <div id="panorama"></div>
-      <div class="placeholder-note" id="ph-note" hidden>Демо-панорама (реальные виды появятся позже)</div>
-      <button class="nav prev" id="nav-prev" aria-label="Предыдущий вид">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="nav next" id="nav-next" aria-label="Следующий вид">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <div class="dots" id="dots" hidden></div>
+    </div>
+    <div class="note" id="ph-note" hidden>Демо-панорама (реальные виды появятся позже)</div>
+    <div class="view-ui">
+      <div class="minimap" id="minimap" hidden></div>
+      <div class="view-controls">
+        <button class="vbtn prev" id="nav-prev" aria-label="Предыдущий вид"><img src="assets/chevron.svg" alt=""></button>
+        <div class="view-pill">
+          <button class="view-close" id="btn-back" aria-label="Закрыть, к плану"><img src="assets/close.svg" alt=""></button>
+          <span class="view-label" id="view-label">ВИД 1</span>
+        </div>
+        <button class="vbtn next" id="nav-next" aria-label="Следующий вид"><img src="assets/chevron.svg" alt=""></button>
+      </div>
     </div>
   </section>
 
@@ -241,28 +221,32 @@
     // Урезанная версия: одна квартира (план + её виды из окна)
     var APT_CODE = "1-10-1002";
 
-    // ВРЕМЕННО: разворот демо-панорамы на 180°. Действует только для камер,
-    // где ещё стоит заглушка; у реальных видов сдвиг не применяется.
+    // ВРЕМЕННО: разворот демо-панорамы на 180° (только для камер-заглушек).
     var DEMO_YAW_OFFSET = 180;
 
-    // Ограничение углов обзора для РЕАЛЬНЫХ видов (данные RotX*/RotY* из CSV).
-    //   APPLY_LIMITS — общий выключатель.
-    //   YAW_SIGN — знак горизонтальных пределов относительно направления камеры
-    //              (калибровка под конвенцию рендеров UE: +1 или -1).
+    // Ограничение углов обзора для реальных видов (RotX*/RotY* из CSV).
     var APPLY_LIMITS = true;
     var YAW_SIGN = 1;
 
     var $ = function (id) { return document.getElementById(id); };
     var screenB = $("screen-b"), screenPlan = $("screen-plan");
 
-    // ---------- утилиты форматирования ----------
-    function korpus(code) { return code.split("-")[0]; }
-    function aptInfo(apt) { return "Корпус " + korpus(apt.code) + ", этаж " + (apt.floor != null ? apt.floor : "—"); }
+    // ---------- форматирование ----------
+    function plural(n, one, few, many) {
+      var d10 = n % 10, d100 = n % 100;
+      if (d10 === 1 && d100 !== 11) return one;
+      if (d10 >= 2 && d10 <= 4 && (d100 < 10 || d100 >= 20)) return few;
+      return many;
+    }
+    function fmtArea(a) {                         // 168.92 -> "168,9м²"
+      var v = Math.round(a * 10) / 10;
+      return String(v).replace(".", ",") + "м<sup>2</sup>";
+    }
+    function fmtPrice(p) { return Math.round(p / 1e6) + "млн Р"; }
 
     // ---------- загрузка данных ----------
     function load() {
       screenPlan.classList.add("active");
-      $("plan-sub").textContent = "Загрузка…";
       fetch("data/apartments.json?ts=" + Date.now())
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (json) {
@@ -270,43 +254,55 @@
           DATA.apartments.forEach(function (a) { byCode[a.code] = a; });
           route();
         })
-        .catch(function (e) {
-          $("plan-sub").textContent = "Не удалось загрузить данные: " + e.message;
-        });
+        .catch(function (e) { $("card-code").textContent = "Ошибка: " + e.message; });
     }
 
-    // ---------- ЭКРАН B ----------
-    var scenesAdded = {};   // sceneId(=image) -> true
+    // ---------- ЭКРАН ВИДА ----------
+    var scenesAdded = {};
     var currentScene = null;
-    var curLimits = null;   // {yawMin,yawMax,pitchMin,pitchMax} центра камеры или null
+    var curLimits = null;
 
     var PLACEHOLDER = "panorama.jpg";
     function isPlaceholder(cam) { return !cam.multiRes && cam.image === PLACEHOLDER; }
-
     function computedYaw(cam) {
-      // Заглушка: временный разворот на 180° от направления камеры.
       if (isPlaceholder(cam)) return (cam.yaw != null ? cam.yaw : 0) + DEMO_YAW_OFFSET;
-      // Реальный рендер снят уже глядя в окно → центр панорамы = 0.
-      return 0;
+      return 0;   // реальный рендер снят уже глядя в окно → центр панорамы = 0
     }
-
-    function clampDeg(v) { return Math.max(-180, Math.min(180, v)); }
     function wrapDeg(a) { return ((a % 360) + 540) % 360 - 180; }   // -> [-180, 180)
 
     function sceneConfig(cam) {
-      // Краевые лимиты Pannellum НЕ используем — они режут по краю кадра.
-      // Вместо этого ограничиваем ЦЕНТР камеры вручную (см. curLimits + clamp).
+      // Краевые лимиты Pannellum не используем — ограничиваем ЦЕНТР камеры вручную (clampLoop).
       var cfg = {
         hfov: 95, minHfov: 45, maxHfov: 120,
         yaw: computedYaw(cam), pitch: 0,
         autoLoad: true, compass: false, friction: 0.15
       };
-      if (cam.multiRes) {                 // 16K и т.п. — тайлами
-        cfg.type = "multires"; cfg.multiRes = cam.multiRes;
-      } else {
-        cfg.type = "equirectangular"; cfg.panorama = cam.image;
-      }
+      if (cam.multiRes) { cfg.type = "multires"; cfg.multiRes = cam.multiRes; }
+      else { cfg.type = "equirectangular"; cfg.panorama = cam.image; }
       return cfg;
+    }
+
+    // мини-карта: силуэт комплекса + камеры квартиры (активная подсвечена)
+    var minimapFor = null;
+    function buildMinimap(apt) {
+      var box = $("minimap");
+      if (minimapFor === apt.code) return;
+      minimapFor = apt.code;
+      if (!apt.minimap) { box.hidden = true; box.innerHTML = ""; return; }
+      box.hidden = false;
+      box.style.width = apt.minimap.w + "px"; box.style.height = apt.minimap.h + "px";
+      var html = '<img src="' + apt.minimap.svg + '" alt="">';
+      apt.cameras.forEach(function (c, i) {
+        if (!c.mini || !c.plan) return;
+        html += '<button class="mm" data-idx="' + c.idx + '" aria-label="Вид ' + (i + 1) + '" ' +
+                'style="left:' + c.mini.x + 'px;top:' + c.mini.y + 'px">' +
+                '<img class="cone" src="assets/minimap-cone.svg" alt="" style="transform:rotate(' + c.plan.dir + 'deg)">' +
+                '<span class="d"></span></button>';
+      });
+      box.innerHTML = html;
+      box.querySelectorAll(".mm").forEach(function (el) {
+        el.addEventListener("click", function () { goView(apt.code, +el.getAttribute("data-idx")); });
+      });
     }
 
     function showViewer(apt, camIdx) {
@@ -316,16 +312,10 @@
       var cam = cams[pos];
       var yaw = computedYaw(cam);
 
-      // Пределы поворота ЦЕНТРА камеры — ровно из таблицы (для реальных видов).
-      if (APPLY_LIMITS && !isPlaceholder(cam) &&
-          cam.yawMin != null && cam.yawMax != null) {
-        // RotX-лимиты заданы относительно ПЕРПЕНДИКУЛЯРА к окну, а камера
-        // смотрит по RotYaw. Смещение перпендикуляра относительно направления
-        // камеры (в панораме оно = 0), нормализованное в [-180,180].
+      // пределы поворота центра камеры (относительно перпендикуляра к окну)
+      if (APPLY_LIMITS && !isPlaceholder(cam) && cam.yawMin != null && cam.yawMax != null) {
         var perp = (cam.perp != null ? cam.perp : cam.yaw);
         var off = wrapDeg(perp - cam.yaw);
-        // Храним сектор как центр + полуширину — корректно клампится по кругу,
-        // в т.ч. если сектор пересекает шов ±180°.
         curLimits = {
           yawCenter: wrapDeg(YAW_SIGN * (off + (cam.yawMin + cam.yawMax) / 2)),
           yawHalf: Math.abs(cam.yawMax - cam.yawMin) / 2,
@@ -336,71 +326,40 @@
         curLimits = null;
       }
 
-      // Заголовок / стрелки / точки — эти узлы ЖИВУТ ВНЕ #panorama,
-      // поэтому не удаляются и всегда на месте.
-      $("v-code").textContent = apt.code;
-      $("v-sub").textContent = "Вид " + (pos + 1) + " из " + cams.length + " · " + aptInfo(apt);
+      $("view-label").textContent = "ВИД " + (pos + 1);
       var multi = cams.length > 1;
       $("nav-prev").hidden = !multi;
       $("nav-next").hidden = !multi;
-      buildDots(apt, pos);
       $("ph-note").hidden = !isPlaceholder(cam);
+      buildMinimap(apt);
+      $("minimap").querySelectorAll(".mm").forEach(function (el) {
+        el.classList.toggle("on", +el.getAttribute("data-idx") === cam.idx);
+      });
 
-      // Один вьювер на всё время (один WebGL-контекст). Каждая камера — своя
-      // сцена (панорама), даже если изображение пока одно и то же. Стрелки
-      // ПЕРЕЗАГРУЖАЮТ панораму (loadScene) с затуханием, а НЕ крутят камеру.
+      // один вьювер (один WebGL-контекст); каждая камера — своя сцена
       var sceneId = apt.code + "/" + cam.idx;
       if (!viewer) {
         scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
         var cfg = {}; cfg[sceneId] = sceneConfig(cam);
         viewer = pannellum.viewer("panorama", {
-          default: {
-            firstScene: sceneId,
-            sceneFadeDuration: 250,
-            showZoomCtrl: true,
-            showFullscreenCtrl: true
-          },
+          default: { firstScene: sceneId, sceneFadeDuration: 250, showControls: false },
           scenes: cfg
         });
       } else {
-        if (!scenesAdded[sceneId]) {
-          viewer.addScene(sceneId, sceneConfig(cam));
-          scenesAdded[sceneId] = true;
-        }
-        if (sceneId !== currentScene) {
-          viewer.loadScene(sceneId, 0, yaw, 95);   // перезагрузка панорамы, без поворота
-          currentScene = sceneId;
-        }
+        if (!scenesAdded[sceneId]) { viewer.addScene(sceneId, sceneConfig(cam)); scenesAdded[sceneId] = true; }
+        if (sceneId !== currentScene) { viewer.loadScene(sceneId, 0, yaw, 95); currentScene = sceneId; }
       }
-
-      // #screen-b мог быть display:none — просим Pannellum пересчитать размер холста
-      setTimeout(function () {
-        try { window.dispatchEvent(new Event("resize")); } catch (e) {}
-      }, 60);
-    }
-
-    function buildDots(apt, pos) {
-      var dots = $("dots");
-      if (apt.cameras.length <= 1) { dots.hidden = true; dots.innerHTML = ""; return; }
-      dots.hidden = false;
-      var html = "";
-      apt.cameras.forEach(function (c, i) {
-        html += '<span class="dot' + (i === pos ? " on" : "") + '" data-idx="' + c.idx + '" title="Вид ' + (i + 1) + '"></span>';
-      });
-      dots.innerHTML = html;
-      dots.querySelectorAll(".dot").forEach(function (el) {
-        el.addEventListener("click", function () {
-          goView(apt.code, parseInt(el.getAttribute("data-idx"), 10));
-        });
-      });
+      setTimeout(function () { try { window.dispatchEvent(new Event("resize")); } catch (e) {} }, 60);
     }
 
     // ---------- ЭКРАН ПЛАНА ----------
-    // Мини панзум: перетаскивание + колесо + щипок. Старт ~2× от вписывания.
+    // Панзум (перетаскивание + колесо + щипок) и метки, привязанные к пикселям плана.
     var planPZ = (function () {
       var img = $("plan-img"), stage = $("plan-stage");
       var s = 1, tx = 0, ty = 0, minS = 1, maxS = 1, iw = 1, ih = 1;
       var pts = {}, lastDist = 0, dragId = null, lastX = 0, lastY = 0;
+      var anchors = [];          // [{el, x, y}] — x,y в пикселях картинки плана
+      var view = null;           // {cx, cy, zoom} — стартовый вид из калибровки
 
       function clamp() {
         var cw = stage.clientWidth, ch = stage.clientHeight, sw = iw * s, sh = ih * s;
@@ -410,13 +369,17 @@
       var bgPending = false;
       function apply() {
         img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")";
-        if (!bgPending) {                                          // перерисовать фон под текущий зум/сдвиг
+        for (var i = 0; i < anchors.length; i++) {
+          var a = anchors[i];
+          a.el.style.left = (tx + a.x * s) + "px";
+          a.el.style.top = (ty + a.y * s) + "px";
+        }
+        if (!bgPending) {
           bgPending = true;
           requestAnimationFrame(function () { bgPending = false; paintBg(); });
         }
       }
-      // Фон следит за планом: план в текущем положении (tx,ty,s), поля вокруг —
-      // растянутые крайние пиксели, чтобы края «продолжались» без шва.
+      // фон: план в текущем положении, поля вокруг — растянутые крайние пиксели
       function paintBg() {
         var cw = stage.clientWidth, ch = stage.clientHeight;
         if (!cw || !ch || !img.naturalWidth) return;
@@ -427,23 +390,26 @@
         var dx = tx, dy = ty, dw = iw * s, dh = ih * s;
         var ml = dx, mt = dy, mr = cw - (dx + dw), mb = ch - (dy + dh);
         ctx.clearRect(0, 0, cw, ch);
-        if (ml > 0.5) ctx.drawImage(img, 0, 0, 2, ih, 0, dy, ml, dh);              // левый край
-        if (mr > 0.5) ctx.drawImage(img, iw - 2, 0, 2, ih, dx + dw, dy, mr, dh);   // правый
-        if (mt > 0.5) ctx.drawImage(img, 0, 0, iw, 2, dx, 0, dw, mt);              // верхний
-        if (mb > 0.5) ctx.drawImage(img, 0, ih - 2, iw, 2, dx, dy + dh, dw, mb);   // нижний
-        if (ml > 0.5 && mt > 0.5) ctx.drawImage(img, 0, 0, 2, 2, 0, 0, ml, mt);              // углы
+        if (ml > 0.5) ctx.drawImage(img, 0, 0, 2, ih, 0, dy, ml, dh);
+        if (mr > 0.5) ctx.drawImage(img, iw - 2, 0, 2, ih, dx + dw, dy, mr, dh);
+        if (mt > 0.5) ctx.drawImage(img, 0, 0, iw, 2, dx, 0, dw, mt);
+        if (mb > 0.5) ctx.drawImage(img, 0, ih - 2, iw, 2, dx, dy + dh, dw, mb);
+        if (ml > 0.5 && mt > 0.5) ctx.drawImage(img, 0, 0, 2, 2, 0, 0, ml, mt);
         if (mr > 0.5 && mt > 0.5) ctx.drawImage(img, iw - 2, 0, 2, 2, dx + dw, 0, mr, mt);
         if (ml > 0.5 && mb > 0.5) ctx.drawImage(img, 0, ih - 2, 2, 2, 0, dy + dh, ml, mb);
         if (mr > 0.5 && mb > 0.5) ctx.drawImage(img, iw - 2, ih - 2, 2, 2, dx + dw, dy + dh, mr, mb);
-        ctx.drawImage(img, dx, dy, dw, dh);                        // сам план (под чёткой картинкой; нужен для сглаживания краёв блюром)
+        ctx.drawImage(img, dx, dy, dw, dh);
       }
       function setup() {
         var cw = stage.clientWidth, ch = stage.clientHeight;
         iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
         img.style.width = iw + "px"; img.style.height = ih + "px";
         var fit = Math.min(cw / iw, ch / ih);
-        minS = fit * 2; maxS = fit * 7; s = Math.min(maxS, fit * 3.5);   // мин 2×, старт 3.5×, макс 7×
-        tx = (cw - iw * s) / 2; ty = (ch - ih * s) / 2;
+        minS = fit * 2; maxS = fit * 7;                       // мин 2×, макс 7× от вписывания
+        var z = view && view.zoom ? view.zoom : 3.5;          // старт — как в макете
+        s = Math.max(minS, Math.min(maxS, fit * z));
+        var cx = view ? view.cx : iw / 2, cy = view ? view.cy : ih / 2;
+        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;
         clamp(); apply();
       }
       function zoomAt(mx, my, factor) {
@@ -452,9 +418,9 @@
         var px = (mx - tx) / s, py = (my - ty) / s;
         s = ns; tx = mx - px * s; ty = my - py * s; clamp(); apply();
       }
+      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
       function dist() { var p = pvals(); return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); }
       function mid() { var p = pvals(); return { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
-      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
 
       stage.addEventListener("wheel", function (e) {
         e.preventDefault();
@@ -462,7 +428,7 @@
         zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);
       }, { passive: false });
       stage.addEventListener("pointerdown", function (e) {
-        if (e.target.closest(".fab")) return;   // не перехватываем клик по кнопке
+        if (e.target.closest(".hotspot")) return;   // тап по метке — это клик, не панорама
         stage.setPointerCapture(e.pointerId);
         pts[e.pointerId] = { x: e.clientX, y: e.clientY };
         var ids = Object.keys(pts);
@@ -493,105 +459,123 @@
       window.addEventListener("resize", function () {
         if (screenPlan.classList.contains("active") && img.naturalWidth) setup();
       });
-      return { setup: setup };
+      return {
+        setup: setup,
+        setView: function (v) { view = v || null; },
+        setAnchors: function (list) { anchors = list; if (img.naturalWidth) apply(); }
+      };
     })();
 
+    // метки на плане: камеры (клик -> вид) и плашка этажа
+    var overlayFor = null;
+    function buildOverlay(apt) {
+      if (overlayFor === apt.code) return;
+      overlayFor = apt.code;
+      var ov = $("plan-overlay"), list = [];
+      ov.innerHTML = "";
+      if (apt.floorLabel) {
+        var fl = document.createElement("div");
+        fl.className = "floor-pill"; fl.textContent = apt.floorLabel.text;
+        ov.appendChild(fl); list.push({ el: fl, x: apt.floorLabel.x, y: apt.floorLabel.y });
+      }
+      apt.cameras.forEach(function (c, i) {
+        if (!c.plan) return;
+        var b = document.createElement("button");
+        b.className = "hotspot"; b.setAttribute("aria-label", "Вид " + (i + 1));
+        b.innerHTML = '<img class="hs-cone" src="assets/hotspot-cone.svg" alt="" style="transform:rotate(' + c.plan.dir + 'deg)">' +
+                      '<span class="hs-glass"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="dot"></i></span>';
+        b.addEventListener("click", function () { goView(apt.code, c.idx); });
+        ov.appendChild(b); list.push({ el: b, x: c.plan.x, y: c.plan.y });
+      });
+      planPZ.setAnchors(list);
+    }
+
+    function fillCard(apt) {
+      $("card-code").textContent = apt.code;
+      var hasRooms = apt.rooms != null, hasArea = apt.area != null, hasPrice = apt.price != null;
+      $("card-rooms").textContent = hasRooms ? apt.rooms + " " + plural(apt.rooms, "спальня", "спальни", "спален") : "";
+      $("card-area").innerHTML = hasArea ? fmtArea(apt.area) : "";
+      $("card-price").textContent = hasPrice ? fmtPrice(apt.price) : "";
+      $("card-div").hidden = !((hasRooms || hasArea) && hasPrice);
+    }
+
     function showPlan(apt) {
-      $("plan-code").textContent = apt.code;
-      $("plan-sub").textContent = aptInfo(apt);
-      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);  // note только для плейсхолдера
+      fillCard(apt);
+      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);
+      planPZ.setView(apt.planView);
+      buildOverlay(apt);
       var img = $("plan-img");
       var src = apt.plan || "plan-placeholder.jpg";
       img.onload = function () { planPZ.setup(); };
-      if (img.getAttribute("src") !== src) {
-        img.setAttribute("src", src);            // onload пересоберёт зум
-      } else if (img.complete && img.naturalWidth) {
-        planPZ.setup();                          // та же картинка — просто сбросить зум
-      }
-      var first = apt.cameras.length ? apt.cameras[0].idx : 0;
-      $("plan-to-views").onclick = function () { goView(apt.code, first); };
+      if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      else if (img.complete && img.naturalWidth) planPZ.setup();
     }
 
     function step(delta) {
       var r = parseHash();
       if (!r.code) return;
       var apt = byCode[r.code]; if (!apt) return;
-      var cams = apt.cameras;
-      var pos = 0;
+      var cams = apt.cameras, pos = 0;
       for (var i = 0; i < cams.length; i++) { if (cams[i].idx === r.camIdx) { pos = i; break; } }
-      pos = (pos + delta + cams.length) % cams.length;   // зациклено
+      pos = (pos + delta + cams.length) % cams.length;
       goView(apt.code, cams[pos].idx);
     }
 
     // ---------- роутинг (хеш, переживает F5) ----------
     function parseHash() {
-      var h = location.hash.replace(/^#\/?/, "");           // "1-02-201/2"
+      var h = location.hash.replace(/^#\/?/, "");
       if (!h) return { code: null, camIdx: null };
       var parts = h.split("/");
-      var code = decodeURIComponent(parts[0]);
       var camIdx = parts[1] != null && parts[1] !== "" ? parseInt(parts[1], 10) : null;
-      return { code: code, camIdx: isNaN(camIdx) ? null : camIdx };
+      return { code: decodeURIComponent(parts[0]), camIdx: isNaN(camIdx) ? null : camIdx };
     }
-
-    // план квартиры — корень сайта (без хеша)
     function goPlan() {
-      if (!location.hash || location.hash === "#") { route(); } else { location.hash = ""; }
+      if (!location.hash || location.hash === "#") route(); else location.hash = "";
     }
-    // #/{code}/{camIdx}    -> вид из окна
     function goView(code, camIdx) {
-      var apt = byCode[code];
-      var idx = camIdx;
+      var apt = byCode[code], idx = camIdx;
       if (apt && (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; }))) {
         idx = apt.cameras.length ? apt.cameras[0].idx : 0;
       }
       var hash = "#/" + encodeURIComponent(code) + "/" + idx;
-      if (location.hash === hash) { route(); } else { location.hash = hash; }
+      if (location.hash === hash) route(); else location.hash = hash;
     }
-
     function setScreen(el) {
-      [screenPlan, screenB].forEach(function (s) {
-        s.classList.toggle("active", s === el);
-      });
+      [screenPlan, screenB].forEach(function (s) { s.classList.toggle("active", s === el); });
     }
-
     function route() {
       if (!DATA) return;
       var apt = byCode[APT_CODE];
-      if (!apt) { $("plan-sub").textContent = "Квартира " + APT_CODE + " не найдена"; return; }
+      if (!apt) { $("card-code").textContent = "Нет " + APT_CODE; return; }
       var r = parseHash();
       if (r.camIdx != null && apt.cameras.length) {
-        // вид из окна: #/<code>/<idx>
-        var idx = apt.cameras.some(function (c) { return c.idx === r.camIdx; })
-          ? r.camIdx : apt.cameras[0].idx;
+        var idx = apt.cameras.some(function (c) { return c.idx === r.camIdx; }) ? r.camIdx : apt.cameras[0].idx;
         setScreen(screenB);
         showViewer(apt, idx);
       } else {
-        // план квартиры (по умолчанию)
         setScreen(screenPlan);
         showPlan(apt);
       }
     }
 
     // ---------- события ----------
-    // из видов -> назад к плану квартиры
     $("btn-back").addEventListener("click", function () { goPlan(); });
     $("nav-prev").addEventListener("click", function () { step(-1); });
     $("nav-next").addEventListener("click", function () { step(1); });
     window.addEventListener("keydown", function (e) {
-      if (screenB.classList.contains("active")) {
-        if (e.key === "ArrowLeft") { step(-1); }
-        else if (e.key === "ArrowRight") { step(1); }
-        else if (e.key === "Escape") { goPlan(); }
-      }
+      if (!screenB.classList.contains("active")) return;
+      if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "Escape") goPlan();
     });
     window.addEventListener("hashchange", route);
 
-    // Жёсткий кламп поворота центра камеры по лимитам из таблицы
+    // кламп поворота центра камеры по лимитам из таблицы
     (function clampLoop() {
       if (viewer && curLimits && screenB.classList.contains("active")) {
         try {
           var y = viewer.getYaw(), p = viewer.getPitch();
-          if (curLimits.yawHalf < 180) {                 // кламп по кругу
+          if (curLimits.yawHalf < 180) {
             var d = wrapDeg(y - curLimits.yawCenter);
             if (d > curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter + curLimits.yawHalf), false);
             else if (d < -curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter - curLimits.yawHalf), false);

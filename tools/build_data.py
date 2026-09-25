@@ -50,6 +50,29 @@ USE_VIEWS = "--use-views" in sys.argv
 FETCH = "--fetch" in sys.argv
 
 
+def _arg(name):
+    if name in sys.argv:
+        i = sys.argv.index(name)
+        if i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return None
+
+
+# --feed <путь|URL> — взять другой фид вместо data/feed_snapshot.xml
+# (напр. дебажный https://sha-ridi.github.io/docs/Realty.xml)
+FEED_OVERRIDE = _arg("--feed")
+CALIB_PATH = os.path.join(DATA, "plan_calib.json")
+
+
+def full_code(num):
+    """Номер из фида -> код как в CSV: '1-10-02' и '1-10-1002' -> '1-10-1002'."""
+    m = re.match(r"^\s*(\d+)-(\d+)-(\d+)\s*$", num or "")
+    if not m:
+        return (num or "").strip()
+    b, ff, nn = m.groups()
+    return "%s-%s-%s" % (b, ff, nn) if len(nn) >= 3 else "%s-%s-%d" % (b, ff, int(ff) * 100 + int(nn))
+
+
 def fetch_feed(url, dst):
     """Скачать фид и атомарно заменить снимок dst. Кидает исключение при ошибке."""
     import urllib.request
@@ -74,7 +97,7 @@ def parse_feed(path):
     feed = {}
     feed_date = root.findtext("generation-date")
     for o in root.findall("offer"):
-        code = (o.findtext("number") or "").strip()
+        code = full_code(o.findtext("number"))
         if not code:
             continue
         area_el = o.find("area")
@@ -124,6 +147,7 @@ def parse_cameras(path):
                 "yaw": _to_float(row.get("RotYaw")),
                 "pitch": _to_float(row.get("RotPitch")),
                 "perp": _to_float(row.get("PerpendicularAngleDeg")),
+                "loc": [_to_float(row.get("LocX")), _to_float(row.get("LocY"))],
                 "yawMin": _to_float(row.get("RotXMin")),
                 "yawMax": _to_float(row.get("RotXMax")),
                 "pitchMin": _to_float(row.get("RotYMin")),
@@ -178,6 +202,33 @@ def multires_for(code, idx):
     }
 
 
+def apply_calib(apt, cal):
+    """Положения/направления камер на плане и мини-карте, плашка этажа, стартовый вид."""
+    if not cal:
+        return
+    (a, b, tx), (c, d, ty) = cal["worldToPlan"]
+    rot = cal.get("planRotDeg", 0.0)
+    mm = cal.get("minimap")
+    for cam in apt["cameras"]:
+        X, Y = cam.get("loc") or (None, None)
+        if X is None or Y is None:
+            continue
+        px, py = a * X + b * Y + tx, c * X + d * Y + ty
+        cam["plan"] = {"x": round(px, 1), "y": round(py, 1),
+                       "dir": round(((cam.get("yaw") or 0.0) + 90.0 + rot) % 360.0, 2)}
+        if mm:
+            t = mm["planToMini"]
+            cam["mini"] = {"x": round(t["mx0"] + (px - t["x0"]) * t["sx"], 2),
+                           "y": round(t["my0"] + (py - t["y0"]) * t["sy"], 2)}
+    if cal.get("floorLabel"):
+        fl = dict(cal["floorLabel"]); fl.setdefault("text", "%s этаж" % apt["floor"])
+        apt["floorLabel"] = fl
+    if cal.get("view"):
+        apt["planView"] = cal["view"]
+    if mm:
+        apt["minimap"] = {"svg": mm["svg"], "w": mm["w"], "h": mm["h"]}
+
+
 def main():
     if FETCH:
         try:
@@ -186,8 +237,18 @@ def main():
         except Exception as e:
             print("[!] fetch failed, using previous snapshot:", e)
 
-    feed, feed_date = parse_feed(XML_PATH)
+    feed_path = XML_PATH
+    if FEED_OVERRIDE:
+        if FEED_OVERRIDE.startswith("http"):
+            feed_path = os.path.join(DATA, "feed_override.xml")
+            n = fetch_feed(FEED_OVERRIDE, feed_path)
+            print("override feed fetched: %d bytes" % n)
+        else:
+            feed_path = FEED_OVERRIDE if os.path.isabs(FEED_OVERRIDE) else os.path.join(REPO, FEED_OVERRIDE)
+        print("feed:", feed_path)
+    feed, feed_date = parse_feed(feed_path)
     cams = parse_cameras(CSV_PATH)
+    calib = json.load(open(CALIB_PATH, encoding="utf-8")) if os.path.exists(CALIB_PATH) else {}
 
     apartments = []
     for code in sorted(cams.keys(), key=natural_key):
@@ -210,6 +271,7 @@ def main():
             "plan": plan_for(code),
             "cameras": c["cameras"],
         }
+        apply_calib(apt, calib.get(code))
         apartments.append(apt)
 
     out = {
