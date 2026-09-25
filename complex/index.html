@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <title>Vesper Погодинская — осмотр комплекса</title>
+  <style>
+    /* Отдельная страница: попасть можно только по прямой ссылке /complex */
+    :root { --bg: #000; --muted: #9aa3ab; --accent: #becac0; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      background: var(--bg); color: #f2f4f6;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    #orbit-stage {
+      position: fixed; inset: 0; overflow: hidden;
+      touch-action: none; cursor: grab;
+      user-select: none; -webkit-user-select: none;
+    }
+    #orbit-stage:active { cursor: grabbing; }
+    #orbit-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      user-select: none; -webkit-user-drag: none; pointer-events: none;
+    }
+    .orbit-loading {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 14px; background: #000; z-index: 3;
+    }
+    .orbit-loading[hidden] { display: none; }
+    .spinner {
+      width: 30px; height: 30px; margin-right: 12px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.15); border-top-color: var(--accent);
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="orbit-stage">
+    <img id="orbit-img" alt="Вид комплекса Vesper Погодинская" draggable="false">
+    <div class="orbit-loading" id="orbit-loading"><span class="spinner"></span>Загрузка…</div>
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    var stage = $("orbit-stage"), img = $("orbit-img");
+    var frames = [], loaded = [], count = 0, cur = 0;
+    var dragId = null, lastX = 0, accum = 0;
+    var PX_PER_FRAME = 5;     // чувствительность вращения
+    var DIR = -1;             // направление вращения
+
+    function pad(i) { return ("000" + i).slice(-3); }
+    function nearestLoaded(i) {
+      if (loaded[i]) return i;
+      for (var d = 1; d < count; d++) {
+        var a = (i - d + count) % count, b = (i + d) % count;
+        if (loaded[a]) return a;
+        if (loaded[b]) return b;
+      }
+      return 0;
+    }
+    function show(i) {
+      cur = ((i % count) + count) % count;
+      var j = nearestLoaded(cur);
+      if (frames[j]) img.src = frames[j].src;
+    }
+
+    fetch("manifest.json?ts=" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (m) {
+        count = m.count;
+        var ver = m.version ? ("?v=" + m.version) : "";   // кеш-бастинг после перегенерации
+        for (var i = 0; i < count; i++) {
+          (function (i) {
+            var im = new Image();
+            im.onload = function () {
+              loaded[i] = true;
+              if (i === 0) { $("orbit-loading").hidden = true; show(0); }
+            };
+            im.src = "frame_" + pad(i) + ".jpg" + ver;
+            frames[i] = im;
+          })(i);
+        }
+      })
+      .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });
+
+    stage.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    stage.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      stage.setPointerCapture(e.pointerId);
+      dragId = e.pointerId; lastX = e.clientX; accum = 0;
+    });
+    stage.addEventListener("pointermove", function (e) {
+      if (e.pointerId !== dragId) return;
+      accum += (e.clientX - lastX); lastX = e.clientX;
+      while (Math.abs(accum) >= PX_PER_FRAME) {
+        if (accum > 0) { show(cur + DIR); accum -= PX_PER_FRAME; }
+        else { show(cur - DIR); accum += PX_PER_FRAME; }
+      }
+    });
+    function up(e) { if (e.pointerId === dragId) dragId = null; }
+    stage.addEventListener("pointerup", up);
+    stage.addEventListener("pointercancel", up);
+  })();
+  </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-23T11:54:30.768717+00:00",
+ "generatedAt": "2026-09-25T07:19:20.403959+00:00",
  "feedDate": "2026-09-10T18:48:15+05:00",
  "placeholderImages": false,
  "counts": {
@@ -42,7 +42,7 @@
    "rooms": 2,
    "area": 154.59,
    "price": 626646024.0,
-   "plan": "plans/1-02-201.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -91,7 +91,7 @@
    "rooms": 2,
    "area": 163.41,
    "price": 633344478.0,
-   "plan": "plans/1-02-202.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -103,16 +103,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-02-202_0",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -124,16 +115,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-02-202_1",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 2,
@@ -145,16 +127,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-02-202_2",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     }
    ]
   },
@@ -167,7 +140,7 @@
    "rooms": 2,
    "area": 138.5,
    "price": 547019600.0,
-   "plan": "plans/1-02-203.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -179,16 +152,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-02-203_0",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -200,16 +164,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-02-203_1",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 2,
@@ -234,7 +189,7 @@
    "rooms": 2,
    "area": 173.3,
    "price": 689352740.0,
-   "plan": "plans/1-02-204.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -283,7 +238,7 @@
    "rooms": 2,
    "area": 162.38,
    "price": 667446752.0,
-   "plan": "plans/1-03-301.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -332,7 +287,7 @@
    "rooms": 2,
    "area": 160.82,
    "price": 546321622.0,
-   "plan": "plans/1-03-302.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -381,7 +336,7 @@
    "rooms": 2,
    "area": 143.11,
    "price": 495418198.0,
-   "plan": "plans/1-03-303.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -430,7 +385,7 @@
    "rooms": 3,
    "area": 181.84,
    "price": 740179720.0,
-   "plan": "plans/1-03-304.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -479,7 +434,7 @@
    "rooms": 2,
    "area": 159.45,
    "price": 682254660.0,
-   "plan": "plans/1-04-401.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -528,7 +483,7 @@
    "rooms": 2,
    "area": 157.91,
    "price": 558401342.0,
-   "plan": "plans/1-04-402.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -577,7 +532,7 @@
    "rooms": 2,
    "area": 138.85,
    "price": 491001370.0,
-   "plan": "plans/1-04-403.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -626,7 +581,7 @@
    "rooms": 2,
    "area": 180.06,
    "price": 756035928.0,
-   "plan": "plans/1-04-404.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -675,7 +630,7 @@
    "rooms": null,
    "area": null,
    "price": null,
-   "plan": "plans/1-05-501.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -736,7 +691,7 @@
    "rooms": 2,
    "area": 143.13,
    "price": 516799491.0,
-   "plan": "plans/1-05-502.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -785,7 +740,7 @@
    "rooms": 3,
    "area": 181.52,
    "price": 839330328.0,
-   "plan": "plans/1-05-503.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1468,7 +1423,7 @@
    "rooms": null,
    "area": null,
    "price": null,
-   "plan": "plans/1-10-1001.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1553,7 +1508,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_0",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 1,
@@ -1565,7 +1529,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_1",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 2,
@@ -1577,7 +1550,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_2",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 3,
@@ -1589,7 +1571,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_3",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     },
     {
      "idx": 4,
@@ -1601,7 +1592,16 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg"
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_4",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg",
+      "tileResolution": 512,
+      "maxLevel": 4,
+      "cubeResolution": 2600
+     }
     }
    ]
   },
@@ -1614,7 +1614,7 @@
    "rooms": null,
    "area": null,
    "price": null,
-   "plan": "plans/1-11-1101.jpg",
+   "plan": "plan-placeholder.jpg",
    "cameras": [
     {
      "idx": 0,
@@ -1626,16 +1626,7 @@
      "yawMax": 100.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/1-11-1101_0.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-11-1101_0",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -1647,16 +1638,7 @@
      "yawMax": 60.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/1-11-1101_1.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-11-1101_1",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 2,
@@ -1668,16 +1650,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "panorama.jpg",
-     "multiRes": {
-      "basePath": "views/multires/1-11-1101_2",
-      "path": "/%l/%s%y_%x",
-      "fallbackPath": "/fallback/%s",
-      "extension": "jpg",
-      "tileResolution": 512,
-      "maxLevel": 4,
-      "cubeResolution": 2600
-     }
+     "image": "panorama.jpg"
     },
     {
      "idx": 3,
@@ -1910,7 +1883,7 @@
      "yawMax": 50.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-02-205_0.jpg"
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -1922,7 +1895,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-02-205_1.jpg"
+     "image": "panorama.jpg"
     }
    ]
   },
@@ -2095,7 +2068,7 @@
      "yawMax": 70.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-03-305_0.jpg"
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -2107,7 +2080,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-03-305_1.jpg"
+     "image": "panorama.jpg"
     }
    ]
   },
@@ -2280,7 +2253,7 @@
      "yawMax": 50.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-04-405_0.jpg"
+     "image": "panorama.jpg"
     },
     {
      "idx": 1,
@@ -2292,7 +2265,7 @@
      "yawMax": 80.0,
      "pitchMin": -90.0,
      "pitchMax": 40.0,
-     "image": "views/2-04-405_1.jpg"
+     "image": "panorama.jpg"
     }
    ]
   },
