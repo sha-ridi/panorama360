@@ -167,6 +167,18 @@
     /* ==========================================================================
        Брейкпоинты: 375 (база) / 768 / 1280 / 1536
        ========================================================================== */
+    /* экран загрузки плана — как на /complex */
+    .loading {
+      position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+      background: #000; color: #9aa3ab; font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .loading[hidden] { display: none; }
+    .spinner {
+      width: 30px; height: 30px; margin-right: 12px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.15); border-top-color: #becac0;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     /* «сделано в MARTA» — снизу слева, под карточкой / кнопками */
     .credit {
       position: fixed; z-index: 21; left: 12px; bottom: calc(var(--ui-bottom) - 34px);
@@ -203,6 +215,7 @@
       <div class="div" id="card-div">|</div>
       <div class="price" id="card-price"></div>
     </div>
+    <div class="loading" id="plan-loading"><span class="spinner"></span>Загрузка…</div>
   </section>
 
   <!-- ЭКРАН ВИДА -->
@@ -269,7 +282,7 @@
           DATA.apartments.forEach(function (a) { byCode[a.code] = a; });
           route();
         })
-        .catch(function (e) { $("card-code").textContent = "Ошибка: " + e.message; });
+        .catch(function (e) { $("card-code").textContent = "Ошибка: " + e.message; $("plan-loading").textContent = "Не удалось загрузить данные"; });
     }
 
     // ---------- ЭКРАН ВИДА ----------
@@ -473,6 +486,7 @@
         var cx = view ? view.cx : iw / 2, cy = view ? view.cy : ih / 2;
         tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;
         clamp(); apply();
+        $("plan-loading").hidden = true;                  // план на месте, метки расставлены
       }
       function zoomAt(mx, my, factor) {
         var ns = Math.max(minS, Math.min(maxS, s * factor));
