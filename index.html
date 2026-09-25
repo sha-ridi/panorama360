@@ -320,6 +320,48 @@
       });
     }
 
+    // ---------- фоновая подгрузка панорам квартиры ----------
+    // Пока открыт план, тихо качаем плитки видов (уровни 1–3 — их Pannellum берёт на старте
+    // на телефоне), чтобы вид открывался сразу из кеша. На время загрузки вида — пауза.
+    var preload = (function () {
+      var queue = [], active = 0, paused = false, started = false, keep = [];
+      var CONCURRENCY = 3, MAX_LEVEL = 3, FACES = ["f", "l", "r", "u", "d", "b"];
+      function tiles(mr, level) {
+        var n = Math.ceil(mr.cubeResolution / Math.pow(2, mr.maxLevel - level) / mr.tileResolution), out = [];
+        FACES.forEach(function (f) {
+          for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+            out.push(mr.basePath + mr.path.replace("%l", level).replace("%s", f).replace("%y", y).replace("%x", x) + "." + mr.extension);
+          }
+        });
+        return out;
+      }
+      function pump() {
+        while (!paused && active < CONCURRENCY && queue.length) {
+          var im = new Image();
+          im.crossOrigin = "anonymous";               // как у Pannellum — чтобы совпал ключ кеша
+          active++;
+          im.onload = im.onerror = function () { active--; pump(); };
+          im.src = queue.shift();
+          keep.push(im);                              // держим ссылку — картинка остаётся в памяти
+        }
+      }
+      return {
+        start: function (apt) {
+          if (started) return;
+          var c = navigator.connection;
+          if (c && (c.saveData || /2g/.test(c.effectiveType || ""))) return;
+          started = true;
+          var mrs = apt.cameras.map(function (cam) { return cam.multiRes; }).filter(Boolean);
+          for (var lv = 1; lv <= MAX_LEVEL; lv++) {   // сначала грубые уровни всех видов, потом детальные
+            mrs.forEach(function (mr) { if (lv <= mr.maxLevel) queue = queue.concat(tiles(mr, lv)); });
+          }
+          pump();
+        },
+        pause: function () { paused = true; },
+        resume: function () { paused = false; pump(); }
+      };
+    })();
+
     function showViewer(apt, camIdx) {
       var cams = apt.cameras;
       var pos = 0;
@@ -353,6 +395,8 @@
 
       // один вьювер (один WebGL-контекст); каждая камера — своя сцена
       var sceneId = apt.code + "/" + cam.idx;
+      if (sceneId !== currentScene || !viewer) preload.pause();   // не мешаем грузиться открываемому виду
+      preload.start(apt);                                          // если зашли сразу по ссылке на вид
       if (!viewer) {
         scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
         var cfg = {}; cfg[sceneId] = sceneConfig(cam);
@@ -360,6 +404,8 @@
           default: { firstScene: sceneId, sceneFadeDuration: 250, showControls: false },
           scenes: cfg
         });
+        viewer.on("load", function () { preload.resume(); });   // вид загрузился — докачиваем остальные
+        viewer.on("error", function () { preload.resume(); });
       } else {
         if (!scenesAdded[sceneId]) { viewer.addScene(sceneId, sceneConfig(cam)); scenesAdded[sceneId] = true; }
         if (sceneId !== currentScene) { viewer.loadScene(sceneId, 0, yaw, 95); currentScene = sceneId; }
@@ -523,9 +569,9 @@
       buildOverlay(apt);
       var img = $("plan-img");
       var src = apt.plan || "plan-placeholder.jpg";
-      img.onload = function () { planPZ.setup(); };
+      img.onload = function () { planPZ.setup(); setTimeout(function () { preload.start(apt); }, 800); };
       if (img.getAttribute("src") !== src) img.setAttribute("src", src);
-      else if (img.complete && img.naturalWidth) planPZ.setup();
+      else if (img.complete && img.naturalWidth) { planPZ.setup(); preload.start(apt); }
     }
 
     function step(delta) {
