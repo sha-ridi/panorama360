@@ -28,25 +28,20 @@
     }
 
     * { box-sizing: border-box; }
-    /* iOS 26 Safari: под статус-бар и плавающую панель заходит только обычный контент,
-       а под position:fixed Safari рисует сплошную заливку (чёрные полосы). Поэтому экраны —
-       absolute на всю «большую» высоту экрана (100lvh), без fixed. */
-    html { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
-    body { position: relative; height: 100vh; height: 100lvh; }
     html, body {
-      margin: 0; padding: 0; overflow: hidden;
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
       background: #000; color: #fff;
       font-family: 'Cera Pro', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
     button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
 
-    .screen { position: absolute; inset: 0; display: none; }
+    .screen { position: fixed; inset: 0; display: none; }
     .screen.active { display: block; }
 
     /* лого — поверх обоих экранов */
     .logo {
-      position: absolute; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
       width: 145px; height: 32px; pointer-events: none; user-select: none;
     }
 
@@ -172,16 +167,9 @@
     /* ==========================================================================
        Брейкпоинты: 375 (база) / 768 / 1280 / 1536
        ========================================================================== */
-    /* iOS Safari: окно страницы кончается над нижней панелью, а всё ниже Safari рисует
-       только если html не обрезает контент. Разрешаем фону (план/панорама) уходить под
-       панель, а прокрутку страницы гасим в JS. */
-    @supports (-webkit-touch-callout: none) {
-      html, body { overflow: visible; }
-      #plan-stage, #stage { bottom: -100px; }
-    }
     /* «сделано в MARTA» — снизу слева, под карточкой / кнопками */
     .credit {
-      position: absolute; z-index: 21; left: 12px; bottom: calc(var(--ui-bottom) - 34px);
+      position: fixed; z-index: 21; left: 12px; bottom: calc(var(--ui-bottom) - 34px);
       padding: 6px 4px; display: flex; align-items: baseline; gap: 4px;
       font-family: 'Montserrat', 'Cera Pro', sans-serif; color: #fff; text-decoration: none;
       background: none; -webkit-tap-highlight-color: transparent;
@@ -381,10 +369,6 @@
 
     // ---------- ЭКРАН ПЛАНА ----------
     // Панзум (перетаскивание + колесо + щипок) и метки, привязанные к пикселям плана.
-    // страница не должна прокручиваться (на iOS фон заходит под панель Safari)
-    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
-    window.addEventListener("scroll", function () { if (window.scrollY) window.scrollTo(0, 0); });
-
     var planPZ = (function () {
       var img = $("plan-img"), stage = $("plan-stage");
       var s = 1, tx = 0, ty = 0, minS = 1, maxS = 1, iw = 1, ih = 1;
@@ -432,16 +416,16 @@
         ctx.drawImage(img, dx, dy, dw, dh);
       }
       function setup() {
-        var cw = stage.clientWidth, ch = Math.min(stage.clientHeight, window.innerHeight || stage.clientHeight);
+        var cw = stage.clientWidth, ch = stage.clientHeight;
         iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
         img.style.width = iw + "px"; img.style.height = ih + "px";
         var fit = Math.min(cw / iw, ch / ih);
-        var cover = Math.max(cw / iw, stage.clientHeight / ih);   // план всегда закрывает всю сцену — за край не выйти
+        var cover = Math.max(cw / iw, ch / ih);                // план всегда закрывает всю сцену — за край не выйти
         minS = Math.max(fit * 2, cover); maxS = Math.max(fit * 7, minS);   // мин 2×, макс 7× от вписывания
         var z = view && view.zoom ? view.zoom : 3.5;          // старт — как в макете
         s = Math.max(minS, Math.min(maxS, fit * z));
         var cx = view ? view.cx : iw / 2, cy = view ? view.cy : ih / 2;
-        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;           // ch — видимая часть, без хвоста под панелью
+        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;
         clamp(); apply();
       }
       function zoomAt(mx, my, factor) {
