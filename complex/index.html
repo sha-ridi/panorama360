@@ -4,18 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
   <title>Vesper Погодинская — осмотр комплекса</title>
   <style>
     /* Отдельная страница: попасть можно только по прямой ссылке /complex */
     :root { --bg: #000; --muted: #9aa3ab; --accent: #becac0; }
     * { box-sizing: border-box; }
+    /* iOS 26 Safari: без position:fixed, иначе сверху/снизу чёрные полосы */
+    html { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
+    body { position: relative; height: 100vh; height: 100lvh; }
     html, body {
-      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      margin: 0; padding: 0; overflow: hidden;
       background: var(--bg); color: #f2f4f6;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     #orbit-stage {
-      position: fixed; inset: 0; overflow: hidden;
+      position: absolute; inset: 0; overflow: hidden; background: #000;
       touch-action: none; cursor: grab;
       user-select: none; -webkit-user-select: none;
     }
@@ -41,13 +45,31 @@
     @media (min-width: 1280px) { :root { --logo-top: 28px; } }
     @media (min-width: 1536px) { :root { --logo-top: 32px; } }
     .logo {
-      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      position: absolute; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
       width: 145px; height: 32px; pointer-events: none; user-select: none; -webkit-user-drag: none;
     }
+    @supports (-webkit-touch-callout: none) {       /* iOS: картинка под нижнюю панель Safari */
+      html, body { overflow: visible; }
+      #orbit-stage { bottom: -100px; }
+    }
+    /* «сделано в MARTA» — снизу слева, как на основной странице */
+    .credit {
+      position: absolute; z-index: 21; left: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+      padding: 6px 4px; display: flex; align-items: baseline; gap: 4px;
+      font-family: 'Montserrat', sans-serif; color: #fff; text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .credit[hidden] { display: none; }   /* скрыто: чтобы вернуть, убрать атрибут hidden у <a class="credit"> */
+    .credit span { font-size: 9px; font-weight: 400; }
+    .credit b { font-size: 13px; font-weight: 800; letter-spacing: .02em; }
+    @media (min-width: 768px) { .credit { left: 20px; bottom: calc(env(safe-area-inset-bottom, 0px) + 26px); } }
+    @media (min-width: 1280px) { .credit { left: 28px; bottom: 34px; } }
+    @media (min-width: 1536px) { .credit { bottom: 42px; } }
   </style>
 </head>
 <body>
   <img class="logo" src="../assets/logo-ru-white.svg" alt="Веспер Погодинская" draggable="false">
+  <a class="credit" hidden href="https://www.marta.pictures/pictures" target="_blank" rel="noopener"><span>сделано в</span><b>MARTA</b></a>
   <div id="orbit-stage">
     <img id="orbit-img" alt="Вид комплекса Vesper Погодинская" draggable="false">
     <div class="orbit-loading" id="orbit-loading"><span class="spinner"></span>Загрузка…</div>
@@ -101,6 +123,8 @@
       })
       .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });
 
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    window.addEventListener("scroll", function () { if (window.scrollY) window.scrollTo(0, 0); });
     stage.addEventListener("dragstart", function (e) { e.preventDefault(); });
     stage.addEventListener("pointerdown", function (e) {
       e.preventDefault();

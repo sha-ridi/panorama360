@@ -6,6 +6,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <title>Веспер Погодинская — виды из окна</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
   <style>
     /* ==========================================================================
        Дизайн по макету Figma (iPhone 16/17 Pro Max). Mobile-first: база — 375px,
@@ -27,20 +28,25 @@
     }
 
     * { box-sizing: border-box; }
+    /* iOS 26 Safari: под статус-бар и плавающую панель заходит только обычный контент,
+       а под position:fixed Safari рисует сплошную заливку (чёрные полосы). Поэтому экраны —
+       absolute на всю «большую» высоту экрана (100lvh), без fixed. */
+    html { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
+    body { position: relative; height: 100vh; height: 100lvh; }
     html, body {
-      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      margin: 0; padding: 0; overflow: hidden;
       background: #000; color: #fff;
       font-family: 'Cera Pro', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
     button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
 
-    .screen { position: fixed; inset: 0; display: none; }
+    .screen { position: absolute; inset: 0; display: none; }
     .screen.active { display: block; }
 
     /* лого — поверх обоих экранов */
     .logo {
-      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      position: absolute; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
       width: 145px; height: 32px; pointer-events: none; user-select: none;
     }
 
@@ -52,6 +58,7 @@
     #plan-stage:active { cursor: grabbing; }
     /* фон: план + растянутые краевые пиксели, лёгкое размытие.
        Без z-index — чтобы стекло меток смешивалось (mix-blend) с планом под ним. */
+    #plan-stage, #plan-stage * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; }   /* без синего выделения при перетаскивании */
     #plan-bg { position: absolute; inset: 0; pointer-events: none; filter: blur(4px); transform: scale(1.04); }
     #plan-img {
       position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform;
@@ -165,6 +172,25 @@
     /* ==========================================================================
        Брейкпоинты: 375 (база) / 768 / 1280 / 1536
        ========================================================================== */
+    /* iOS Safari: окно страницы кончается над нижней панелью, а всё ниже Safari рисует
+       только если html не обрезает контент. Разрешаем фону (план/панорама) уходить под
+       панель, а прокрутку страницы гасим в JS. */
+    @supports (-webkit-touch-callout: none) {
+      html, body { overflow: visible; }
+      #plan-stage, #stage { bottom: -100px; }
+    }
+    /* «сделано в MARTA» — снизу слева, под карточкой / кнопками */
+    .credit {
+      position: absolute; z-index: 21; left: 12px; bottom: calc(var(--ui-bottom) - 34px);
+      padding: 6px 4px; display: flex; align-items: baseline; gap: 4px;
+      font-family: 'Montserrat', 'Cera Pro', sans-serif; color: #fff; text-decoration: none;
+      background: none; -webkit-tap-highlight-color: transparent;
+    }
+    .credit[hidden] { display: none; }   /* скрыто: чтобы вернуть, убрать атрибут hidden у <a class="credit"> */
+    .credit span { font-size: 9px; font-weight: 400; }
+    .credit b { font-size: 13px; font-weight: 800; letter-spacing: .02em; }
+    @media (min-width: 768px) { .credit { left: 20px; bottom: calc(var(--ui-bottom) - 6px); } }
+    @media (min-width: 1280px) { .credit { left: 28px; } }
     @media (min-width: 768px)  { :root { --ui-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px); --logo-top: 24px; } }
     @media (min-width: 1280px) { :root { --ui-bottom: 40px; --logo-top: 28px; } }
     @media (min-width: 1536px) { :root { --ui-bottom: 48px; --logo-top: 32px; } }
@@ -173,6 +199,7 @@
 <body>
 
   <img class="logo" src="assets/logo-ru-white.svg" alt="Веспер Погодинская">
+  <a class="credit" hidden href="https://www.marta.pictures/pictures" target="_blank" rel="noopener"><span>сделано в</span><b>MARTA</b></a>
 
   <!-- ЭКРАН ПЛАНА -->
   <section id="screen-plan" class="screen">
@@ -354,6 +381,10 @@
 
     // ---------- ЭКРАН ПЛАНА ----------
     // Панзум (перетаскивание + колесо + щипок) и метки, привязанные к пикселям плана.
+    // страница не должна прокручиваться (на iOS фон заходит под панель Safari)
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    window.addEventListener("scroll", function () { if (window.scrollY) window.scrollTo(0, 0); });
+
     var planPZ = (function () {
       var img = $("plan-img"), stage = $("plan-stage");
       var s = 1, tx = 0, ty = 0, minS = 1, maxS = 1, iw = 1, ih = 1;
@@ -401,15 +432,16 @@
         ctx.drawImage(img, dx, dy, dw, dh);
       }
       function setup() {
-        var cw = stage.clientWidth, ch = stage.clientHeight;
+        var cw = stage.clientWidth, ch = Math.min(stage.clientHeight, window.innerHeight || stage.clientHeight);
         iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
         img.style.width = iw + "px"; img.style.height = ih + "px";
         var fit = Math.min(cw / iw, ch / ih);
-        minS = fit * 2; maxS = fit * 7;                       // мин 2×, макс 7× от вписывания
+        var cover = Math.max(cw / iw, stage.clientHeight / ih);   // план всегда закрывает всю сцену — за край не выйти
+        minS = Math.max(fit * 2, cover); maxS = Math.max(fit * 7, minS);   // мин 2×, макс 7× от вписывания
         var z = view && view.zoom ? view.zoom : 3.5;          // старт — как в макете
         s = Math.max(minS, Math.min(maxS, fit * z));
         var cx = view ? view.cx : iw / 2, cy = view ? view.cy : ih / 2;
-        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;
+        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;           // ch — видимая часть, без хвоста под панелью
         clamp(); apply();
       }
       function zoomAt(mx, my, factor) {
@@ -492,8 +524,9 @@
 
     function fillCard(apt) {
       $("card-code").textContent = apt.code;
-      var hasRooms = apt.rooms != null, hasArea = apt.area != null, hasPrice = apt.price != null;
-      $("card-rooms").textContent = hasRooms ? apt.rooms + " " + plural(apt.rooms, "спальня", "спальни", "спален") : "";
+      var beds = apt.bedrooms != null ? apt.bedrooms : apt.rooms;   // спальни из калибровки, иначе комнаты из фида
+      var hasRooms = beds != null, hasArea = apt.area != null, hasPrice = apt.price != null;
+      $("card-rooms").textContent = hasRooms ? beds + " " + plural(beds, "спальня", "спальни", "спален") : "";
       $("card-area").innerHTML = hasArea ? fmtArea(apt.area) : "";
       $("card-price").textContent = hasPrice ? fmtPrice(apt.price) : "";
       $("card-div").hidden = !((hasRooms || hasArea) && hasPrice);

@@ -225,6 +225,8 @@ def apply_calib(apt, cal):
         apt["floorLabel"] = fl
     if cal.get("view"):
         apt["planView"] = cal["view"]
+    if cal.get("bedrooms") is not None:           # спален в фиде нет — задаём вручную
+        apt["bedrooms"] = cal["bedrooms"]
     if mm:
         apt["minimap"] = {"svg": mm["svg"], "w": mm["w"], "h": mm["h"]}
 
