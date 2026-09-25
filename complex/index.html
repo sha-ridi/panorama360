@@ -10,16 +10,13 @@
     /* Отдельная страница: попасть можно только по прямой ссылке /complex */
     :root { --bg: #000; --muted: #9aa3ab; --accent: #becac0; }
     * { box-sizing: border-box; }
-    /* iOS 26 Safari: без position:fixed, иначе сверху/снизу чёрные полосы */
-    html { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
-    body { position: relative; height: 100vh; height: 100lvh; }
     html, body {
-      margin: 0; padding: 0; overflow: hidden;
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
       background: var(--bg); color: #f2f4f6;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     #orbit-stage {
-      position: absolute; inset: 0; overflow: hidden; background: #000;
+      position: fixed; inset: 0; overflow: hidden;
       touch-action: none; cursor: grab;
       user-select: none; -webkit-user-select: none;
     }
@@ -45,16 +42,12 @@
     @media (min-width: 1280px) { :root { --logo-top: 28px; } }
     @media (min-width: 1536px) { :root { --logo-top: 32px; } }
     .logo {
-      position: absolute; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
       width: 145px; height: 32px; pointer-events: none; user-select: none; -webkit-user-drag: none;
-    }
-    @supports (-webkit-touch-callout: none) {       /* iOS: картинка под нижнюю панель Safari */
-      html, body { overflow: visible; }
-      #orbit-stage { bottom: -100px; }
     }
     /* «сделано в MARTA» — снизу слева, как на основной странице */
     .credit {
-      position: absolute; z-index: 21; left: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+      position: fixed; z-index: 21; left: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
       padding: 6px 4px; display: flex; align-items: baseline; gap: 4px;
       font-family: 'Montserrat', sans-serif; color: #fff; text-decoration: none;
       -webkit-tap-highlight-color: transparent;
@@ -123,8 +116,6 @@
       })
       .catch(function () { $("orbit-loading").textContent = "Не удалось загрузить облёт"; });
 
-    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
-    window.addEventListener("scroll", function () { if (window.scrollY) window.scrollTo(0, 0); });
     stage.addEventListener("dragstart", function (e) { e.preventDefault(); });
     stage.addEventListener("pointerdown", function (e) {
       e.preventDefault();
