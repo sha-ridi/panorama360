@@ -6,6 +6,22 @@
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
   <title>Vesper Погодинская — осмотр комплекса</title>
+  <!-- iPhone Safari: та же «разгонная полоса», что на основной странице (прокрутка на 62px),
+       чтобы кадр заходил под статус-бар и нижнюю панель. Кадр рисуется в canvas: середина — как
+       обычно (cover по видимой части), а верхняя и нижняя полосы кадра растягиваются на поля под панелями. -->
+  <script>
+  (function () {
+    if (!/iPhone|iPod/.test(navigator.userAgent) && !/[?&]runway\b/.test(location.search)) return;
+    document.documentElement.classList.add("ios-runway");
+    var OFF = 62;
+    function fix() { if (Math.abs(window.scrollY - OFF) > 1) window.scrollTo(0, OFF); }
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("DOMContentLoaded", fix);
+    window.addEventListener("load", function () { fix(); setTimeout(fix, 300); });
+    window.addEventListener("resize", function () { setTimeout(fix, 50); });
+    window.addEventListener("scroll", fix);
+  })();
+  </script>
   <style>
     /* Отдельная страница: попасть можно только по прямой ссылке /complex */
     :root { --bg: #000; --muted: #9aa3ab; --accent: #becac0; }
@@ -58,6 +74,14 @@
     @media (min-width: 768px) { .credit { left: 20px; bottom: calc(env(safe-area-inset-bottom, 0px) + 26px); } }
     @media (min-width: 1280px) { .credit { left: 28px; bottom: 34px; } }
     @media (min-width: 1536px) { .credit { bottom: 42px; } }
+    #orbit-canvas { display: none; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .ios-runway { --off: 62px; --bleed: 140px; }
+    .ios-runway, .ios-runway body { overflow: visible !important; height: auto !important; }
+    .ios-runway body { height: calc(var(--off) + 100dvh + var(--bleed)) !important; position: relative; }
+    .ios-runway #orbit-stage { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+    .ios-runway #orbit-img { display: none; }
+    .ios-runway #orbit-canvas { display: block; }
+    .ios-runway .logo { position: absolute; top: calc(var(--off) + var(--logo-top)); }
   </style>
 </head>
 <body>
@@ -65,6 +89,7 @@
   <a class="credit" hidden href="https://www.marta.pictures/pictures" target="_blank" rel="noopener"><span>сделано в</span><b>MARTA</b></a>
   <div id="orbit-stage">
     <img id="orbit-img" alt="Вид комплекса Vesper Погодинская" draggable="false">
+    <canvas id="orbit-canvas"></canvas>
     <div class="orbit-loading" id="orbit-loading"><span class="spinner"></span>Загрузка…</div>
   </div>
 
@@ -89,11 +114,36 @@
       }
       return 0;
     }
+    // iPhone: рисуем кадр в canvas — середина без искажений (cover по видимой части экрана),
+    // верхние TOP и нижние BOT доли кадра растягиваются на поля под статус-баром и панелью Safari
+    var runway = document.documentElement.classList.contains("ios-runway");
+    var cv = $("orbit-canvas"), shown = null;
+    var OFF = 62, TOP = 0.3, BOT = 0.2;
+    function paint(im) {
+      var W = stage.clientWidth, H = stage.clientHeight;
+      var dpr = Math.min(window.devicePixelRatio || 1, 3);
+      if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) {
+        cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      }
+      var ctx = cv.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var iw = im.naturalWidth, ih = im.naturalHeight;
+      var vis = window.innerHeight;                                  // видимая часть между панелями
+      var s = Math.max(W / iw, vis / ih), dw = iw * s, dx = (W - dw) / 2, dy = OFF + (vis - ih * s) / 2;
+      var t = ih * TOP, b = ih * (1 - BOT);
+      var y1 = Math.max(0, dy + t * s), y2 = dy + b * s;
+      ctx.drawImage(im, 0, 0, iw, t, dx, 0, dw, y1);                 // верх: растянут до края
+      ctx.drawImage(im, 0, t, iw, b - t, dx, y1, dw, y2 - y1);       // середина: как есть
+      ctx.drawImage(im, 0, b, iw, ih - b, dx, y2, dw, H - y2);       // низ: растянут до края
+    }
     function show(i) {
       cur = ((i % count) + count) % count;
       var j = nearestLoaded(cur);
-      if (frames[j]) img.src = frames[j].src;
+      if (!frames[j]) return;
+      if (runway) { shown = frames[j]; paint(shown); }
+      else img.src = frames[j].src;
     }
+    window.addEventListener("resize", function () { if (runway && shown) setTimeout(function () { paint(shown); }, 60); });
 
     fetch("manifest.json?ts=" + Date.now())
       .then(function (r) { return r.json(); })
