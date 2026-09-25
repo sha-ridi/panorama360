@@ -68,7 +68,7 @@
     /* лого — поверх обоих экранов */
     .logo {
       position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
-      width: 145px; height: 32px; pointer-events: none; user-select: none;
+      width: 188.5px; height: 41.6px; pointer-events: none; user-select: none;   /* макет ×1.3 */
     }
 
     /* ---------- ЭКРАН ПЛАНА ---------- */
@@ -93,18 +93,18 @@
       pointer-events: auto; cursor: pointer;
     }
     .hs-cone {
-      position: absolute; left: -27.414px; top: -32px; width: 52.0048px; height: 32px;
-      transform-origin: 27.414px 32px; pointer-events: none;
+      position: absolute; left: -31.526px; top: -36.8px; width: 59.806px; height: 36.8px;   /* макет ×1.15 */
+      transform-origin: 31.526px 36.8px; pointer-events: none;
     }
     .hs-glass {
-      position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 296px;
+      position: absolute; left: -18.4px; top: -18.4px; width: 36.8px; height: 36.8px; border-radius: 296px;
       box-shadow: 0 8px 40px rgba(0, 0, 0, .12);
     }
     .hs-glass i { position: absolute; inset: 0; border-radius: 296px; }
     .hs-glass .g1 { background: rgba(255, 255, 255, .65); }
     .hs-glass .g2 { background: #ddd; mix-blend-mode: color-burn; }
     .hs-glass .g3 { background: #f7f7f7; mix-blend-mode: darken; }
-    .hs-glass .dot { inset: auto; left: 11px; top: 11px; width: 10px; height: 10px; background: #fff; }
+    .hs-glass .dot { inset: auto; left: 12.65px; top: 12.65px; width: 11.5px; height: 11.5px; background: #fff; }
     .hotspot:focus-visible .hs-glass { outline: 2px solid #fff; outline-offset: 2px; }
 
     .floor-pill {
@@ -137,7 +137,7 @@
     .apt-card [hidden] { display: none; }
 
     .note {
-      position: absolute; z-index: 6; top: calc(var(--logo-top) + 44px); left: 50%; transform: translateX(-50%);
+      position: absolute; z-index: 6; top: calc(var(--logo-top) + 57px); left: 50%; transform: translateX(-50%);
       font-size: 11px; color: rgba(255,255,255,.85); white-space: nowrap; pointer-events: none;
       background: rgba(0,0,0,.45); padding: 4px 12px; border-radius: 999px;
     }

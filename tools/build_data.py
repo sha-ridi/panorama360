@@ -214,6 +214,9 @@ def apply_calib(apt, cal):
         if X is None or Y is None:
             continue
         px, py = a * X + b * Y + tx, c * X + d * Y + ty
+        hs = (cal.get("hotspots") or {}).get(str(cam["idx"]))
+        if hs:                                        # ручная точка на плане (у окна) вместо UE-координат
+            px, py = float(hs[0]), float(hs[1])
         cam["plan"] = {"x": round(px, 1), "y": round(py, 1),
                        "dir": round(((cam.get("yaw") or 0.0) + 90.0 + rot) % 360.0, 2)}
         if mm:
