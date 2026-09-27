@@ -6,6 +6,21 @@
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
   <title>Vesper Погодинская — осмотр комплекса</title>
+  <!-- iPhone Safari: «разгонная полоса» (прокрутка на 62px), чтобы кадр заходил под статус-бар
+       и нижнюю панель. Кадр не растягивается — просто cover на удлинённую сцену (чуть крупнее). -->
+  <script>
+  (function () {
+    if (!/iPhone|iPod/.test(navigator.userAgent) && !/[?&]runway\b/.test(location.search)) return;
+    document.documentElement.classList.add("ios-runway");
+    var OFF = 62;
+    function fix() { if (Math.abs(window.scrollY - OFF) > 1) window.scrollTo(0, OFF); }
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("DOMContentLoaded", fix);
+    window.addEventListener("load", function () { fix(); setTimeout(fix, 300); });
+    window.addEventListener("resize", function () { setTimeout(fix, 50); });
+    window.addEventListener("scroll", fix);
+  })();
+  </script>
   <style>
     /* Отдельная страница: попасть можно только по прямой ссылке /complex */
     :root { --bg: #000; --muted: #9aa3ab; --accent: #becac0; }
@@ -58,6 +73,11 @@
     @media (min-width: 768px) { .credit { left: 20px; bottom: calc(env(safe-area-inset-bottom, 0px) + 26px); } }
     @media (min-width: 1280px) { .credit { left: 28px; bottom: 34px; } }
     @media (min-width: 1536px) { .credit { bottom: 42px; } }
+    .ios-runway { --off: 62px; --bleed: 140px; }
+    .ios-runway, .ios-runway body { overflow: visible !important; height: auto !important; }
+    .ios-runway body { height: calc(var(--off) + 100dvh + var(--bleed)) !important; position: relative; }
+    .ios-runway #orbit-stage { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+    .ios-runway .logo { position: absolute; top: calc(var(--off) + var(--logo-top)); }
   </style>
 </head>
 <body>
