@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-25T12:43:23.546758+00:00",
+ "generatedAt": "2026-09-27T13:18:26.012603+00:00",
  "feedDate": "2026-09-22T12:18:30+05:00",
  "placeholderImages": false,
  "counts": {
@@ -1893,10 +1893,10 @@
       "basePath": "views/multires/1-10-1002_0",
       "path": "/%l/%s%y_%x",
       "fallbackPath": "/fallback/%s",
-      "extension": "jpg?v=202609251513",
+      "extension": "jpg?v=202609271618pre",
       "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
+      "maxLevel": 4,
+      "cubeResolution": 2600
      },
      "plan": {
       "x": 3074.0,
@@ -1927,10 +1927,10 @@
       "basePath": "views/multires/1-10-1002_1",
       "path": "/%l/%s%y_%x",
       "fallbackPath": "/fallback/%s",
-      "extension": "jpg?v=202609251532",
+      "extension": "jpg?v=202609271618pre",
       "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
+      "maxLevel": 4,
+      "cubeResolution": 2600
      },
      "plan": {
       "x": 2992.0,
@@ -1961,10 +1961,10 @@
       "basePath": "views/multires/1-10-1002_2",
       "path": "/%l/%s%y_%x",
       "fallbackPath": "/fallback/%s",
-      "extension": "jpg?v=202609251539",
+      "extension": "jpg?v=202609271618pre",
       "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
+      "maxLevel": 4,
+      "cubeResolution": 2600
      },
      "plan": {
       "x": 2159.0,
@@ -1995,10 +1995,10 @@
       "basePath": "views/multires/1-10-1002_3",
       "path": "/%l/%s%y_%x",
       "fallbackPath": "/fallback/%s",
-      "extension": "jpg?v=202609251541",
+      "extension": "jpg?v=202609271618pre",
       "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
+      "maxLevel": 4,
+      "cubeResolution": 2600
      },
      "plan": {
       "x": 1333.0,
@@ -2029,10 +2029,10 @@
       "basePath": "views/multires/1-10-1002_4",
       "path": "/%l/%s%y_%x",
       "fallbackPath": "/fallback/%s",
-      "extension": "jpg?v=202609251542",
+      "extension": "jpg?v=202609271618pre",
       "tileResolution": 512,
-      "maxLevel": 5,
-      "cubeResolution": 5208
+      "maxLevel": 4,
+      "cubeResolution": 2600
      },
      "plan": {
       "x": 1274.0,
