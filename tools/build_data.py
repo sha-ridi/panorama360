@@ -180,7 +180,7 @@ def image_for(code, idx):
 def plan_for(code):
     fname = f"{code}.jpg"
     if os.path.exists(os.path.join(PLANS_DIR, fname)):
-        return f"plans/{fname}"
+        return f"plans/{fname}?v={os.path.getsize(os.path.join(PLANS_DIR, fname))}"   # кеш-бастинг при замене плана
     return PLAN_PLACEHOLDER   # план ещё не готов -> плейсхолдер
 
 
