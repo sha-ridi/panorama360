@@ -362,10 +362,10 @@
 
     // ---------- фоновая подгрузка панорам квартиры ----------
     // Пока открыт план, тихо качаем плитки видов (уровни 1–3 — их Pannellum берёт на старте
-    // на телефоне), чтобы вид открывался сразу из кеша. На время загрузки вида — пауза.
+    // на телефоне, потом 4 — для зума), чтобы вид открывался сразу из кеша. На время загрузки вида — пауза.
     var preload = (function () {
       var queue = [], active = 0, paused = false, started = false, keep = [];
-      var CONCURRENCY = 3, MAX_LEVEL = 3, FACES = ["f", "l", "r", "u", "d", "b"];
+      var CONCURRENCY = 3, MAX_LEVEL = 4, FACES = ["f", "l", "r", "u", "d", "b"];
       function tiles(mr, level) {
         var n = Math.ceil(mr.cubeResolution / Math.pow(2, mr.maxLevel - level) / mr.tileResolution), out = [];
         FACES.forEach(function (f) {
