@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <base href="../">   <!-- v2: всё, кроме данных, берётся из корня сайта -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- iPhone Safari (iOS 26): пока страница не прокручена, Safari сам заливает полосы под
+       статус-баром и нижней панелью. Поэтому делаем «разгонную полосу»: страница на 62px выше,
+       сразу прокручена на 62px, экраны сдвинуты на столько же вниз — интерфейс стоит на месте,
+       а план/панорама (сцены) заходят под статус-бар и под нижнюю панель. -->
+  <script>
+  (function () {
+    var ua = navigator.userAgent;
+    if (!/iPhone|iPod/.test(ua)) return;
+    document.documentElement.classList.add("ios-runway");
+    var OFF = 62;
+    function fix() { if (Math.abs(window.scrollY - OFF) > 1) window.scrollTo(0, OFF); }
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("DOMContentLoaded", fix);
+    window.addEventListener("load", function () { fix(); setTimeout(fix, 300); });
+    window.addEventListener("resize", function () { setTimeout(fix, 50); });
+    window.addEventListener("scroll", fix);
+  })();
+  </script>
+  <style>
+    .ios-runway { --off: 62px; }
+    .ios-runway, .ios-runway body { overflow: visible !important; height: auto !important; }
+    .ios-runway body { height: calc(var(--off) + 100dvh + 140px) !important; position: relative; }
+    .ios-runway .screen { position: absolute; left: 0; right: 0; top: var(--off); bottom: auto; height: 100dvh; }
+    .ios-runway #plan-stage, .ios-runway #stage { top: calc(-1 * var(--off)); bottom: -140px; }
+    .ios-runway .logo { position: absolute; top: calc(var(--off) + var(--logo-top)); }
+  </style>
+  <title>Веспер Погодинская — виды из окна</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap">
+  <style>
+    /* ==========================================================================
+       Дизайн по макету Figma (iPhone 16/17 Pro Max). Mobile-first: база — 375px,
+       дальше только min-width: 768 / 1280 / 1536.
+       ========================================================================== */
+    @font-face { font-family: 'Cera Pro'; src: url('fonts/CeraPro-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Cera Pro'; src: url('fonts/CeraPro-Medium.ttf') format('truetype'); font-weight: 500 700; font-display: swap; }
+
+    :root {
+      --green-80: rgba(38, 87, 70, .8);    /* плашки, карточка */
+      --green-70: rgba(38, 87, 70, .7);    /* пилюля вида */
+      --moss: #57967a;                     /* «ВИД N» */
+      --sage: #b6d5b9;                     /* разделитель */
+      --txt-2: #d4d4d4;                    /* второстепенный текст карточки */
+      --ui-bottom: calc(env(safe-area-inset-bottom, 0px) + 62px);   /* как в макете: над плавающей панелью Safari */
+      --logo-top: calc(env(safe-area-inset-top, 0px) + 16px);
+      font-synthesis: none;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      background: #000; color: #fff;
+      font-family: 'Cera Pro', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+
+    .screen { position: fixed; inset: 0; display: none; }
+    .screen.active { display: block; }
+
+    /* лого — поверх обоих экранов */
+    .logo {
+      position: fixed; z-index: 20; top: var(--logo-top); left: 50%; transform: translateX(-50%);
+      width: 188.5px; height: 41.6px; pointer-events: none; user-select: none;   /* макет ×1.3 */
+    }
+
+    /* ---------- ЭКРАН ПЛАНА ---------- */
+    #plan-stage {
+      position: absolute; inset: 0; overflow: hidden; background: #000;
+      touch-action: none; cursor: grab;
+    }
+    #plan-stage:active { cursor: grabbing; }
+    /* фон: план + растянутые краевые пиксели, лёгкое размытие.
+       Без z-index — чтобы стекло меток смешивалось (mix-blend) с планом под ним. */
+    #plan-stage, #plan-stage * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; }   /* без синего выделения при перетаскивании */
+    #plan-bg { position: absolute; inset: 0; pointer-events: none; filter: blur(4px); transform: scale(1.04); }
+    #plan-img {
+      position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform;
+      user-select: none; -webkit-user-drag: none;
+    }
+    #plan-overlay { position: absolute; inset: 0; pointer-events: none; }
+
+    /* метка камеры: якорь 0×0 в точке камеры, размер на экране постоянный */
+    .hotspot {
+      position: absolute; width: 0; height: 0; padding: 0; margin: 0; border: 0; background: none;
+      pointer-events: auto; cursor: pointer;
+    }
+    .hs-cone {
+      position: absolute; left: -31.526px; top: -36.8px; width: 59.806px; height: 36.8px;   /* макет ×1.15 */
+      transform-origin: 31.526px 36.8px; pointer-events: none;
+    }
+    .hs-glass {
+      position: absolute; left: -18.4px; top: -18.4px; width: 36.8px; height: 36.8px; border-radius: 296px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .12);
+    }
+    .hs-glass i { position: absolute; inset: 0; border-radius: 296px; }
+    .hs-glass .g1 { background: rgba(255, 255, 255, .65); }
+    .hs-glass .g2 { background: #ddd; mix-blend-mode: color-burn; }
+    .hs-glass .g3 { background: #f7f7f7; mix-blend-mode: darken; }
+    .hs-glass .dot { inset: auto; left: 12.65px; top: 12.65px; width: 11.5px; height: 11.5px; background: #fff; }
+    .hotspot:focus-visible .hs-glass { outline: 2px solid #fff; outline-offset: 2px; }
+
+    .floor-pill {
+      position: absolute; transform: translate(-50%, -50%);
+      width: 100px; height: 45px; padding: 10px 15px; border-radius: 200px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--green-80); color: #fff;
+      font-size: 20px; font-weight: 400; line-height: 1; text-transform: lowercase; white-space: nowrap;
+    }
+
+    /* карточка квартиры */
+    .apt-card {
+      position: absolute; z-index: 5; left: 50%; bottom: calc(var(--ui-bottom) / 2);   /* вдвое ниже макета */ transform: translateX(-50%);
+      width: 185px; height: 94px; border-radius: 15px; background: var(--green-80);
+      white-space: nowrap; pointer-events: none;
+    }
+    .apt-card .code {
+      position: absolute; left: 0; right: 0; top: 13px; text-align: center;
+      font-size: 20px; font-weight: 500; line-height: 1; text-transform: uppercase; color: #fff;
+    }
+    .apt-card .left, .apt-card .div, .apt-card .price {
+      position: absolute; top: 62px; transform: translateY(-50%);
+      font-size: 14px; font-weight: 400; line-height: 1;
+    }
+    .apt-card .left { left: 17px; color: var(--txt-2); text-transform: lowercase; }
+    .apt-card .left span { display: block; }
+    .apt-card .div { left: 50%; transform: translate(-50%, -50%); color: var(--sage); }
+    .apt-card .price { left: 108px; color: var(--txt-2); }
+    .apt-card sup { font-size: 9px; line-height: 0; vertical-align: 5px; }
+    .apt-card [hidden] { display: none; }
+
+    .note {
+      position: absolute; z-index: 6; top: calc(var(--logo-top) + 57px); left: 50%; transform: translateX(-50%);
+      font-size: 11px; color: rgba(255,255,255,.85); white-space: nowrap; pointer-events: none;
+      background: rgba(0,0,0,.45); padding: 4px 12px; border-radius: 999px;
+    }
+    .note[hidden] { display: none; }
+
+    /* ---------- ЭКРАН ВИДА ---------- */
+    #stage { position: absolute; inset: 0; background: #000; }
+    #panorama { position: absolute; inset: 0; }
+
+    .view-ui {
+      position: absolute; z-index: 5; left: 50%; bottom: calc(var(--ui-bottom) / 2);   /* вдвое ниже макета, как карточка плана */ transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 25px;
+    }
+    /* мини-карта комплекса с камерами квартиры */
+    .minimap { position: relative; width: 102.083px; height: 77.977px; }
+    .minimap > img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .mm {
+      position: absolute; width: 0; height: 0; padding: 0; border: 0; background: none; cursor: pointer;
+    }
+    .mm::after { content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; }  /* зона нажатия */
+    .mm .cone {
+      position: absolute; left: -13.1727px; top: -15.11px; width: 26.3455px; height: 15.11px;
+      transform-origin: 13.1727px 15.11px; opacity: .45; transition: opacity .2s; pointer-events: none;
+    }
+    .mm .d {
+      position: absolute; left: -2.4394px; top: -2.4394px; width: 4.8788px; height: 4.8788px;
+      border-radius: 50%; background: #fff; transition: transform .2s;
+    }
+    .mm:not(.on) { display: none; }   /* показываем только текущий вид */
+    .mm.on .cone { opacity: 1; }
+
+    .view-controls { display: flex; align-items: center; gap: 19px; }
+    .vbtn { width: 48px; height: 48px; padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; }
+    .vbtn img { display: block; width: 48px; height: 48px; }
+    .vbtn.prev img { transform: rotate(90deg); }
+    .vbtn.next img { transform: rotate(-90deg); }
+    .vbtn[hidden] { display: inline-block; visibility: hidden; }
+    .vbtn:active img, .view-close:active img { filter: brightness(1.15); }
+    .view-pill { position: relative; width: 126px; height: 48px; border-radius: 200px; background: var(--green-70); }
+    .view-close {
+      position: absolute; left: 1.55px; top: 1px; width: 46px; height: 46px;
+      padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer;
+    }
+    .view-close img { display: block; width: 46px; height: 46px; }
+    .view-label {
+      position: absolute; left: 81.05px; top: 24px; transform: translate(-50%, -50%);
+      font-size: 16px; font-weight: 500; line-height: 1; letter-spacing: .8px; color: var(--moss);
+      white-space: nowrap; pointer-events: none;
+    }
+
+    .pnlm-about-msg { display: none !important; }
+
+    /* ==========================================================================
+       Брейкпоинты: 375 (база) / 768 / 1280 / 1536
+       ========================================================================== */
+    /* экран загрузки плана — как на /complex */
+    .loading {
+      position: absolute; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+      background: #000; color: #9aa3ab; font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .loading[hidden] { display: none; }
+    .spinner {
+      width: 30px; height: 30px; margin-right: 12px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.15); border-top-color: #becac0;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* «сделано в MARTA» — снизу слева, под карточкой / кнопками */
+    .credit {
+      position: fixed; z-index: 21; left: 12px; bottom: calc(var(--ui-bottom) - 34px);
+      padding: 6px 4px; display: flex; align-items: baseline; gap: 4px;
+      font-family: 'Montserrat', 'Cera Pro', sans-serif; color: #fff; text-decoration: none;
+      background: none; -webkit-tap-highlight-color: transparent;
+    }
+    .credit[hidden] { display: none; }   /* скрыто: чтобы вернуть, убрать атрибут hidden у <a class="credit"> */
+    .credit span { font-size: 9px; font-weight: 400; }
+    .credit b { font-size: 13px; font-weight: 800; letter-spacing: .02em; }
+    @media (min-width: 768px) { .credit { left: 20px; bottom: calc(var(--ui-bottom) - 6px); } }
+    @media (min-width: 1280px) { .credit { left: 28px; } }
+    @media (min-width: 768px)  { :root { --ui-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px); --logo-top: 24px; } }
+    @media (min-width: 1280px) { :root { --ui-bottom: 40px; --logo-top: 28px; } }
+    @media (min-width: 1536px) { :root { --ui-bottom: 48px; --logo-top: 32px; } }
+  </style>
+</head>
+<body>
+
+  <img class="logo" src="assets/logo-ru-white.svg" alt="Веспер Погодинская">
+  <a class="credit" hidden href="https://www.marta.pictures/pictures" target="_blank" rel="noopener"><span>сделано в</span><b>MARTA</b></a>
+
+  <!-- ЭКРАН ПЛАНА -->
+  <section id="screen-plan" class="screen">
+    <div id="plan-stage">
+      <canvas id="plan-bg"></canvas>
+      <img id="plan-img" alt="План квартиры" draggable="false">
+      <div id="plan-overlay"></div>
+    </div>
+    <div class="note" id="plan-note" hidden>Демо-план (реальный появится позже)</div>
+    <div class="apt-card" id="apt-card" aria-live="polite">
+      <div class="code" id="card-code">…</div>
+      <div class="left"><span id="card-rooms"></span><span id="card-area"></span></div>
+      <div class="div" id="card-div">|</div>
+      <div class="price" id="card-price"></div>
+    </div>
+    <div class="loading" id="plan-loading"><span class="spinner"></span>Загрузка…</div>
+  </section>
+
+  <!-- ЭКРАН ВИДА -->
+  <section id="screen-b" class="screen">
+    <div id="stage">
+      <div id="panorama"></div>
+    </div>
+    <div class="note" id="ph-note" hidden>Демо-панорама (реальные виды появятся позже)</div>
+    <div class="view-ui">
+      <div class="minimap" id="minimap" hidden></div>
+      <div class="view-controls">
+        <button class="vbtn prev" id="nav-prev" aria-label="Предыдущий вид"><img src="assets/chevron.svg" alt=""></button>
+        <div class="view-pill">
+          <button class="view-close" id="btn-back" aria-label="Закрыть, к плану"><img src="assets/close.svg" alt=""></button>
+          <span class="view-label" id="view-label">ВИД 1</span>
+        </div>
+        <button class="vbtn next" id="nav-next" aria-label="Следующий вид"><img src="assets/chevron.svg" alt=""></button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.7/pannellum.min.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    var DATA = null;
+    var byCode = {};
+    var viewer = null;
+
+    // Урезанная версия: одна квартира (план + её виды из окна)
+    var APT_CODE = "1-10-1002";
+
+    // ВРЕМЕННО: разворот демо-панорамы на 180° (только для камер-заглушек).
+    var DEMO_YAW_OFFSET = 180;
+
+    // Ограничение углов обзора для реальных видов (RotX*/RotY* из CSV).
+    var APPLY_LIMITS = true;
+    var YAW_SIGN = 1;
+
+    var $ = function (id) { return document.getElementById(id); };
+    var screenB = $("screen-b"), screenPlan = $("screen-plan");
+
+    // ---------- форматирование ----------
+    function plural(n, one, few, many) {
+      var d10 = n % 10, d100 = n % 100;
+      if (d10 === 1 && d100 !== 11) return one;
+      if (d10 >= 2 && d10 <= 4 && (d100 < 10 || d100 >= 20)) return few;
+      return many;
+    }
+    function fmtArea(a) {                         // 168.92 -> "168,9м²"
+      var v = Math.round(a * 10) / 10;
+      return String(v).replace(".", ",") + "м<sup>2</sup>";
+    }
+    function fmtPrice(p) { return Math.round(p / 1e6) + "млн Р"; }
+
+    // ---------- загрузка данных ----------
+    function load() {
+      screenPlan.classList.add("active");
+      fetch("v2/apartments.json?ts=" + Date.now())
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (json) {
+          DATA = json;
+          DATA.apartments.forEach(function (a) { byCode[a.code] = a; });
+          route();
+        })
+        .catch(function (e) { $("card-code").textContent = "Ошибка: " + e.message; $("plan-loading").textContent = "Не удалось загрузить данные"; });
+    }
+
+    // ---------- ЭКРАН ВИДА ----------
+    var scenesAdded = {};
+    var currentScene = null;
+    var curLimits = null;
+
+    var PLACEHOLDER = "panorama.jpg";
+    function isPlaceholder(cam) { return !cam.multiRes && cam.image === PLACEHOLDER; }
+    function computedYaw(cam) {
+      if (isPlaceholder(cam)) return (cam.yaw != null ? cam.yaw : 0) + DEMO_YAW_OFFSET;
+      return 0;   // реальный рендер снят уже глядя в окно → центр панорамы = 0
+    }
+    function wrapDeg(a) { return ((a % 360) + 540) % 360 - 180; }   // -> [-180, 180)
+
+    function sceneConfig(cam) {
+      // Краевые лимиты Pannellum не используем — ограничиваем ЦЕНТР камеры вручную (clampLoop).
+      var cfg = {
+        hfov: 95, minHfov: 55, maxHfov: 120,
+        multiResMinHfov: true,   // иначе Pannellum для multires сам снижает minHfov до «пиксель в пиксель» (16K зумилась сильнее)
+        yaw: computedYaw(cam), pitch: 0,
+        autoLoad: true, compass: false, friction: 0.15
+      };
+      if (cam.multiRes) { cfg.type = "multires"; cfg.multiRes = cam.multiRes; }
+      else { cfg.type = "equirectangular"; cfg.panorama = cam.image; }
+      return cfg;
+    }
+
+    // мини-карта: силуэт комплекса + камеры квартиры (активная подсвечена)
+    var minimapFor = null;
+    function buildMinimap(apt) {
+      var box = $("minimap");
+      if (minimapFor === apt.code) return;
+      minimapFor = apt.code;
+      if (!apt.minimap) { box.hidden = true; box.innerHTML = ""; return; }
+      box.hidden = false;
+      box.style.width = apt.minimap.w + "px"; box.style.height = apt.minimap.h + "px";
+      var html = '<img src="' + apt.minimap.svg + '" alt="">';
+      apt.cameras.forEach(function (c, i) {
+        if (!c.mini || !c.plan) return;
+        html += '<button class="mm" data-idx="' + c.idx + '" aria-label="Вид ' + (i + 1) + '" ' +
+                'style="left:' + c.mini.x + 'px;top:' + c.mini.y + 'px">' +
+                '<img class="cone" src="assets/minimap-cone.svg" alt="" style="transform:rotate(' + c.plan.dir + 'deg)">' +
+                '<span class="d"></span></button>';
+      });
+      box.innerHTML = html;
+      box.querySelectorAll(".mm").forEach(function (el) {
+        el.addEventListener("click", function () { goView(apt.code, +el.getAttribute("data-idx")); });
+      });
+    }
+
+    // ---------- фоновая подгрузка панорам квартиры ----------
+    // Пока открыт план, тихо качаем плитки видов (уровни 1–3 — их Pannellum берёт на старте
+    // на телефоне), чтобы вид открывался сразу из кеша. На время загрузки вида — пауза.
+    var preload = (function () {
+      var queue = [], active = 0, paused = false, started = false, keep = [];
+      var CONCURRENCY = 3, MAX_LEVEL = 3, FACES = ["f", "l", "r", "u", "d", "b"];
+      function tiles(mr, level) {
+        var n = Math.ceil(mr.cubeResolution / Math.pow(2, mr.maxLevel - level) / mr.tileResolution), out = [];
+        FACES.forEach(function (f) {
+          for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+            out.push(mr.basePath + mr.path.replace("%l", level).replace("%s", f).replace("%y", y).replace("%x", x) + "." + mr.extension);
+          }
+        });
+        return out;
+      }
+      function pump() {
+        while (!paused && active < CONCURRENCY && queue.length) {
+          var im = new Image();
+          im.crossOrigin = "anonymous";               // как у Pannellum — чтобы совпал ключ кеша
+          active++;
+          im.onload = im.onerror = function () { active--; pump(); };
+          im.src = queue.shift();
+          keep.push(im);                              // держим ссылку — картинка остаётся в памяти
+        }
+      }
+      return {
+        start: function (apt) {
+          if (started) return;
+          var c = navigator.connection;
+          if (c && (c.saveData || /2g/.test(c.effectiveType || ""))) return;
+          started = true;
+          var mrs = apt.cameras.map(function (cam) { return cam.multiRes; }).filter(Boolean);
+          for (var lv = 1; lv <= MAX_LEVEL; lv++) {   // сначала грубые уровни всех видов, потом детальные
+            mrs.forEach(function (mr) { if (lv <= mr.maxLevel) queue = queue.concat(tiles(mr, lv)); });
+          }
+          pump();
+        },
+        pause: function () { paused = true; },
+        resume: function () { paused = false; pump(); }
+      };
+    })();
+
+    function showViewer(apt, camIdx) {
+      var cams = apt.cameras;
+      var pos = 0;
+      for (var i = 0; i < cams.length; i++) { if (cams[i].idx === camIdx) { pos = i; break; } }
+      var cam = cams[pos];
+      var yaw = computedYaw(cam);
+
+      // пределы поворота центра камеры (относительно перпендикуляра к окну)
+      if (APPLY_LIMITS && !isPlaceholder(cam) && cam.yawMin != null && cam.yawMax != null) {
+        var perp = (cam.perp != null ? cam.perp : cam.yaw);
+        var off = wrapDeg(perp - cam.yaw);
+        curLimits = {
+          yawCenter: wrapDeg(YAW_SIGN * (off + (cam.yawMin + cam.yawMax) / 2)),
+          yawHalf: Math.abs(cam.yawMax - cam.yawMin) / 2,
+          pitchMin: Math.min(cam.pitchMin, cam.pitchMax),
+          pitchMax: Math.max(cam.pitchMin, cam.pitchMax)
+        };
+      } else {
+        curLimits = null;
+      }
+
+      $("view-label").textContent = "ВИД " + (pos + 1);
+      var multi = cams.length > 1;
+      $("nav-prev").hidden = !multi;
+      $("nav-next").hidden = !multi;
+      $("ph-note").hidden = !isPlaceholder(cam);
+      buildMinimap(apt);
+      $("minimap").querySelectorAll(".mm").forEach(function (el) {
+        el.classList.toggle("on", +el.getAttribute("data-idx") === cam.idx);
+      });
+
+      // один вьювер (один WebGL-контекст); каждая камера — своя сцена
+      var sceneId = apt.code + "/" + cam.idx;
+      if (sceneId !== currentScene || !viewer) preload.pause();   // не мешаем грузиться открываемому виду
+      preload.start(apt);                                          // если зашли сразу по ссылке на вид
+      if (!viewer) {
+        scenesAdded = {}; scenesAdded[sceneId] = true; currentScene = sceneId;
+        var cfg = {}; cfg[sceneId] = sceneConfig(cam);
+        viewer = pannellum.viewer("panorama", {
+          default: { firstScene: sceneId, sceneFadeDuration: 250, showControls: false },
+          scenes: cfg
+        });
+        viewer.on("load", function () { preload.resume(); });   // вид загрузился — докачиваем остальные
+        viewer.on("error", function () { preload.resume(); });
+      } else {
+        if (!scenesAdded[sceneId]) { viewer.addScene(sceneId, sceneConfig(cam)); scenesAdded[sceneId] = true; }
+        if (sceneId !== currentScene) { viewer.loadScene(sceneId, 0, yaw, 95); currentScene = sceneId; }
+      }
+      setTimeout(function () { try { window.dispatchEvent(new Event("resize")); } catch (e) {} }, 60);
+    }
+
+    // ---------- ЭКРАН ПЛАНА ----------
+    // Панзум (перетаскивание + колесо + щипок) и метки, привязанные к пикселям плана.
+    var planPZ = (function () {
+      var img = $("plan-img"), stage = $("plan-stage");
+      var s = 1, tx = 0, ty = 0, minS = 1, maxS = 1, iw = 1, ih = 1;
+      var pts = {}, lastDist = 0, dragId = null, lastX = 0, lastY = 0;
+      var anchors = [];          // [{el, x, y}] — x,y в пикселях картинки плана
+      var view = null;           // {cx, cy, zoom} — стартовый вид из калибровки
+
+      function clamp() {
+        var cw = stage.clientWidth, ch = stage.clientHeight, sw = iw * s, sh = ih * s;
+        tx = sw >= cw ? Math.min(0, Math.max(cw - sw, tx)) : (cw - sw) / 2;
+        ty = sh >= ch ? Math.min(0, Math.max(ch - sh, ty)) : (ch - sh) / 2;
+      }
+      var bgPending = false;
+      function apply() {
+        img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + s + ")";
+        for (var i = 0; i < anchors.length; i++) {
+          var a = anchors[i];
+          a.el.style.left = (tx + a.x * s) + "px";
+          a.el.style.top = (ty + a.y * s) + "px";
+        }
+        if (!bgPending) {
+          bgPending = true;
+          requestAnimationFrame(function () { bgPending = false; paintBg(); });
+        }
+      }
+      // фон: план в текущем положении, поля вокруг — растянутые крайние пиксели
+      function paintBg() {
+        var cw = stage.clientWidth, ch = stage.clientHeight;
+        if (!cw || !ch || !img.naturalWidth) return;
+        var bg = $("plan-bg");
+        if (bg.width !== cw) bg.width = cw;
+        if (bg.height !== ch) bg.height = ch;
+        var ctx = bg.getContext("2d");
+        var dx = tx, dy = ty, dw = iw * s, dh = ih * s;
+        var ml = dx, mt = dy, mr = cw - (dx + dw), mb = ch - (dy + dh);
+        ctx.clearRect(0, 0, cw, ch);
+        if (ml > 0.5) ctx.drawImage(img, 0, 0, 2, ih, 0, dy, ml, dh);
+        if (mr > 0.5) ctx.drawImage(img, iw - 2, 0, 2, ih, dx + dw, dy, mr, dh);
+        if (mt > 0.5) ctx.drawImage(img, 0, 0, iw, 2, dx, 0, dw, mt);
+        if (mb > 0.5) ctx.drawImage(img, 0, ih - 2, iw, 2, dx, dy + dh, dw, mb);
+        if (ml > 0.5 && mt > 0.5) ctx.drawImage(img, 0, 0, 2, 2, 0, 0, ml, mt);
+        if (mr > 0.5 && mt > 0.5) ctx.drawImage(img, iw - 2, 0, 2, 2, dx + dw, 0, mr, mt);
+        if (ml > 0.5 && mb > 0.5) ctx.drawImage(img, 0, ih - 2, 2, 2, 0, dy + dh, ml, mb);
+        if (mr > 0.5 && mb > 0.5) ctx.drawImage(img, iw - 2, ih - 2, 2, 2, dx + dw, dy + dh, mr, mb);
+        ctx.drawImage(img, dx, dy, dw, dh);
+      }
+      function setup() {
+        var cw = stage.clientWidth, ch = stage.clientHeight;
+        iw = img.naturalWidth || 1; ih = img.naturalHeight || 1;
+        img.style.width = iw + "px"; img.style.height = ih + "px";
+        var fit = Math.min(cw / iw, ch / ih);
+        var cover = Math.max(cw / iw, ch / ih);                // план всегда закрывает всю сцену — за край не выйти
+        minS = Math.max(fit * 2, cover); maxS = Math.max(fit * 7, minS);   // мин 2×, макс 7× от вписывания
+        var z = view && view.zoom ? view.zoom : 3.5;          // старт — как в макете
+        s = Math.max(minS, Math.min(maxS, fit * z));
+        var cx = view ? view.cx : iw / 2, cy = view ? view.cy : ih / 2;
+        tx = cw / 2 - cx * s; ty = ch / 2 - cy * s;
+        clamp(); apply();
+        $("plan-loading").hidden = true;                  // план на месте, метки расставлены
+      }
+      function zoomAt(mx, my, factor) {
+        var ns = Math.max(minS, Math.min(maxS, s * factor));
+        if (ns === s) return;
+        var px = (mx - tx) / s, py = (my - ty) / s;
+        s = ns; tx = mx - px * s; ty = my - py * s; clamp(); apply();
+      }
+      function pvals() { return Object.keys(pts).map(function (k) { return pts[k]; }); }
+      function dist() { var p = pvals(); return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); }
+      function mid() { var p = pvals(); return { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
+
+      stage.addEventListener("wheel", function (e) {
+        e.preventDefault();
+        var r = stage.getBoundingClientRect();
+        zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+      }, { passive: false });
+      stage.addEventListener("pointerdown", function (e) {
+        if (e.target.closest(".hotspot")) return;   // тап по метке — это клик, не панорама
+        stage.setPointerCapture(e.pointerId);
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length === 1) { dragId = e.pointerId; lastX = e.clientX; lastY = e.clientY; }
+        else if (ids.length === 2) { lastDist = dist(); }
+      });
+      stage.addEventListener("pointermove", function (e) {
+        if (!pts[e.pointerId]) return;
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length >= 2) {
+          var d = dist();
+          if (lastDist) { var r = stage.getBoundingClientRect(), m = mid(); zoomAt(m.x - r.left, m.y - r.top, d / lastDist); }
+          lastDist = d;
+        } else if (e.pointerId === dragId) {
+          tx += e.clientX - lastX; ty += e.clientY - lastY; lastX = e.clientX; lastY = e.clientY; clamp(); apply();
+        }
+      });
+      function up(e) {
+        delete pts[e.pointerId];
+        var ids = Object.keys(pts);
+        if (ids.length < 2) lastDist = 0;
+        if (ids.length === 1) { dragId = +ids[0]; lastX = pts[dragId].x; lastY = pts[dragId].y; }
+        if (ids.length === 0) dragId = null;
+      }
+      stage.addEventListener("pointerup", up);
+      stage.addEventListener("pointercancel", up);
+      window.addEventListener("resize", function () {
+        if (screenPlan.classList.contains("active") && img.naturalWidth) setup();
+      });
+      return {
+        setup: setup,
+        setView: function (v) { view = v || null; },
+        setAnchors: function (list) { anchors = list; if (img.naturalWidth) apply(); }
+      };
+    })();
+
+    // метки на плане: камеры (клик -> вид) и плашка этажа
+    var overlayFor = null;
+    function buildOverlay(apt) {
+      if (overlayFor === apt.code) return;
+      overlayFor = apt.code;
+      var ov = $("plan-overlay"), list = [];
+      ov.innerHTML = "";
+      if (apt.floorLabel) {
+        var fl = document.createElement("div");
+        fl.className = "floor-pill"; fl.textContent = apt.floorLabel.text;
+        ov.appendChild(fl); list.push({ el: fl, x: apt.floorLabel.x, y: apt.floorLabel.y });
+      }
+      apt.cameras.forEach(function (c, i) {
+        if (!c.plan) return;
+        var b = document.createElement("button");
+        b.className = "hotspot"; b.setAttribute("aria-label", "Вид " + (i + 1));
+        b.innerHTML = '<img class="hs-cone" src="assets/hotspot-cone.svg" alt="" style="transform:rotate(' + c.plan.dir + 'deg)">' +
+                      '<span class="hs-glass"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="dot"></i></span>';
+        b.addEventListener("click", function () { goView(apt.code, c.idx); });
+        ov.appendChild(b); list.push({ el: b, x: c.plan.x, y: c.plan.y });
+      });
+      planPZ.setAnchors(list);
+    }
+
+    function fillCard(apt) {
+      $("card-code").textContent = apt.code;
+      var beds = apt.bedrooms != null ? apt.bedrooms : apt.rooms;   // спальни из калибровки, иначе комнаты из фида
+      var hasRooms = beds != null, hasArea = apt.area != null, hasPrice = apt.price != null;
+      $("card-rooms").textContent = hasRooms ? beds + " " + plural(beds, "спальня", "спальни", "спален") : "";
+      $("card-area").innerHTML = hasArea ? fmtArea(apt.area) : "";
+      $("card-price").textContent = hasPrice ? fmtPrice(apt.price) : "";
+      $("card-div").hidden = !((hasRooms || hasArea) && hasPrice);
+    }
+
+    function showPlan(apt) {
+      fillCard(apt);
+      $("plan-note").hidden = (apt.plan && apt.plan.indexOf("plans/") === 0);
+      planPZ.setView(apt.planView);
+      buildOverlay(apt);
+      var img = $("plan-img");
+      var src = apt.plan || "plan-placeholder.jpg";
+      img.onload = function () { planPZ.setup(); setTimeout(function () { preload.start(apt); }, 800); };
+      if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      else if (img.complete && img.naturalWidth) { planPZ.setup(); preload.start(apt); }
+    }
+
+    function step(delta) {
+      var r = parseHash();
+      if (!r.code) return;
+      var apt = byCode[r.code]; if (!apt) return;
+      var cams = apt.cameras, pos = 0;
+      for (var i = 0; i < cams.length; i++) { if (cams[i].idx === r.camIdx) { pos = i; break; } }
+      pos = (pos + delta + cams.length) % cams.length;
+      goView(apt.code, cams[pos].idx);
+    }
+
+    // ---------- роутинг (хеш, переживает F5) ----------
+    function parseHash() {
+      var h = location.hash.replace(/^#\/?/, "");
+      if (!h) return { code: null, camIdx: null };
+      var parts = h.split("/");
+      var camIdx = parts[1] != null && parts[1] !== "" ? parseInt(parts[1], 10) : null;
+      return { code: decodeURIComponent(parts[0]), camIdx: isNaN(camIdx) ? null : camIdx };
+    }
+    function goPlan() {
+      if (!location.hash || location.hash === "#") route(); else location.hash = "";
+    }
+    function goView(code, camIdx) {
+      var apt = byCode[code], idx = camIdx;
+      if (apt && (idx == null || !apt.cameras.some(function (c) { return c.idx === idx; }))) {
+        idx = apt.cameras.length ? apt.cameras[0].idx : 0;
+      }
+      var hash = "#/" + encodeURIComponent(code) + "/" + idx;
+      if (location.hash === hash) route(); else location.hash = hash;
+    }
+    function setScreen(el) {
+      [screenPlan, screenB].forEach(function (s) { s.classList.toggle("active", s === el); });
+    }
+    function route() {
+      if (!DATA) return;
+      var apt = byCode[APT_CODE];
+      if (!apt) { $("card-code").textContent = "Нет " + APT_CODE; return; }
+      var r = parseHash();
+      if (r.camIdx != null && apt.cameras.length) {
+        var idx = apt.cameras.some(function (c) { return c.idx === r.camIdx; }) ? r.camIdx : apt.cameras[0].idx;
+        setScreen(screenB);
+        showViewer(apt, idx);
+      } else {
+        setScreen(screenPlan);
+        showPlan(apt);
+      }
+    }
+
+    // ---------- события ----------
+    $("btn-back").addEventListener("click", function () { goPlan(); });
+    $("nav-prev").addEventListener("click", function () { step(-1); });
+    $("nav-next").addEventListener("click", function () { step(1); });
+    window.addEventListener("keydown", function (e) {
+      if (!screenB.classList.contains("active")) return;
+      if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "Escape") goPlan();
+    });
+    window.addEventListener("hashchange", route);
+
+    // кламп поворота центра камеры по лимитам из таблицы
+    (function clampLoop() {
+      if (viewer && curLimits && screenB.classList.contains("active")) {
+        try {
+          var y = viewer.getYaw(), p = viewer.getPitch();
+          if (curLimits.yawHalf < 180) {
+            var d = wrapDeg(y - curLimits.yawCenter);
+            if (d > curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter + curLimits.yawHalf), false);
+            else if (d < -curLimits.yawHalf) viewer.setYaw(wrapDeg(curLimits.yawCenter - curLimits.yawHalf), false);
+          }
+          if (p < curLimits.pitchMin) viewer.setPitch(curLimits.pitchMin, false);
+          else if (p > curLimits.pitchMax) viewer.setPitch(curLimits.pitchMax, false);
+        } catch (e) {}
+      }
+      requestAnimationFrame(clampLoop);
+    })();
+
+    load();
+  })();
+  </script>
+</body>
+</html>

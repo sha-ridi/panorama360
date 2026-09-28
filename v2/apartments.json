@@ -1,0 +1,4054 @@
+{
+ "generatedAt": "2026-09-28T07:54:08.688613+00:00",
+ "feedDate": "2026-09-22T12:18:30+05:00",
+ "placeholderImages": false,
+ "counts": {
+  "total": 64,
+  "forSale": 64,
+  "cameras": 194
+ },
+ "apartments": [
+  {
+   "code": "1-01-101",
+   "building": "1",
+   "floor": 1,
+   "unit": "101",
+   "forSale": true,
+   "rooms": 2,
+   "area": 160.53,
+   "price": 684467814.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent101_0",
+     "yaw": -127.672994,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -10223.075,
+      357.921
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-02-201",
+   "building": "1",
+   "floor": 2,
+   "unit": "201",
+   "forSale": true,
+   "rooms": 2,
+   "area": 154.59,
+   "price": 620446965.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent201_0",
+     "yaw": 117.664833,
+     "pitch": -10.21735,
+     "perp": 141.0,
+     "loc": [
+      -10609.557,
+      2216.833
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent201_1",
+     "yaw": 173.864882,
+     "pitch": -15.644937,
+     "perp": 186.0,
+     "loc": [
+      -11165.183,
+      1281.504
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent201_2",
+     "yaw": -85.0,
+     "pitch": -10.292114,
+     "perp": 231.0,
+     "loc": [
+      -10515.399,
+      556.355
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-02-202",
+   "building": "1",
+   "floor": 2,
+   "unit": "202",
+   "forSale": true,
+   "rooms": 2,
+   "area": 163.41,
+   "price": 627069534.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent202_0",
+     "yaw": -105.394311,
+     "pitch": 0.0,
+     "perp": 231.0,
+     "loc": [
+      -9787.928,
+      -39.653
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent202_1",
+     "yaw": -95.0,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent202_2",
+     "yaw": -2.505334,
+     "pitch": -0.0,
+     "perp": -39.0,
+     "loc": [
+      -8246.412,
+      456.026
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-02-203",
+   "building": "1",
+   "floor": 2,
+   "unit": "203",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.5,
+   "price": 541604250.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent203_0",
+     "yaw": -28.188078,
+     "pitch": -0.0,
+     "perp": -39.0,
+     "loc": [
+      -7805.503,
+      999.595
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent203_1",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7474.21,
+      1662.721
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent203_2",
+     "yaw": 83.824381,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8027.818,
+      2312.169
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-02-204",
+   "building": "1",
+   "floor": 2,
+   "unit": "204",
+   "forSale": true,
+   "rooms": 2,
+   "area": 173.3,
+   "price": 682542050.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent204_0",
+     "yaw": 19.385858,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8756.828,
+      2906.17
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent204_1",
+     "yaw": 85.0,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9509.088,
+      3319.735
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent204_2",
+     "yaw": 141.004155,
+     "pitch": -10.134241,
+     "perp": 141.0,
+     "loc": [
+      -10014.014,
+      2951.415
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-03-301",
+   "building": "1",
+   "floor": 3,
+   "unit": "301",
+   "forSale": true,
+   "rooms": 2,
+   "area": 162.38,
+   "price": 660837886.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent301_0",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10995.473,
+      1912.541
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent301_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11267.435,
+      1269.233
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent301_2",
+     "yaw": -85.0,
+     "pitch": -0.509646,
+     "perp": 261.0,
+     "loc": [
+      -10656.09,
+      635.084
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-03-302",
+   "building": "1",
+   "floor": 3,
+   "unit": "302",
+   "forSale": true,
+   "rooms": 2,
+   "area": 160.82,
+   "price": 540901988.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent302_0",
+     "yaw": -128.574376,
+     "pitch": -0.0,
+     "perp": 261.0,
+     "loc": [
+      -9926.731,
+      59.213
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent302_1",
+     "yaw": -95.0,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9113.187,
+      -476.527
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent302_2",
+     "yaw": -2.503596,
+     "pitch": -0.0,
+     "perp": -9.0,
+     "loc": [
+      -8173.933,
+      489.613
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-03-303",
+   "building": "1",
+   "floor": 3,
+   "unit": "303",
+   "forSale": true,
+   "rooms": 2,
+   "area": 143.11,
+   "price": 490509525.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent303_0",
+     "yaw": -2.668402,
+     "pitch": -0.0,
+     "perp": -9.0,
+     "loc": [
+      -7878.165,
+      855.627
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent303_1",
+     "yaw": 38.198284,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7366.344,
+      1683.803
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent303_2",
+     "yaw": 96.962881,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -7955.61,
+      2401.54
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-03-304",
+   "building": "1",
+   "floor": 3,
+   "unit": "304",
+   "forSale": true,
+   "rooms": 3,
+   "area": 181.84,
+   "price": 732851568.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent304_0",
+     "yaw": 33.980048,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8683.955,
+      2999.019
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent304_1",
+     "yaw": 96.034482,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9519.951,
+      3422.491
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent304_2",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10403.008,
+      2645.825
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-04-401",
+   "building": "1",
+   "floor": 4,
+   "unit": "401",
+   "forSale": true,
+   "rooms": 2,
+   "area": 159.45,
+   "price": 675493980.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent401_0",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10693.843,
+      2285.077
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent401_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11165.183,
+      1281.504
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent401_2",
+     "yaw": -157.43905,
+     "pitch": -0.766017,
+     "perp": 201.0,
+     "loc": [
+      -10593.781,
+      567.338
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-04-402",
+   "building": "1",
+   "floor": 4,
+   "unit": "402",
+   "forSale": true,
+   "rooms": 2,
+   "area": 157.91,
+   "price": 552874492.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent402_0",
+     "yaw": -178.036321,
+     "pitch": -0.798208,
+     "perp": 201.0,
+     "loc": [
+      -9858.758,
+      -11.81
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent402_1",
+     "yaw": -98.128091,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent402_2",
+     "yaw": 11.168917,
+     "pitch": 0.0,
+     "perp": 321.0,
+     "loc": [
+      -8246.412,
+      456.026
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-04-403",
+   "building": "1",
+   "floor": 4,
+   "unit": "403",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.85,
+   "price": 486141620.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent403_0",
+     "yaw": -93.422645,
+     "pitch": -0.0,
+     "perp": 291.0,
+     "loc": [
+      -7818.095,
+      932.921
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent403_1",
+     "yaw": 5.404224,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7473.301,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent403_2",
+     "yaw": 94.305992,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8027.818,
+      2312.169
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-04-404",
+   "building": "1",
+   "floor": 4,
+   "unit": "404",
+   "forSale": true,
+   "rooms": 2,
+   "area": 180.06,
+   "price": 748563438.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent404_0",
+     "yaw": 24.844871,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8326.248,
+      2705.547
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent404_1",
+     "yaw": 96.034482,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9509.088,
+      3319.735
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent404_2",
+     "yaw": 128.887002,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10099.525,
+      3020.65
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-05-501",
+   "building": "1",
+   "floor": 5,
+   "unit": "501",
+   "forSale": true,
+   "rooms": 2,
+   "area": 143.13,
+   "price": 511675437.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent501_0",
+     "yaw": 125.631541,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10996.189,
+      1913.198
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent501_1",
+     "yaw": 179.76458,
+     "pitch": 0.0,
+     "perp": 186.0,
+     "loc": [
+      -11267.435,
+      1269.233
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent501_2",
+     "yaw": -161.068801,
+     "pitch": -0.0,
+     "perp": 261.0,
+     "loc": [
+      -10295.573,
+      357.652
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent501_3",
+     "yaw": -95.194434,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9113.187,
+      -476.527
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-05-502",
+   "building": "1",
+   "floor": 5,
+   "unit": "502",
+   "forSale": true,
+   "rooms": 2,
+   "area": 143.13,
+   "price": 511675437.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent502_0",
+     "yaw": -2.668402,
+     "pitch": -0.0,
+     "perp": -9.0,
+     "loc": [
+      -7878.165,
+      855.627
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent502_1",
+     "yaw": 38.674064,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7366.344,
+      1683.803
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent502_2",
+     "yaw": 86.321836,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -7955.61,
+      2401.54
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-05-503",
+   "building": "1",
+   "floor": 5,
+   "unit": "503",
+   "forSale": true,
+   "rooms": 3,
+   "area": 181.52,
+   "price": 763037472.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent503_0",
+     "yaw": 29.475789,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8683.955,
+      2999.019
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent503_1",
+     "yaw": 110.453457,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9519.951,
+      3422.491
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent503_2",
+     "yaw": 133.679625,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10403.008,
+      2645.825
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-06-601",
+   "building": "1",
+   "floor": 6,
+   "unit": "601",
+   "forSale": true,
+   "rooms": 2,
+   "area": 161.45,
+   "price": 707151000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent601_0",
+     "yaw": 131.935187,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10693.843,
+      2285.077
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent601_1",
+     "yaw": -167.561878,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11165.183,
+      1281.504
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent601_2",
+     "yaw": -177.152666,
+     "pitch": -0.798938,
+     "perp": 201.0,
+     "loc": [
+      -10226.426,
+      286.798
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent601_3",
+     "yaw": -90.332841,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent601_4",
+     "yaw": 6.005001,
+     "pitch": 0.0,
+     "perp": 321.0,
+     "loc": [
+      -8568.563,
+      116.811
+     ],
+     "yawMin": -50.0,
+     "yawMax": 55.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-06-602",
+   "building": "1",
+   "floor": 6,
+   "unit": "602",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.75,
+   "price": 562492500.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent602_0",
+     "yaw": -98.026564,
+     "pitch": -0.0,
+     "perp": 291.0,
+     "loc": [
+      -7818.095,
+      932.921
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent602_1",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7473.301,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent602_2",
+     "yaw": 72.309996,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8027.818,
+      2312.169
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-06-603",
+   "building": "1",
+   "floor": 6,
+   "unit": "603",
+   "forSale": true,
+   "rooms": 2,
+   "area": 179.92,
+   "price": 787347912.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent603_0",
+     "yaw": 32.590688,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8326.248,
+      2705.547
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent603_1",
+     "yaw": 112.101204,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9509.088,
+      3319.735
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent603_2",
+     "yaw": 132.098563,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10099.525,
+      3020.65
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-07-701",
+   "building": "1",
+   "floor": 7,
+   "unit": "701",
+   "forSale": true,
+   "rooms": 2,
+   "area": 162.2,
+   "price": 726656000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent701_0",
+     "yaw": 133.336464,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10995.473,
+      1912.541
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent701_1",
+     "yaw": -164.855825,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11267.435,
+      1269.233
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent701_2",
+     "yaw": -128.936857,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -10149.313,
+      256.618
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent701_3",
+     "yaw": -95.194434,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9113.187,
+      -476.527
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent701_4",
+     "yaw": 12.150014,
+     "pitch": 0.0,
+     "perp": -9.0,
+     "loc": [
+      -8173.933,
+      489.613
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-07-702",
+   "building": "1",
+   "floor": 7,
+   "unit": "702",
+   "forSale": true,
+   "rooms": 2,
+   "area": 143.14,
+   "price": 603506868.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent702_0",
+     "yaw": 5.226954,
+     "pitch": 0.0,
+     "perp": -9.0,
+     "loc": [
+      -7892.753,
+      864.031
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent702_1",
+     "yaw": 30.455579,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7370.487,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent702_2",
+     "yaw": 74.075215,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -7946.102,
+      2396.918
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-07-703",
+   "building": "1",
+   "floor": 7,
+   "unit": "703",
+   "forSale": true,
+   "rooms": 3,
+   "area": 181.59,
+   "price": 818407971.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent703_0",
+     "yaw": 29.903377,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8683.955,
+      2999.019
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent703_1",
+     "yaw": 114.043424,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9519.951,
+      3422.491
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent703_2",
+     "yaw": 130.369957,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10403.008,
+      2645.825
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-08-801",
+   "building": "1",
+   "floor": 8,
+   "unit": "801",
+   "forSale": true,
+   "rooms": 3,
+   "area": 195.5,
+   "price": 850425000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent801_0",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10693.843,
+      2285.077
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent801_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11165.183,
+      1281.504
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent801_2",
+     "yaw": -174.200003,
+     "pitch": -0.0,
+     "perp": 201.0,
+     "loc": [
+      -10226.426,
+      286.798
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent801_3",
+     "yaw": -97.077879,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent801_4",
+     "yaw": 9.854466,
+     "pitch": 0.0,
+     "perp": -39.0,
+     "loc": [
+      -8246.412,
+      456.026
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-08-802",
+   "building": "1",
+   "floor": 8,
+   "unit": "802",
+   "forSale": true,
+   "rooms": 4,
+   "area": 329.29,
+   "price": 1582897030.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent802_0",
+     "yaw": -101.125716,
+     "pitch": -0.0,
+     "perp": 291.0,
+     "loc": [
+      -8123.322,
+      582.936
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent802_1",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7473.301,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent802_2",
+     "yaw": 51.063144,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8326.248,
+      2705.547
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent802_3",
+     "yaw": 96.034482,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9509.088,
+      3319.735
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent802_4",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10099.525,
+      3020.65
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-09-901",
+   "building": "1",
+   "floor": 9,
+   "unit": "901",
+   "forSale": true,
+   "rooms": 3,
+   "area": 198.8,
+   "price": 890624000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent901_0",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10995.473,
+      1912.541
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent901_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11267.435,
+      1269.233
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent901_2",
+     "yaw": -128.936855,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -10155.959,
+      268.049
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent901_3",
+     "yaw": -92.084847,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9108.069,
+      -472.307
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent901_4",
+     "yaw": 20.720784,
+     "pitch": 0.0,
+     "perp": 351.0,
+     "loc": [
+      -8497.032,
+      130.397
+     ],
+     "yawMin": -80.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-09-902",
+   "building": "1",
+   "floor": 9,
+   "unit": "902",
+   "forSale": true,
+   "rooms": 2,
+   "area": 147.6,
+   "price": 634680000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent902_0",
+     "yaw": -95.272227,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -8100.284,
+      640.97
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent902_1",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7370.487,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent902_2",
+     "yaw": 51.063144,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8683.955,
+      2999.019
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent902_3",
+     "yaw": 96.034482,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9519.951,
+      3422.491
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent902_4",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10403.008,
+      2645.825
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-10-1001",
+   "building": "1",
+   "floor": 10,
+   "unit": "1001",
+   "forSale": true,
+   "rooms": 3,
+   "area": 245.4,
+   "price": 1055000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent1001_0",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10693.843,
+      2285.077
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent1001_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -11165.183,
+      1281.504
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent1001_2",
+     "yaw": -127.867799,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -10329.807,
+      390.121
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent1001_3",
+     "yaw": -95.924648,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent1001_4",
+     "yaw": -92.198674,
+     "pitch": -0.0,
+     "perp": 291.0,
+     "loc": [
+      -8428.065,
+      207.614
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "1-10-1002",
+   "building": "1",
+   "floor": 10,
+   "unit": "1002",
+   "forSale": true,
+   "rooms": 3,
+   "area": 168.92,
+   "price": 658000000.0,
+   "plan": "plans/1-10-1002_v2.jpg?v=2562480",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent1002_0",
+     "yaw": -98.236977,
+     "pitch": -0.0,
+     "perp": 291.0,
+     "loc": [
+      -8129.83,
+      577.73
+     ],
+     "yawMin": -50.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_0",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg?v=202609251513",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     },
+     "plan": {
+      "x": 3090.3,
+      "y": 1896.8,
+      "dir": 32.18
+     },
+     "mini": {
+      "x": 45.0,
+      "y": 52.15
+     }
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent1002_1",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7473.301,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_1",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg?v=202609251532",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     },
+     "plan": {
+      "x": 2972.6,
+      "y": 2643.9,
+      "dir": 129.78
+     },
+     "mini": {
+      "x": 43.05,
+      "y": 70.01
+     }
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent1002_2",
+     "yaw": 51.063144,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8326.248,
+      2705.547
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_2",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg?v=202609251539",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     },
+     "plan": {
+      "x": 2157.4,
+      "y": 2805.6,
+      "dir": 180.08
+     },
+     "mini": {
+      "x": 23.21,
+      "y": 74.16
+     }
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent1002_3",
+     "yaw": 96.034482,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9509.088,
+      3319.735
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_3",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg?v=202609251541",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     },
+     "plan": {
+      "x": 1356.0,
+      "y": 2632.4,
+      "dir": 223.98
+     },
+     "mini": {
+      "x": 3.55,
+      "y": 69.86
+     }
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent1002_4",
+     "yaw": 141.004155,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10099.525,
+      3020.65
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg",
+     "multiRes": {
+      "basePath": "views/multires/1-10-1002_4",
+      "path": "/%l/%s%y_%x",
+      "fallbackPath": "/fallback/%s",
+      "extension": "jpg?v=202609251542",
+      "tileResolution": 512,
+      "maxLevel": 5,
+      "cubeResolution": 5208
+     },
+     "plan": {
+      "x": 1269.2,
+      "y": 1994.1,
+      "dir": 270.0
+     },
+     "mini": {
+      "x": 2.14,
+      "y": 54.4
+     }
+    }
+   ],
+   "floorLabel": {
+    "x": 2162,
+    "y": 1863,
+    "text": "10 этаж"
+   },
+   "planView": {
+    "cx": 2135,
+    "cy": 2385,
+    "zoom": 2.17
+   },
+   "bedrooms": 4,
+   "minimap": {
+    "svg": "assets/minimap.svg",
+    "w": 102.083,
+    "h": 77.977
+   }
+  },
+  {
+   "code": "1-11-1101",
+   "building": "1",
+   "floor": 11,
+   "unit": "1101",
+   "forSale": true,
+   "rooms": 4,
+   "area": 385.5,
+   "price": 2050000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent1101_0",
+     "yaw": 128.310913,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -10131.318,
+      2450.932
+     ],
+     "yawMin": -100.0,
+     "yawMax": 100.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent1101_1",
+     "yaw": -173.156936,
+     "pitch": -0.0,
+     "perp": 186.0,
+     "loc": [
+      -10638.757,
+      1691.771
+     ],
+     "yawMin": -120.0,
+     "yawMax": 60.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent1101_2",
+     "yaw": -127.867799,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -10235.964,
+      334.812
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent1101_3",
+     "yaw": -83.156936,
+     "pitch": -0.0,
+     "perp": 276.0,
+     "loc": [
+      -9125.227,
+      -376.196
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraComponent1101_4",
+     "yaw": -27.464297,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -8024.434,
+      730.186
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 5,
+     "component": "ViewCameraComponent1101_5",
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "perp": 6.0,
+     "loc": [
+      -7473.301,
+      1683.399
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 6,
+     "component": "ViewCameraComponent1101_6",
+     "yaw": 51.063144,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -8402.937,
+      2610.63
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 7,
+     "component": "ViewCameraComponent1101_7",
+     "yaw": 101.589337,
+     "pitch": 0.0,
+     "perp": 96.0,
+     "loc": [
+      -9678.836,
+      2897.685
+     ],
+     "yawMin": -60.0,
+     "yawMax": 120.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-02-201",
+   "building": "2",
+   "floor": 2,
+   "unit": "201",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.71,
+   "price": 563805756.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent201_0",
+     "yaw": 156.540326,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.131,
+      -2468.206
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent201_1",
+     "yaw": -131.51654,
+     "pitch": -9.67011,
+     "perp": 231.0,
+     "loc": [
+      -8474.559,
+      -3612.053
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-02-202",
+   "building": "2",
+   "floor": 2,
+   "unit": "202",
+   "forSale": true,
+   "rooms": 2,
+   "area": 144.8,
+   "price": 434400000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent202_0",
+     "yaw": -129.62626,
+     "pitch": -9.166293,
+     "perp": 231.0,
+     "loc": [
+      -8109.094,
+      -3918.908
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent202_1",
+     "yaw": -73.882798,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6960.955,
+      -3857.103
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-02-203",
+   "building": "2",
+   "floor": 2,
+   "unit": "203",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.71,
+   "price": 563805756.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent203_0",
+     "yaw": -75.362698,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6644.463,
+      -3514.012
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-02-204",
+   "building": "2",
+   "floor": 2,
+   "unit": "204",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.71,
+   "price": 563805756.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent204_0",
+     "yaw": -80.055345,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5771.733,
+      -2410.457
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent204_1",
+     "yaw": -5.572813,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5194.995,
+      -1676.096
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent204_2",
+     "yaw": 47.778526,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5682.394,
+      -890.205
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-02-205",
+   "building": "2",
+   "floor": 2,
+   "unit": "205",
+   "forSale": true,
+   "rooms": 2,
+   "area": 148.85,
+   "price": 529161750.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent205_0",
+     "yaw": 50.052111,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6408.349,
+      -301.703
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent205_1",
+     "yaw": 92.417063,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -7171.661,
+      -633.308
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-03-301",
+   "building": "2",
+   "floor": 3,
+   "unit": "301",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.6,
+   "price": 437068000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent301_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.131,
+      -2468.206
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent301_1",
+     "yaw": -110.987778,
+     "pitch": -9.074833,
+     "perp": 231.0,
+     "loc": [
+      -8651.889,
+      -3455.073
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-03-302",
+   "building": "2",
+   "floor": 3,
+   "unit": "302",
+   "forSale": true,
+   "rooms": 3,
+   "area": 186.78,
+   "price": 565569840.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent302_0",
+     "yaw": -150.812179,
+     "pitch": -8.66497,
+     "perp": 231.0,
+     "loc": [
+      -7947.17,
+      -4062.25
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent302_1",
+     "yaw": -87.952719,
+     "pitch": -9.056912,
+     "perp": 321.0,
+     "loc": [
+      -6960.955,
+      -3857.103
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-03-303",
+   "building": "2",
+   "floor": 3,
+   "unit": "303",
+   "forSale": true,
+   "rooms": 3,
+   "area": 186.95,
+   "price": 570197500.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent303_0",
+     "yaw": -74.25676,
+     "pitch": -9.049085,
+     "perp": 321.0,
+     "loc": [
+      -6679.305,
+      -3519.149
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-03-304",
+   "building": "2",
+   "floor": 3,
+   "unit": "304",
+   "forSale": true,
+   "rooms": 3,
+   "area": 186.78,
+   "price": 565569840.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent304_0",
+     "yaw": -85.154183,
+     "pitch": -9.475964,
+     "perp": 321.0,
+     "loc": [
+      -5771.733,
+      -2410.457
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent304_1",
+     "yaw": 10.785967,
+     "pitch": 0.0,
+     "perp": 321.0,
+     "loc": [
+      -5187.337,
+      -1672.597
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent304_2",
+     "yaw": 58.211877,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5501.733,
+      -1054.142
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-03-305",
+   "building": "2",
+   "floor": 3,
+   "unit": "305",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.49,
+   "price": 431520991.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent305_0",
+     "yaw": 50.052111,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6225.89,
+      -454.522
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent305_1",
+     "yaw": 109.385427,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -7181.297,
+      -659.656
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-04-401",
+   "building": "2",
+   "floor": 4,
+   "unit": "401",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.8,
+   "price": 447360000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent401_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.131,
+      -2468.206
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent401_1",
+     "yaw": -104.098404,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8474.559,
+      -3612.053
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-04-402",
+   "building": "2",
+   "floor": 4,
+   "unit": "402",
+   "forSale": true,
+   "rooms": 2,
+   "area": 144.2,
+   "price": 454230000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent402_0",
+     "yaw": -97.305962,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8109.094,
+      -3918.908
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent402_1",
+     "yaw": -62.331766,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6960.955,
+      -3857.103
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-04-403",
+   "building": "2",
+   "floor": 4,
+   "unit": "403",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.1,
+   "price": 583752000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent403_0",
+     "yaw": -59.615586,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6653.335,
+      -3500.883
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-04-404",
+   "building": "2",
+   "floor": 4,
+   "unit": "404",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.55,
+   "price": 594533500.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent404_0",
+     "yaw": -71.112831,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5771.733,
+      -2410.457
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent404_1",
+     "yaw": 17.362142,
+     "pitch": 0.0,
+     "perp": 321.0,
+     "loc": [
+      -5170.85,
+      -1664.929
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent404_2",
+     "yaw": 47.778526,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5682.394,
+      -890.205
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-04-405",
+   "building": "2",
+   "floor": 4,
+   "unit": "405",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.52,
+   "price": 440895308.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent405_0",
+     "yaw": 50.052111,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6408.349,
+      -301.703
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent405_1",
+     "yaw": 85.244927,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -6891.541,
+      -273.484
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-05-501",
+   "building": "2",
+   "floor": 5,
+   "unit": "501",
+   "forSale": true,
+   "rooms": 2,
+   "area": 140.1,
+   "price": 456726000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent501_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.131,
+      -2468.206
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent501_1",
+     "yaw": -90.653283,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8659.695,
+      -3449.398
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-05-502",
+   "building": "2",
+   "floor": 5,
+   "unit": "502",
+   "forSale": true,
+   "rooms": 2,
+   "area": 144.6,
+   "price": 465612000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent502_0",
+     "yaw": -95.128635,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -7931.502,
+      -4044.551
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent502_1",
+     "yaw": -38.469847,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6960.955,
+      -3857.103
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-05-503",
+   "building": "2",
+   "floor": 5,
+   "unit": "503",
+   "forSale": true,
+   "rooms": 2,
+   "area": 140.1,
+   "price": 456726000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent503_0",
+     "yaw": -71.971952,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6358.888,
+      -3137.298
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-05-504",
+   "building": "2",
+   "floor": 5,
+   "unit": "504",
+   "forSale": true,
+   "rooms": 2,
+   "area": 134.5,
+   "price": 416000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent504_0",
+     "yaw": -74.428116,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5771.733,
+      -2410.457
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent504_1",
+     "yaw": -36.313351,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5186.219,
+      -1670.469
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent504_2",
+     "yaw": 47.778526,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5508.309,
+      -1048.175
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-05-505",
+   "building": "2",
+   "floor": 5,
+   "unit": "505",
+   "forSale": true,
+   "rooms": 2,
+   "area": 142.8,
+   "price": 448000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent505_0",
+     "yaw": 50.052111,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6229.008,
+      -463.441
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent505_1",
+     "yaw": 89.121866,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -6892.341,
+      -278.594
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-06-601",
+   "building": "2",
+   "floor": 6,
+   "unit": "601",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.43,
+   "price": 467146272.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent601_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.131,
+      -2468.206
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent601_1",
+     "yaw": -90.859296,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8474.559,
+      -3612.053
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-06-602",
+   "building": "2",
+   "floor": 6,
+   "unit": "602",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.43,
+   "price": 467146272.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent602_0",
+     "yaw": -91.880998,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8116.983,
+      -3911.924
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent602_1",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6659.158,
+      -3507.626
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-06-603",
+   "building": "2",
+   "floor": 6,
+   "unit": "603",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.7,
+   "price": 672247550.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent603_0",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6070.643,
+      -2765.394
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent603_1",
+     "yaw": 1.177075,
+     "pitch": 0.0,
+     "perp": 321.0,
+     "loc": [
+      -5177.473,
+      -1672.884
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent603_2",
+     "yaw": 85.556222,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5677.018,
+      -895.084
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-06-604",
+   "building": "2",
+   "floor": 6,
+   "unit": "604",
+   "forSale": true,
+   "rooms": 2,
+   "area": 138.6,
+   "price": 464365440.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent604_0",
+     "yaw": 50.052111,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6408.349,
+      -301.703
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent604_1",
+     "yaw": 107.678583,
+     "pitch": 0.0,
+     "perp": 86.0,
+     "loc": [
+      -6630.337,
+      -89.016
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent604_2",
+     "yaw": 171.984999,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -7791.71,
+      -1369.006
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-07-701",
+   "building": "2",
+   "floor": 7,
+   "unit": "701",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.65,
+   "price": 491568000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent701_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8695.776,
+      -2460.793
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent701_1",
+     "yaw": -99.496262,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -7564.604,
+      -4330.654
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent701_2",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6659.158,
+      -3507.626
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-07-702",
+   "building": "2",
+   "floor": 7,
+   "unit": "702",
+   "forSale": true,
+   "rooms": 3,
+   "area": 186.85,
+   "price": 695960195.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent702_0",
+     "yaw": -68.885684,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6076.359,
+      -2763.21
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent702_1",
+     "yaw": -14.071714,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5184.848,
+      -1661.265
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent702_2",
+     "yaw": 82.152952,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5492.622,
+      -1062.785
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-07-703",
+   "building": "2",
+   "floor": 7,
+   "unit": "703",
+   "forSale": true,
+   "rooms": 2,
+   "area": 137.86,
+   "price": 480359384.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent703_0",
+     "yaw": 69.796729,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6222.777,
+      -451.706
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent703_1",
+     "yaw": 78.61608,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -6893.299,
+      -280.076
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent703_2",
+     "yaw": 171.471037,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -7791.71,
+      -1369.006
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-08-801",
+   "building": "2",
+   "floor": 8,
+   "unit": "801",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.78,
+   "price": 510197000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent801_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8695.776,
+      -2460.793
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent801_1",
+     "yaw": -85.548613,
+     "pitch": -0.0,
+     "perp": 261.0,
+     "loc": [
+      -8258.219,
+      -3798.711
+     ],
+     "yawMin": -50.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent801_2",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6963.404,
+      -3859.939
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-08-802",
+   "building": "2",
+   "floor": 8,
+   "unit": "802",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.36,
+   "price": 724708480.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent802_0",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6079.722,
+      -2767.103
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent802_1",
+     "yaw": -14.560479,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5175.346,
+      -1677.77
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent802_2",
+     "yaw": 87.514448,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5680.164,
+      -907.341
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-08-803",
+   "building": "2",
+   "floor": 8,
+   "unit": "803",
+   "forSale": true,
+   "rooms": 2,
+   "area": 137.81,
+   "price": 498665485.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent803_0",
+     "yaw": 51.235929,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6411.714,
+      -306.015
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent803_1",
+     "yaw": 77.22514,
+     "pitch": 0.0,
+     "perp": 86.0,
+     "loc": [
+      -6630.461,
+      -88.612
+     ],
+     "yawMin": -70.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent803_2",
+     "yaw": 167.279433,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -7791.71,
+      -1369.006
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-09-901",
+   "building": "2",
+   "floor": 9,
+   "unit": "901",
+   "forSale": true,
+   "rooms": 2,
+   "area": 139.92,
+   "price": 538692000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent901_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8695.776,
+      -2460.793
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent901_1",
+     "yaw": -86.192043,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8288.553,
+      -3762.757
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent901_2",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6659.158,
+      -3507.626
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-09-902",
+   "building": "2",
+   "floor": 9,
+   "unit": "902",
+   "forSale": true,
+   "rooms": 3,
+   "area": 187.1,
+   "price": 710980000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent902_0",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5756.859,
+      -2417.584
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent902_1",
+     "yaw": 47.778526,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5834.689,
+      -734.167
+     ],
+     "yawMin": -50.0,
+     "yawMax": 70.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent902_2",
+     "yaw": 87.293789,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -6912.836,
+      -305.993
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-10-1001",
+   "building": "2",
+   "floor": 10,
+   "unit": "1001",
+   "forSale": true,
+   "rooms": 3,
+   "area": 218.65,
+   "price": 918000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent1001_0",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8684.172,
+      -2476.326
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent1001_1",
+     "yaw": -81.458669,
+     "pitch": -0.0,
+     "perp": 261.0,
+     "loc": [
+      -8248.903,
+      -3824.337
+     ],
+     "yawMin": -80.0,
+     "yawMax": 40.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent1001_2",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6666.211,
+      -3492.998
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-10-1002",
+   "building": "2",
+   "floor": 10,
+   "unit": "1002",
+   "forSale": true,
+   "rooms": 3,
+   "area": 152.3,
+   "price": 578000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraComponent1002_0",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -5756.859,
+      -2417.584
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraComponent1002_1",
+     "yaw": 47.778526,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -5685.695,
+      -902.797
+     ],
+     "yawMin": -70.0,
+     "yawMax": 50.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraComponent1002_2",
+     "yaw": 85.609553,
+     "pitch": 0.0,
+     "perp": 86.0,
+     "loc": [
+      -6620.399,
+      -71.02
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraComponent1002_3",
+     "yaw": -179.615262,
+     "pitch": -0.0,
+     "perp": 141.0,
+     "loc": [
+      -7495.458,
+      -995.145
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  },
+  {
+   "code": "2-11-1101",
+   "building": "2",
+   "floor": 11,
+   "unit": "1101",
+   "forSale": true,
+   "rooms": 4,
+   "area": 362.8,
+   "price": 1850000000.0,
+   "plan": "plan-placeholder.jpg",
+   "cameras": [
+    {
+     "idx": 0,
+     "component": "ViewCameraLocationComponent1101_0",
+     "yaw": -10.074974,
+     "pitch": -0.0,
+     "perp": 51.0,
+     "loc": [
+      -5193.146,
+      -1459.303
+     ],
+     "yawMin": -100.0,
+     "yawMax": 100.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 1,
+     "component": "ViewCameraLocationComponent1101_1",
+     "yaw": 92.803529,
+     "pitch": 0.0,
+     "perp": 51.0,
+     "loc": [
+      -6524.945,
+      -323.178
+     ],
+     "yawMin": -100.0,
+     "yawMax": 100.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 2,
+     "component": "ViewCameraLocationComponent1101_2",
+     "yaw": 139.38702,
+     "pitch": 0.0,
+     "perp": 141.0,
+     "loc": [
+      -8687.391,
+      -2472.892
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 3,
+     "component": "ViewCameraLocationComponent1101_3",
+     "yaw": -123.554826,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -8833.122,
+      -2964.666
+     ],
+     "yawMin": -120.0,
+     "yawMax": 100.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 4,
+     "component": "ViewCameraLocationComponent1101_4",
+     "yaw": -93.268449,
+     "pitch": -0.0,
+     "perp": 231.0,
+     "loc": [
+      -7581.151,
+      -4106.901
+     ],
+     "yawMin": -100.0,
+     "yawMax": 120.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    },
+    {
+     "idx": 5,
+     "component": "ViewCameraLocationComponent1101_5",
+     "yaw": -40.812853,
+     "pitch": -0.0,
+     "perp": 321.0,
+     "loc": [
+      -6063.4,
+      -2772.554
+     ],
+     "yawMin": -80.0,
+     "yawMax": 80.0,
+     "pitchMin": -90.0,
+     "pitchMax": 40.0,
+     "image": "panorama.jpg"
+    }
+   ]
+  }
+ ]
+}
