@@ -327,7 +327,8 @@
     function sceneConfig(cam) {
       // Краевые лимиты Pannellum не используем — ограничиваем ЦЕНТР камеры вручную (clampLoop).
       var cfg = {
-        hfov: 95, minHfov: 85, maxHfov: 120,
+        hfov: 95, minHfov: 55, maxHfov: 120,
+        multiResMinHfov: true,   // иначе Pannellum для multires сам снижает minHfov до «пиксель в пиксель» (16K зумилась сильнее)
         yaw: computedYaw(cam), pitch: 0,
         autoLoad: true, compass: false, friction: 0.15
       };
